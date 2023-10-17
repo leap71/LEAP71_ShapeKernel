@@ -2,9 +2,7 @@
 
 ## Dependencies
 
-- using PicoGK as the voxel engine --> LINK
-
-  
+The LEAP 71 ShapeKernel [uses PicoGK as the foundational Geometry Engine](https://github.com/leap71/PicoGK).
 
 ## Overview
 
