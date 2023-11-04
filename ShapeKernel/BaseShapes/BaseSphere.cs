@@ -58,9 +58,9 @@ namespace Leap71
                 //theta is the polar angle
                 SetAzimuthalSteps(360);
                 SetPolarSteps(180);
-                m_oFrame = oFrame;
+                m_oFrame            = oFrame;
                 m_oRadiusModulation = new SurfaceModulation(fRadius);
-                m_bTransformed = false;
+                m_bTransformed      = false;
             }
 
 
@@ -84,8 +84,8 @@ namespace Leap71
             //construction
             public override Voxels oConstructVoxels()
             {
-                Mesh oMesh = oConstructMesh();
-                Voxels oVoxels = new Voxels(oMesh);
+                Mesh oMesh      = oConstructMesh();
+                Voxels oVoxels  = new Voxels(oMesh);
                 return oVoxels;
             }
 
@@ -95,13 +95,13 @@ namespace Leap71
                 float fRadiusRatio  = 1f;
                 for (int iThetaStep = 1; iThetaStep < m_nAzimuthalSteps; iThetaStep++)
                 {
-                    float fThetaRatio1 = (1f) / m_nAzimuthalSteps * (iThetaStep - 1);
-                    float fThetaRatio2 = (1f) / m_nAzimuthalSteps * (iThetaStep);
+                    float fThetaRatio1 = (1f) / (m_nAzimuthalSteps - 1) * (iThetaStep - 1);
+                    float fThetaRatio2 = (1f) / (m_nAzimuthalSteps - 1) * (iThetaStep);
 
                     for (int iPhiStep = 0; iPhiStep < m_nPolarSteps; iPhiStep++)
                     {
-                        float fPhiRatio1 = (1f) / m_nPolarSteps * (iPhiStep - 1);
-                        float fPhiRatio2 = (1f) / m_nPolarSteps * (iPhiStep);
+                        float fPhiRatio1 = (1f) / (m_nPolarSteps - 1) * (iPhiStep - 1);
+                        float fPhiRatio2 = (1f) / (m_nPolarSteps - 1) * (iPhiStep);
 
                         Vector3 vecPt0 = vecGetSurfacePoint(fPhiRatio1, fThetaRatio1, fRadiusRatio);
                         Vector3 vecPt1 = vecGetSurfacePoint(fPhiRatio1, fThetaRatio2, fRadiusRatio);
