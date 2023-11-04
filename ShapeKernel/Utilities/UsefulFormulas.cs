@@ -47,7 +47,7 @@ namespace Leap71
             /// </summary>
             public static void Wait(float fSeconds)
             {
-                Thread.Sleep((float)(1000 * fSeconds));
+                Thread.Sleep((int)(1000 * fSeconds));
             }
 
             /// <summary>
