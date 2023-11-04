@@ -45,9 +45,9 @@ namespace Leap71
             /// <summary>
             /// Pauses the program execution for a given number of seconds.
             /// </summary>
-            public static void Wait(int iSeconds)
+            public static void Wait(float fSeconds)
             {
-                Thread.Sleep(1000 * iSeconds);
+                Thread.Sleep((float)(1000 * fSeconds));
             }
 
             /// <summary>
