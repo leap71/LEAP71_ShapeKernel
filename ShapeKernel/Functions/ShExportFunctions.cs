@@ -60,6 +60,14 @@ namespace Leap71
                 Mesh oMesh = new Mesh(oVoxels);
                 ExportMeshToSTLFile(oMesh, strFilePath);
             }
+
+            public enum EExport { STL, TGA, CSV };
+            public static string strGetExportPath(EExport eExport, string strFilename)
+            {
+                string strFormatStub    = "." + eExport.ToString();
+                string strFullPath      = Path.Combine(Library.strLogFolder, strFilename + strFormatStub);
+                return strFullPath;
+            }
         }
     }
 }
