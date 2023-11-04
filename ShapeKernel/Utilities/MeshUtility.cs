@@ -43,6 +43,9 @@ namespace Leap71
 	{
 		public static class MeshUtility
 		{
+            /// <summary>
+            /// Creates a mesh object from a regularly arranged point grid.
+            /// </summary>
             public static Mesh mshFromGrid(List<List<Vector3>> aGrid)
             {
                 Mesh oMesh = new Mesh();
@@ -60,6 +63,21 @@ namespace Leap71
                 }
                 return oMesh;
             }
-		}
+
+            /// <summary>
+            /// Creates a mesh object from four points that form a quad shape.
+            /// </summary>
+            public static Mesh mshFromQuad(
+                Vector3 vecPt1,
+                Vector3 vecPt2,
+                Vector3 vecPt3,
+                Vector3 vecPt4)
+            {
+                Mesh oMesh = new Mesh();
+                oMesh.nAddTriangle(vecPt4, vecPt1, vecPt2);
+                oMesh.nAddTriangle(vecPt2, vecPt3, vecPt4);
+                return oMesh;
+            }
+        }
     }
 }
