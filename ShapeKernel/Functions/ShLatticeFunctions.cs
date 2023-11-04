@@ -135,10 +135,10 @@ namespace Leap71
             /// Beam has a constant radius.
             /// Beam has rounded end caps.
             /// </summary>
-            public static Lattice latFromBeam(Vector3 vecPt1, Vector3 vecPt2, float fBeam1)
+            public static Lattice latFromBeam(Vector3 vecPt1, Vector3 vecPt2, float fBeam, bool bRounded)
             {
                 Lattice oLattice = new Lattice();
-                oLattice.AddBeam(vecPt1, fBeam1, vecPt2, fBeam1, true);
+                oLattice.AddBeam(vecPt1, fBeam, vecPt2, fBeam, bRounded);
                 return oLattice;
             }
 
@@ -147,10 +147,10 @@ namespace Leap71
             /// Beam has a variable radius.
             /// Beam has rounded end caps.
             /// </summary>
-            public static Lattice latFromBeam(Vector3 vecPt1, Vector3 vecPt2, float fBeam1, float fBeam2)
+            public static Lattice latFromBeam(Vector3 vecPt1, Vector3 vecPt2, float fBeam1, float fBeam2, bool bRounded)
             {
                 Lattice oLattice = new Lattice();
-                oLattice.AddBeam(vecPt1, fBeam1, vecPt2, fBeam2, true);
+                oLattice.AddBeam(vecPt1, fBeam1, vecPt2, fBeam2, bRounded);
                 return oLattice;
             }
         }
