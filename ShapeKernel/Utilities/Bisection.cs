@@ -33,9 +33,6 @@
 //
 
 
-using PicoGK;
-
-
 namespace Leap71
 {
     namespace ShapeKernel
@@ -51,6 +48,7 @@ namespace Leap71
             protected Func  m_oFunc;
             protected uint  m_nIterations;
             protected uint  m_nMaxIterations;
+            protected float m_fRemainingDiff;
 
 
             /// <summary>
@@ -90,19 +88,14 @@ namespace Leap71
                 }
 
                 float fMid              = fMin;
-                float fRemainingDiff    = fMax - fMin;
-                Library.Log($"Bisection: Remaining Diff = {fRemainingDiff}");
-
-                while (fRemainingDiff >= m_fEpsilon)
+                m_fRemainingDiff        = fMax - fMin;
+                while (m_fRemainingDiff >= m_fEpsilon)
                 {
-                    // Find middle point
-                    fMid = 0.5f * (fMin + fMax);
-
-                    // Check if middle point is root
+                    fMid                = 0.5f * (fMin + fMax);
                     if (fGetOutputFromFunc(fMid) == 0f)
+                    {
                         break;
-
-                    // Decide the side to repeat the steps
+                    }
                     else if (fGetOutputFromFunc(fMid) * fGetOutputFromFunc(fMin) < 0)
                     {
                         fMax = fMid;
@@ -112,8 +105,7 @@ namespace Leap71
                         fMin = fMid;
                     }
 
-                    fRemainingDiff = fMax - fMin;
-                    Library.Log($"Bisection: Remaining Diff = {fRemainingDiff}");
+                    m_fRemainingDiff = fMax - fMin;
                     m_nIterations++;
 
                     if (m_nIterations == m_nMaxIterations)
@@ -127,6 +119,11 @@ namespace Leap71
             public uint nGetIterations()
             {
                 return m_nIterations;
+            }
+
+            public float fGetRemainingDiff()
+            {
+                return m_fRemainingDiff;
             }
         }
     }
