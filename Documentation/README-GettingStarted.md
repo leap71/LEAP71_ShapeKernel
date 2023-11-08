@@ -18,7 +18,7 @@ At this point, your **Visual Studio (VS) project** should have a folder named Pi
 
 
 
-![vsproject.png](/Users/josefinelissner/Documents/GitHub/LEAP71_ShapeKernel/Documentation/vsproject.png)
+![vsproject.png](vsproject.png)
 
 *(1) Project structure in VS before and after adding the ShapeKernel library.*
 
@@ -30,11 +30,11 @@ The ShapeKernel library relies on a few functions from the **MathNet.Numerics** 
 
 - Tools > Manage NuGet Packages > Search: MathNet... > Add MathNet.Numerics
 
-<img src="/Users/josefinelissner/Documents/GitHub/JL_CoolCube/Documentation/error0.png" alt="image-20231019213901141" style="zoom:100%;" />
+<img src="error0.png" alt="image-20231019213901141" style="zoom:100%;" />
 
-<img src="/Users/josefinelissner/Documents/GitHub/JL_CoolCube/Documentation/error1.png" alt="image-20231019213901141" style="zoom:50%;" />
+<img src="error1.png" alt="image-20231019213901141" style="zoom:50%;" />
 
-<img src="/Users/josefinelissner/Documents/GitHub/JL_CoolCube/Documentation/error2.png" alt="image-20231019213901141" style="zoom:100%;" />
+<img src="error2.png" alt="image-20231019213901141" style="zoom:100%;" />
 
 
 
@@ -112,6 +112,6 @@ Once you have run the first example successfully, feel free to go through the ot
 
 
 
-![](/Users/josefinelissner/Documents/GitHub/LEAP71_ShapeKernel/Documentation/shapekernelexamples.jpg)
+![](shapekernelexamples.jpg)
 
 *(1) Examples of different BaseShapes.*
