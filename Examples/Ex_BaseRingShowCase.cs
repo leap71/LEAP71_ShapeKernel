@@ -37,8 +37,8 @@ namespace Leap71
                         //basic
                         LocalFrame oLocalFrame  = new LocalFrame(new Vector3(-50, -50, 0));
                         BaseRing oShape         = new BaseRing(oLocalFrame, 30, 8);
-                        Voxels oVoxels          = oShape.oConstructVoxels();
-                        Sh.PreviewVoxels(oVoxels, Cp.strFrozen);
+                        Voxels oVoxels          = oShape.voxConstruct();
+                        Sh.PreviewVoxels(oVoxels, Cp.clrFrozen);
                     }
 
                     {
@@ -46,8 +46,8 @@ namespace Leap71
                         LocalFrame oLocalFrame  = new LocalFrame(new Vector3(-50, 50, 0));
                         BaseRing oShape         = new BaseRing(oLocalFrame, 30);
                         oShape.SetRadius(new SurfaceModulation(fGetRingRadius0));
-                        Voxels oVoxels          = oShape.oConstructVoxels();
-                        Sh.PreviewVoxels(oVoxels, Cp.strPitaya);
+                        Voxels oVoxels          = oShape.voxConstruct();
+                        Sh.PreviewVoxels(oVoxels, Cp.clrPitaya);
                     }
 
                     {
@@ -55,8 +55,8 @@ namespace Leap71
                         LocalFrame oLocalFrame  = new LocalFrame(new Vector3(50, 50, 0));
                         BaseRing oShape         = new BaseRing(oLocalFrame, 30);
                         oShape.SetRadius(new SurfaceModulation(fGetRingRadius1));
-                        Voxels oVoxels          = oShape.oConstructVoxels();
-                        Sh.PreviewVoxels(oVoxels, Cp.strWarning);
+                        Voxels oVoxels          = oShape.voxConstruct();
+                        Sh.PreviewVoxels(oVoxels, Cp.clrWarning);
                     }
 
                     {
@@ -64,8 +64,8 @@ namespace Leap71
                         LocalFrame oLocalFrame  = new LocalFrame(new Vector3(50, -50, 0));
                         BaseRing oShape         = new BaseRing(oLocalFrame, 30);
                         oShape.SetRadius(new SurfaceModulation(fGetRingRadius2));
-                        Voxels oVoxels          = oShape.oConstructVoxels();
-                        Sh.PreviewVoxels(oVoxels, Cp.strBlueberry);
+                        Voxels oVoxels          = oShape.voxConstruct();
+                        Sh.PreviewVoxels(oVoxels, Cp.clrBlueberry);
                     }
                 }
                 catch (Exception e)

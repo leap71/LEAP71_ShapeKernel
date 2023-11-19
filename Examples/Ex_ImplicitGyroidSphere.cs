@@ -46,8 +46,8 @@ namespace Leap71
                     //intersect an implicit pattern with a bounding voxelfield.
                     Voxels voxGyroidSphere  = Sh.voxIntersectImplicit(voxSphere, sdfPattern);
 
-                    Sh.PreviewVoxels(voxGyroidSphere,   Cp.strBillie);
-                    Sh.PreviewVoxels(voxSphere,         Cp.strBubblegum, 0.3f);
+                    Sh.PreviewVoxels(voxGyroidSphere,   Cp.clrBillie);
+                    Sh.PreviewVoxels(voxSphere,         Cp.clrBubblegum, 0.3f);
                 }
                 catch (Exception e)
                 {

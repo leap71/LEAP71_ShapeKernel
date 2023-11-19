@@ -41,7 +41,7 @@ namespace Leap71
 {
     namespace ShapeKernel
     {
-        public class BaseRing : BaseShape, ISurfaceBaseShape
+        public class BaseRing : BaseShape, IMeshBaseShape, ISurfaceBaseShape
         {
             protected uint              m_nPolarSteps;
             protected uint              m_nRadialSteps;
@@ -83,14 +83,14 @@ namespace Leap71
 
 
             //construction
-            public override Voxels oConstructVoxels()
+            public override Voxels voxConstruct()
             {
-                Mesh oMesh      = oConstructMesh();
+                Mesh oMesh      = mshConstruct();
                 Voxels oVoxels  = new Voxels(oMesh);
                 return oVoxels;
             }
 
-            public Mesh oConstructMesh()
+            public Mesh mshConstruct()
             {
                 Mesh oMesh          = new Mesh();
                 float fRadiusRatio  = 1f;

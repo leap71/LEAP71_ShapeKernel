@@ -43,22 +43,34 @@ namespace Leap71
         public partial class Sh
         {
             public static uint nNumberOfGroups = 0;
-            public static void PreviewMesh(Mesh oMesh, string strColor, float fTransparency = 0.9f, float fMetallic = 0.3f, float fRoughness = 0.7f)
+            public static void PreviewMesh(
+                Mesh        oMesh,
+                ColorFloat  clrColor,
+                float       fTransparency   = 0.9f,
+                float       fMetallic       = 0.3f,
+                float       fRoughness      = 0.7f)
             {
-                int iNextGroupId = (int)nNumberOfGroups;
+                int iNextGroupId    = (int)nNumberOfGroups;
+                ColorFloat clr      = new ColorFloat(clrColor, fTransparency);
                 Library.oViewer().SetGroupMaterial(iNextGroupId,
-                                            new ColorFloat(Cp.strGetColor(strColor, fTransparency)),
+                                            clr,
                                             fMetallic,
                                             fRoughness);
                 Library.oViewer().Add(oMesh, iNextGroupId);
                 nNumberOfGroups++;
             }
 
-            public static int PreviewVoxels(Voxels oVoxels, string strColor, float fTransparency = 0.9f, float fMetallic = 0.3f, float fRoughness = 0.7f)
+            public static int PreviewVoxels(
+                Voxels      oVoxels,
+                ColorFloat  clrColor,
+                float       fTransparency   = 0.9f,
+                float       fMetallic       = 0.3f,
+                float       fRoughness      = 0.7f)
             {
-                int iNextGroupId = (int)nNumberOfGroups;
+                int iNextGroupId    = (int)nNumberOfGroups;
+                ColorFloat clr      = new ColorFloat(clrColor, fTransparency);
                 Library.oViewer().SetGroupMaterial(iNextGroupId,
-                                            new ColorFloat(Cp.strGetColor(strColor, fTransparency)),
+                                            clr,
                                             fMetallic,
                                             fRoughness);
                 Library.oViewer().Add(oVoxels, iNextGroupId);
@@ -66,11 +78,17 @@ namespace Leap71
                 return (int)(nNumberOfGroups - 1);
             }
 
-            public static void PreviewLattice(Lattice oLattice, string strColor, float fTransparency = 0.9f, float fMetallic = 0.3f, float fRoughness = 0.7f)
+            public static void PreviewLattice(
+                Lattice     oLattice,
+                ColorFloat  clrColor,
+                float       fTransparency   = 0.9f,
+                float       fMetallic       = 0.3f,
+                float       fRoughness      = 0.7f)
             {
-                int iNextGroupId = (int)nNumberOfGroups;
+                int iNextGroupId    = (int)nNumberOfGroups;
+                ColorFloat clr      = new ColorFloat(clrColor, fTransparency);
                 Library.oViewer().SetGroupMaterial(iNextGroupId,
-                                            new ColorFloat(Cp.strGetColor(strColor, fTransparency)),
+                                            clr,
                                             fMetallic,
                                             fRoughness);
                 Voxels oVoxels = new Voxels(oLattice);
@@ -78,24 +96,40 @@ namespace Leap71
                 nNumberOfGroups++;
             }
 
-            public static void PreviewPoint(Vector3 vecPt, float fBeam, string strColor, float fTransparency = 0.9f, float fMetallic = 0.3f, float fRoughness = 0.7f)
+            public static void PreviewPoint(
+                Vector3     vecPt,
+                float       fBeam,
+                ColorFloat  clrColor,
+                float       fTransparency   = 0.9f,
+                float       fMetallic       = 0.3f,
+                float       fRoughness      = 0.7f)
             {
                 Lattice oLattice = new Lattice();
                 oLattice.AddSphere(vecPt, fBeam);
-                PreviewLattice(oLattice, strColor, fTransparency, fMetallic, fRoughness);
+                PreviewLattice(oLattice, clrColor, fTransparency, fMetallic, fRoughness);
             }
 
-            public static void PreviewBeam(Vector3 vecPt1, float fBeam1, Vector3 vecPt2, float fBeam2, string strColor, float fTransparency = 0.9f, float fMetallic = 0.3f, float fRoughness = 0.7f)
+            public static void PreviewBeam(
+                Vector3     vecPt1,
+                float       fBeam1,
+                Vector3     vecPt2,
+                float       fBeam2,
+                ColorFloat  clrColor,
+                float       fTransparency   = 0.9f,
+                float       fMetallic       = 0.3f,
+                float       fRoughness      = 0.7f)
             {
                 Lattice oLattice = new Lattice();
                 oLattice.AddBeam(vecPt1, fBeam1, vecPt2, fBeam2, true);
-                PreviewLattice(oLattice, strColor, fTransparency, fMetallic, fRoughness);
+                PreviewLattice(oLattice, clrColor, fTransparency, fMetallic, fRoughness);
             }
 
-            public static void PreviewLine(List<Vector3> aPoints, string strColor)
+            public static void PreviewLine(
+                List<Vector3>   aPoints,
+                ColorFloat      clrColor)
             {
                 int iNextGroupId = (int)nNumberOfGroups;
-                PolyLine oLine = new PolyLine(strColor);
+                PolyLine oLine = new PolyLine(clrColor);
                 for (int i = 0; i < aPoints.Count; i++)
                 {
                     oLine.nAddVertex(aPoints[i]);
@@ -104,38 +138,50 @@ namespace Leap71
                 nNumberOfGroups++;
             }
 
-            public static void PreviewGrid(List<List<Vector3>> aGrid, string strColor)
+            public static void PreviewGrid(
+                List<List<Vector3>> aGrid,
+                ColorFloat          clrColor)
             {
                 for (int i = 0; i < aGrid.Count; i++)
                 {
-                    PreviewLine(aGrid[i], strColor);
+                    PreviewLine(aGrid[i], clrColor);
                 }
                 aGrid = GridOperations.aGetInverseGrid(aGrid);
                 for (int i = 0; i < aGrid.Count; i++)
                 {
-                    PreviewLine(aGrid[i], strColor);
+                    PreviewLine(aGrid[i], clrColor);
                 }
             }
 
-            public static void PreviewEdges(List<List<Vector3>> aEdges, string strColor)
+            public static void PreviewEdges(
+                List<List<Vector3>> aEdges,
+                ColorFloat          clrColor)
             {
                 for (int i = 0; i < aEdges.Count; i++)
                 {
-                    PreviewLine(aEdges[i], strColor);
+                    PreviewLine(aEdges[i], clrColor);
                 }
             }
 
-            public static void PreviewPointCloud(List<Vector3> aPoints, float fBeam, string strColor, float fTransparency = 0.9f, float fMetallic = 0.3f, float fRoughness = 0.7f)
+            public static void PreviewPointCloud(
+                List<Vector3>   aPoints,
+                float           fBeam,
+                ColorFloat      clrColor,
+                float           fTransparency   = 0.9f,
+                float           fMetallic       = 0.3f,
+                float           fRoughness      = 0.7f)
             {
                 Lattice oLattice = new Lattice();
                 for (int i = 0; i < aPoints.Count; i++)
                 {
                     oLattice.AddBeam(aPoints[i], fBeam, aPoints[i], fBeam);
                 }
-                PreviewLattice(oLattice, strColor, fTransparency, fMetallic, fRoughness);
+                PreviewLattice(oLattice, clrColor, fTransparency, fMetallic, fRoughness);
             }
 
-            public static void PreviewFrame(LocalFrame oFrame, float fSize)
+            public static void PreviewFrame(
+                LocalFrame  oFrame,
+                float       fSize)
             {
                 Lattice oXLattice = new Lattice();
                 Lattice oYLattice = new Lattice();
@@ -148,14 +194,14 @@ namespace Leap71
                     ref oYLattice,
                     ref oZLattice);
 
-                PreviewLattice(oXLattice, Cp.strRed);
-                PreviewLattice(oYLattice, Cp.strGreen);
-                PreviewLattice(oZLattice, Cp.strBlue);
+                PreviewLattice(oXLattice, Cp.clrRed);
+                PreviewLattice(oYLattice, Cp.clrGreen);
+                PreviewLattice(oZLattice, Cp.clrBlue);
             }
 
             public static void PreviewFrame(
-                LocalFrame oFrame,
-                float fSize,
+                LocalFrame  oFrame,
+                float       fSize,
                 ref Lattice oXLattice,
                 ref Lattice oYLattice,
                 ref Lattice oZLattice)
@@ -172,7 +218,9 @@ namespace Leap71
                 oZLattice.AddBeam(vecCentre, fBeam1, vecTipZ, fBeam2);
             }
 
-            public static void PreviewFrames(Frames oFrames, float fSize)
+            public static void PreviewFrames(
+                Frames  oFrames,
+                float   fSize)
             {
                 Lattice oXLattice = new Lattice();
                 Lattice oYLattice = new Lattice();
@@ -189,21 +237,30 @@ namespace Leap71
                         ref oZLattice);
                 }
 
-                PreviewLattice(oXLattice, Cp.strRed);
-                PreviewLattice(oYLattice, Cp.strGreen);
-                PreviewLattice(oZLattice, Cp.strBlue);
+                PreviewLattice(oXLattice, Cp.clrRed);
+                PreviewLattice(oYLattice, Cp.clrGreen);
+                PreviewLattice(oZLattice, Cp.clrBlue);
             }
 
-            public static void PreviewCircleSection(LocalFrame oFrame, float fRadius, string strColor, float fTransparency = 0.9f, float fMetallic = 0.3f, float fRoughness = 0.7f)
+            public static void PreviewCircleSection(
+                LocalFrame  oFrame,
+                float       fRadius,
+                ColorFloat  clrColor,
+                float       fTransparency   = 0.9f,
+                float       fMetallic       = 0.3f,
+                float       fRoughness      = 0.7f)
             {
                 Lattice oLattice    = new Lattice();
                 Vector3 vecPt1      = oFrame.vecGetPosition();
                 Vector3 vecPt2      = vecPt1 + 1f * oFrame.vecGetLocalZ();
                 oLattice.AddBeam(vecPt1, fRadius, vecPt2, fRadius, false);
-                PreviewLattice(oLattice, strColor, fTransparency, fMetallic, fRoughness);
+                PreviewLattice(oLattice, clrColor, fTransparency, fMetallic, fRoughness);
             }
 
-            public static void PreviewCircle(LocalFrame oFrame, float fRadius, string strColor)
+            public static void PreviewCircle(
+                LocalFrame  oFrame,
+                float       fRadius,
+                ColorFloat  clrColor)
             {
                 List<Vector3> aPoints   = new List<Vector3>();
                 uint nSamples           = 100;
@@ -214,16 +271,23 @@ namespace Leap71
                     Vector3 vecPt   = VecOperations.vecTranslatePointOntoFrame(oFrame, vecRel);
                     aPoints.Add(vecPt);
                 }
-                PreviewLine(aPoints, strColor);
+                PreviewLine(aPoints, clrColor);
             }
 
-            public static void PreviewCircle(Vector3 vecCentre, float fRadius, string strColor)
+            public static void PreviewCircle(
+                Vector3     vecCentre,
+                float       fRadius,
+                ColorFloat  clrColor)
             {
                 LocalFrame oFrame = new LocalFrame(vecCentre);
-                PreviewCircle(oFrame, fRadius, strColor);
+                PreviewCircle(oFrame, fRadius, clrColor);
             }
 
-            public static void PreviewCylinderWireframe(BaseCylinder oCyl, string strColor, uint nRadialSamples = 5, uint nLengthSamples = 10)
+            public static void PreviewCylinderWireframe(
+                BaseCylinder    oCyl,
+                ColorFloat      clrColor,
+                uint            nRadialSamples = 5,
+                uint            nLengthSamples = 10)
             {
                 //length samples
                 for (uint nLengthSample = 0; nLengthSample < nLengthSamples; nLengthSample++)
@@ -237,7 +301,7 @@ namespace Leap71
                         float fPhiRatio     = 1f / (float)(nSamples - 1) * i;
                         aPoints.Add(oCyl.vecGetSurfacePoint(fLengthRatio, fPhiRatio, fRadiusRatio));
                     }
-                    PreviewLine(aPoints, strColor);
+                    PreviewLine(aPoints, clrColor);
                 }
 
                 //radial samples
@@ -252,11 +316,15 @@ namespace Leap71
                         float fLengthRatio  = 1f / (float)(nSamples - 1) * i;
                         aPoints.Add(oCyl.vecGetSurfacePoint(fLengthRatio, fPhiRatio, fRadiusRatio));
                     }
-                    PreviewLine(aPoints, strColor);
+                    PreviewLine(aPoints, clrColor);
                 }
             }
 
-            public static void PreviewPipeWireframe(BasePipe oCyl, string strColor, uint nRadialSamples = 5, uint nLengthSamples = 10)
+            public static void PreviewPipeWireframe(
+                BasePipe    oCyl,
+                ColorFloat  clrColor,
+                uint        nRadialSamples = 5,
+                uint        nLengthSamples = 10)
             {
                 //length samples
                 for (uint nLengthSample = 0; nLengthSample < nLengthSamples; nLengthSample++)
@@ -270,7 +338,7 @@ namespace Leap71
                         float fPhiRatio     = 1f / (float)(nSamples - 1) * i;
                         aPoints.Add(oCyl.vecGetSurfacePoint(fLengthRatio, fPhiRatio, fRadiusRatio));
                     }
-                    PreviewLine(aPoints, strColor);
+                    PreviewLine(aPoints, clrColor);
                 }
 
                 //radial samples
@@ -285,11 +353,13 @@ namespace Leap71
                         float fLengthRatio  = 1f / (float)(nSamples - 1) * i;
                         aPoints.Add(oCyl.vecGetSurfacePoint(fLengthRatio, fPhiRatio, fRadiusRatio));
                     }
-                    PreviewLine(aPoints, strColor);
+                    PreviewLine(aPoints, clrColor);
                 }
             }
 
-            public static void PreviewBoxWireframe(BaseBox oBox, string strColor)
+            public static void PreviewBoxWireframe(
+                BaseBox     oBox,
+                ColorFloat  clrColor)
             {
                 //lower face
                 PreviewLine(new List<Vector3>()
@@ -299,7 +369,7 @@ namespace Leap71
                     oBox.vecGetSurfacePoint(1, 1, 0),
                     oBox.vecGetSurfacePoint(1, -1, 0),
                     oBox.vecGetSurfacePoint(-1, -1, 0)
-                }, strColor);
+                }, clrColor);
 
 
                 //upper face
@@ -310,42 +380,44 @@ namespace Leap71
                     oBox.vecGetSurfacePoint(1, 1, 1),
                     oBox.vecGetSurfacePoint(1, -1, 1),
                     oBox.vecGetSurfacePoint(-1, -1, 1)
-                }, strColor);
+                }, clrColor);
 
                 //side pillars
                 PreviewLine(new List<Vector3>()
                 {
                     oBox.vecGetSurfacePoint(-1, -1, 0),
                     oBox.vecGetSurfacePoint(-1, -1, 1),
-                }, strColor);
+                }, clrColor);
 
                 PreviewLine(new List<Vector3>()
                 {
                     oBox.vecGetSurfacePoint(-1, 1, 0),
                     oBox.vecGetSurfacePoint(-1, 1, 1),
-                }, strColor);
+                }, clrColor);
 
                 PreviewLine(new List<Vector3>()
                 {
                     oBox.vecGetSurfacePoint(1, 1, 0),
                     oBox.vecGetSurfacePoint(1, 1, 1),
-                }, strColor);
+                }, clrColor);
 
                 PreviewLine(new List<Vector3>()
                 {
                     oBox.vecGetSurfacePoint(1, -1, 0),
                     oBox.vecGetSurfacePoint(1, -1, 1),
-                }, strColor);
+                }, clrColor);
             }
 
-            public static void PreviewBoxWireframe(BBox3 oBBox, string strColor)
+            public static void PreviewBoxWireframe(
+                BBox3       oBBox,
+                ColorFloat  clrColor)
             {
                 Vector3 vecBase = VecOperations.vecSetZ(0.5f * (oBBox.vecMax + oBBox.vecMin), oBBox.vecMin.Z);
                 float fLength   = (oBBox.vecMax - oBBox.vecMin).Z;
                 float fWidth    = (oBBox.vecMax - oBBox.vecMin).X;
                 float fDepth    = (oBBox.vecMax - oBBox.vecMin).Y;
                 BaseBox oBox    = new BaseBox(new LocalFrame(vecBase), fLength, fWidth, fDepth);
-                PreviewBoxWireframe(oBox, strColor);
+                PreviewBoxWireframe(oBox, clrColor);
             }
         }
     }

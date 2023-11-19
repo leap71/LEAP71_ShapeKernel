@@ -41,7 +41,7 @@ namespace Leap71
 {
     namespace ShapeKernel
     {
-        public class BasePipe : BaseShape, ISurfaceBaseShape
+        public class BasePipe : BaseShape, IMeshBaseShape, ISurfaceBaseShape
         {
             protected uint              m_nLengthSteps;
             protected uint              m_nPolarSteps;
@@ -117,14 +117,14 @@ namespace Leap71
 
 
             //construction
-            public override Voxels oConstructVoxels()
+            public override Voxels voxConstruct()
             {
-                Mesh oMesh      = oConstructMesh();
+                Mesh oMesh      = mshConstruct();
                 Voxels oVoxels  = new Voxels(oMesh);
                 return oVoxels;
             }
 
-            public virtual Mesh oConstructMesh()
+            public virtual Mesh mshConstruct()
             {
                 Mesh oMesh = new Mesh();
                 AddTopSurface(ref oMesh);

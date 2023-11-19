@@ -41,7 +41,7 @@ namespace Leap71
 {
     namespace ShapeKernel
     {
-        public class LatticePipe : BaseShape, ISpineBaseShape
+        public class LatticePipe : BaseShape, ILatticeBaseShape, ISpineBaseShape
         {
             protected LineModulation m_oRadiusModulation;
             protected uint           m_nLengthSteps;
@@ -87,14 +87,14 @@ namespace Leap71
 
 
             //construction
-            public override Voxels oConstructVoxels()
+            public override Voxels voxConstruct()
             {
-                Lattice oLattice = oConstructLattice();
+                Lattice oLattice = latConstruct();
                 Voxels oVoxels   = new Voxels(oLattice);
                 return oVoxels;
             }
 
-            protected virtual Lattice oConstructLattice()
+            public virtual Lattice latConstruct()
             {
                 Lattice oLattice = new Lattice();
                 for (int iZStep = 1; iZStep < m_nLengthSteps; iZStep++)

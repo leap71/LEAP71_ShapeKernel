@@ -94,7 +94,7 @@ namespace Leap71
                 return fRadius;
             }
 
-            protected override Lattice oConstructLattice()
+            public override Lattice latConstruct()
             {
                 Lattice oLattice        = new Lattice();
                 for (int iZStep = 0; iZStep < m_nLengthSteps; iZStep++)

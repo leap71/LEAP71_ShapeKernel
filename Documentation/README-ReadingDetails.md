@@ -495,7 +495,7 @@ Here is the summary of how you can operate a Base Shape:
 - Render Base Shape into voxelfield:
 
   ```c#
-  Voxels oVoxels = oShape.oConstructVoxels();
+  Voxels oVoxels = oShape.voxConstruct();
   ```
 
 

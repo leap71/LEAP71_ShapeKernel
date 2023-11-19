@@ -37,8 +37,8 @@ namespace Leap71
                         //basic
                         LocalFrame oLocalFrame  = new LocalFrame(new Vector3(-50, 0, 0));
                         LatticePipe oShape      = new LatticePipe(oLocalFrame, 60f, 10);
-                        Voxels oVoxels          = oShape.oConstructVoxels();
-                        Sh.PreviewVoxels(oVoxels, Cp.strYellow);
+                        Voxels oVoxels          = oShape.voxConstruct();
+                        Sh.PreviewVoxels(oVoxels, Cp.clrYellow);
                     }
 
                     {
@@ -46,8 +46,8 @@ namespace Leap71
                         LocalFrame oLocalFrame  = new LocalFrame(new Vector3(50, -50, 0));
                         LatticePipe oShape      = new LatticePipe(oLocalFrame, 60);
                         oShape.SetRadius(new LineModulation(fGetLineModulation1));
-                        Voxels oVoxels          = oShape.oConstructVoxels();
-                        Sh.PreviewVoxels(oVoxels, Cp.strFrozen);
+                        Voxels oVoxels          = oShape.voxConstruct();
+                        Sh.PreviewVoxels(oVoxels, Cp.clrFrozen);
                     }
 
                     {
@@ -56,8 +56,8 @@ namespace Leap71
                         Frames aFrames          = new Frames(oSpine.aGetPoints(), Vector3.UnitY);
                         LatticePipe oShape      = new LatticePipe(aFrames);
                         oShape.SetRadius(new LineModulation(fGetLineModulation1));
-                        Voxels oVoxels          = oShape.oConstructVoxels();
-                        Sh.PreviewVoxels(oVoxels, Cp.strRacingGreen);
+                        Voxels oVoxels          = oShape.voxConstruct();
+                        Sh.PreviewVoxels(oVoxels, Cp.clrRacingGreen);
                     }
 
                     {
@@ -66,8 +66,8 @@ namespace Leap71
                         List<Vector3> aPoints   = SplineOperations.aTranslateList(oSpine.aGetPoints(), 50 * Vector3.UnitX);
                         Frames aFrames          = new Frames(aPoints, Vector3.UnitY);
                         LatticePipe oShape      = new LatticePipe(aFrames, 5f);
-                        Voxels oVoxels          = oShape.oConstructVoxels();
-                        Sh.PreviewVoxels(oVoxels, Cp.strOrchid);
+                        Voxels oVoxels          = oShape.voxConstruct();
+                        Sh.PreviewVoxels(oVoxels, Cp.clrOrchid);
                     }
                 }
                 catch (Exception e)

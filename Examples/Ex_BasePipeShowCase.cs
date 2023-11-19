@@ -37,8 +37,8 @@ namespace Leap71
                         //basic
                         LocalFrame oLocalFrame  = new LocalFrame(new Vector3(-50, 0, 0));
                         BasePipe oShape         = new BasePipe(oLocalFrame, 60, 10, 20);
-                        Voxels oVoxels          = oShape.oConstructVoxels();
-                        Sh.PreviewVoxels(oVoxels, Cp.strBlue);
+                        Voxels oVoxels          = oShape.voxConstruct();
+                        Sh.PreviewVoxels(oVoxels, Cp.clrBlue);
                     }
 
                     {
@@ -46,8 +46,8 @@ namespace Leap71
                         LocalFrame oLocalFrame  = new LocalFrame(new Vector3(0, 0, 0));
                         BasePipe oShape         = new BasePipe(oLocalFrame, 60, 10, 20);
                         oShape.SetTransformation(vecGetTransformation);
-                        Voxels oVoxels          = oShape.oConstructVoxels();
-                        Sh.PreviewVoxels(oVoxels, Cp.strGreen);
+                        Voxels oVoxels          = oShape.voxConstruct();
+                        Sh.PreviewVoxels(oVoxels, Cp.clrGreen);
                     }
 
                     {
@@ -58,8 +58,8 @@ namespace Leap71
                         oShape.SetRadius(
                             new SurfaceModulation(6f),
                             new SurfaceModulation(new LineModulation(fGetLineModulation1)));
-                        Voxels oVoxels          = oShape.oConstructVoxels();
-                        Sh.PreviewVoxels(oVoxels, Cp.strLemongrass);
+                        Voxels oVoxels          = oShape.voxConstruct();
+                        Sh.PreviewVoxels(oVoxels, Cp.clrLemongrass);
                     }
 
                     {
@@ -70,8 +70,8 @@ namespace Leap71
                         oShape.SetRadius(
                             new SurfaceModulation(fGetSurfaceModulation3),
                             new SurfaceModulation(fGetSurfaceModulation1));
-                        Voxels oVoxels          = oShape.oConstructVoxels();
-                        Sh.PreviewVoxels(oVoxels, Cp.strLavender);
+                        Voxels oVoxels          = oShape.voxConstruct();
+                        Sh.PreviewVoxels(oVoxels, Cp.clrLavender);
                     }
 
                     {
@@ -82,8 +82,8 @@ namespace Leap71
                         oShape.SetRadius(
                             new SurfaceModulation(fGetSurfaceModulation4),
                             new SurfaceModulation(fGetSurfaceModulation2));
-                        Voxels oVoxels          = oShape.oConstructVoxels();
-                        Sh.PreviewVoxels(oVoxels, Cp.strRed);
+                        Voxels oVoxels          = oShape.voxConstruct();
+                        Sh.PreviewVoxels(oVoxels, Cp.clrRed);
                     }
 
                     {
@@ -94,8 +94,8 @@ namespace Leap71
                         oShape.SetRadius(
                             new SurfaceModulation(fGetSurfaceModulation3),
                             new SurfaceModulation(fGetSurfaceModulation1));
-                        Voxels oVoxels          = oShape.oConstructVoxels();
-                        Sh.PreviewVoxels(oVoxels, Cp.strOrchid);
+                        Voxels oVoxels          = oShape.voxConstruct();
+                        Sh.PreviewVoxels(oVoxels, Cp.clrOrchid);
                     }
 
                     {
@@ -104,8 +104,8 @@ namespace Leap71
                         List<Vector3> aPoints   = SplineOperations.aTranslateList(oSpine.aGetPoints(), 50 * Vector3.UnitX);
                         Frames aFrames          = new Frames(aPoints, Vector3.UnitY);
                         BasePipe oShape         = new BasePipe(aFrames, 10, 12);
-                        Voxels oVoxels          = oShape.oConstructVoxels();
-                        Sh.PreviewVoxels(oVoxels, Cp.strToothpaste);
+                        Voxels oVoxels          = oShape.voxConstruct();
+                        Sh.PreviewVoxels(oVoxels, Cp.clrToothpaste);
                     }
                 }
                 catch (Exception e)

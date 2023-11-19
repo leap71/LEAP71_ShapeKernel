@@ -37,8 +37,8 @@ namespace Leap71
                         //basic
                         LocalFrame oLocalFrame  = new LocalFrame(new Vector3(-50, 0, 0));
                         BaseBox oShape          = new BaseBox(oLocalFrame, 20, 10, 15);
-                        Voxels oVoxels          = oShape.oConstructVoxels();
-                        Sh.PreviewVoxels(oVoxels, Cp.strBlue);
+                        Voxels oVoxels          = oShape.voxConstruct();
+                        Sh.PreviewVoxels(oVoxels, Cp.clrBlue);
                     }
 
                     {
@@ -47,8 +47,8 @@ namespace Leap71
                         BaseBox oShape          = new BaseBox(oLocalFrame, 20);
                         oShape.SetWidth(new LineModulation(fGetLineModulation2));
                         oShape.SetDepth(new LineModulation(fGetLineModulation1));
-                        Voxels oVoxels          = oShape.oConstructVoxels();
-                        Sh.PreviewVoxels(oVoxels, Cp.strGreen);
+                        Voxels oVoxels          = oShape.voxConstruct();
+                        Sh.PreviewVoxels(oVoxels, Cp.clrGreen);
                     }
                     {
                         //modulated + spined
@@ -57,8 +57,8 @@ namespace Leap71
                         BaseBox oShape          = new BaseBox(aFrames);
                         oShape.SetWidth(new LineModulation(fGetLineModulation2));
                         oShape.SetDepth(new LineModulation(fGetLineModulation1));
-                        Voxels oVoxels          = oShape.oConstructVoxels();
-                        Sh.PreviewVoxels(oVoxels, Cp.strYellow);
+                        Voxels oVoxels          = oShape.voxConstruct();
+                        Sh.PreviewVoxels(oVoxels, Cp.clrYellow);
                     }
                 }
                 catch (Exception e)

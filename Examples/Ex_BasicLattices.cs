@@ -48,7 +48,7 @@ namespace Leap71
                     oLattice.AddBeam(vecPt1, fRadius1, vecPt2, fRadius2, true);
                     oLattice.AddBeam(vecPt1, fRadius1, vecPt2, fRadius2, false);
 
-                    Sh.PreviewLattice(oLattice, Cp.strBlueberry);
+                    Sh.PreviewLattice(oLattice, Cp.clrBlueberry);
                 }
                 catch (Exception e)
                 {

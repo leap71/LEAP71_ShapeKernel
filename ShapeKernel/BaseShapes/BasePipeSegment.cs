@@ -115,7 +115,7 @@ namespace Leap71
 
 
             //construction
-            public override Mesh oConstructMesh()
+            public override Mesh mshConstruct()
             {
                 Mesh oMesh = new Mesh();
                 AddTopSurface(ref oMesh);

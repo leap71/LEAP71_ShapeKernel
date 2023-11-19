@@ -40,8 +40,8 @@ namespace Leap71
                         float fRadius               = 5;
                         LocalFrame oLocalFrame      = new LocalFrame(new Vector3(-50, 0, 0), Vector3.UnitY);
                         LatticeManifold oShape      = new LatticeManifold(oLocalFrame, fLength, fRadius, fOverhangAngleInDeg, bExtendBothSides);
-                        Voxels oVoxels              = oShape.oConstructVoxels();
-                        Sh.PreviewVoxels(oVoxels, Cp.strYellow);
+                        Voxels oVoxels              = oShape.voxConstruct();
+                        Sh.PreviewVoxels(oVoxels, Cp.clrYellow);
                     }
 
                     {
@@ -51,8 +51,8 @@ namespace Leap71
                         float fRadius               = 10;
                         LocalFrame oLocalFrame      = new LocalFrame(new Vector3(0, 0, 0), Vector3.UnitY);
                         LatticeManifold oShape      = new LatticeManifold(oLocalFrame, fLength, fRadius, fOverhangAngleInDeg, bExtendBothSides);
-                        Voxels oVoxels              = oShape.oConstructVoxels();
-                        Sh.PreviewVoxels(oVoxels, Cp.strCrystal);
+                        Voxels oVoxels              = oShape.voxConstruct();
+                        Sh.PreviewVoxels(oVoxels, Cp.clrCrystal);
                     }
 
                     {
@@ -62,8 +62,8 @@ namespace Leap71
                         float fRadius               = 5;
                         LocalFrame oLocalFrame      = new LocalFrame(new Vector3(50, 0, 0), Vector3.UnitY);
                         LatticeManifold oShape      = new LatticeManifold(oLocalFrame, fLength, fRadius, fOverhangAngleInDeg, bExtendBothSides);
-                        Voxels oVoxels              = oShape.oConstructVoxels();
-                        Sh.PreviewVoxels(oVoxels, Cp.strGreen);
+                        Voxels oVoxels              = oShape.voxConstruct();
+                        Sh.PreviewVoxels(oVoxels, Cp.clrGreen);
                     }
 
                 }

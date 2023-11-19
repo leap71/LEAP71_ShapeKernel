@@ -46,10 +46,6 @@ Now, go into the Program.cs file and modify it to make it look like this by copy
 
 
 
-<img src="program.png" alt="image-20231019213901141" style="zoom:50%;" />
-
-
-
 ```c#
 using Leap71.ShapeKernel;
 using PicoGK;
@@ -71,7 +67,7 @@ catch (Exception e)
 {
     Library.Log("Failed to run Task.");
     Library.Log(e.ToString());
-    Library.oViewer().SetBackgroundColor(new ColorFloat(Cp.strWarning));
+    Library.oViewer().SetBackgroundColor(Cp.clrWarning);
 }
 ```
 

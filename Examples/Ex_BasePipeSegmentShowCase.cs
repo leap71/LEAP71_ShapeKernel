@@ -40,8 +40,8 @@ namespace Leap71
                             new LineModulation(MathF.PI),
                             new LineModulation(0.5f * MathF.PI),
                             BasePipeSegment.EMethod.MID_RANGE);
-                        Voxels oVoxels          = oShape.oConstructVoxels();
-                        Sh.PreviewVoxels(oVoxels, Cp.strBlue);
+                        Voxels oVoxels          = oShape.voxConstruct();
+                        Sh.PreviewVoxels(oVoxels, Cp.clrBlue);
                     }
 
                     {
@@ -55,8 +55,8 @@ namespace Leap71
                         oShape.SetRadius(
                             new SurfaceModulation(6f),
                             new SurfaceModulation(new LineModulation(fGetLineModulation1)));
-                        Voxels oVoxels          = oShape.oConstructVoxels();
-                        Sh.PreviewVoxels(oVoxels, Cp.strCrystal);
+                        Voxels oVoxels          = oShape.voxConstruct();
+                        Sh.PreviewVoxels(oVoxels, Cp.clrCrystal);
                     }
 
                     {
@@ -70,8 +70,8 @@ namespace Leap71
                         oShape.SetRadius(
                             new SurfaceModulation(fGetSurfaceModulation3),
                             new SurfaceModulation(fGetSurfaceModulation1));
-                        Voxels oVoxels          = oShape.oConstructVoxels();
-                        Sh.PreviewVoxels(oVoxels, Cp.strYellow);
+                        Voxels oVoxels          = oShape.voxConstruct();
+                        Sh.PreviewVoxels(oVoxels, Cp.clrYellow);
                     }
 
                     {
@@ -85,8 +85,8 @@ namespace Leap71
                         oShape.SetRadius(
                             new SurfaceModulation(fGetSurfaceModulation4),
                             new SurfaceModulation(fGetSurfaceModulation2));
-                        Voxels oVoxels          = oShape.oConstructVoxels();
-                        Sh.PreviewVoxels(oVoxels, Cp.strRuby);
+                        Voxels oVoxels          = oShape.voxConstruct();
+                        Sh.PreviewVoxels(oVoxels, Cp.clrRuby);
                     }
 
                     {
@@ -100,8 +100,8 @@ namespace Leap71
                         oShape.SetRadius(
                             new SurfaceModulation(fGetSurfaceModulation3),
                             new SurfaceModulation(fGetSurfaceModulation1));
-                        Voxels oVoxels          = oShape.oConstructVoxels();
-                        Sh.PreviewVoxels(oVoxels, Cp.strRacingGreen);
+                        Voxels oVoxels          = oShape.voxConstruct();
+                        Sh.PreviewVoxels(oVoxels, Cp.clrRacingGreen);
                     }
 
                     {
@@ -113,8 +113,8 @@ namespace Leap71
                             new LineModulation(fGetSegmentPhiMid1),
                             new LineModulation(1f * MathF.PI),
                             BasePipeSegment.EMethod.MID_RANGE);
-                        Voxels oVoxels          = oShape.oConstructVoxels();
-                        Sh.PreviewVoxels(oVoxels, Cp.strGray);
+                        Voxels oVoxels          = oShape.voxConstruct();
+                        Sh.PreviewVoxels(oVoxels, Cp.clrGray);
                     }
                 }
                 catch (Exception e)

@@ -37,8 +37,8 @@ namespace Leap71
                         //basic
                         LocalFrame oLocalFrame  = new LocalFrame(new Vector3(-100, 0, 0));
                         BaseSphere oShape       = new BaseSphere(oLocalFrame, 40);
-                        Voxels oVoxels          = oShape.oConstructVoxels();
-                        Sh.PreviewVoxels(oVoxels, Cp.strFrozen);
+                        Voxels oVoxels          = oShape.voxConstruct();
+                        Sh.PreviewVoxels(oVoxels, Cp.clrFrozen);
                     }
 
                     {
@@ -46,8 +46,8 @@ namespace Leap71
                         LocalFrame oLocalFrame  = new LocalFrame(new Vector3(0, 0, 0));
                         BaseSphere oShape       = new BaseSphere(oLocalFrame);
                         oShape.SetRadius(new SurfaceModulation(fGetSphereRadius0));
-                        Voxels oVoxels          = oShape.oConstructVoxels();
-                        Sh.PreviewVoxels(oVoxels, Cp.strPitaya);
+                        Voxels oVoxels          = oShape.voxConstruct();
+                        Sh.PreviewVoxels(oVoxels, Cp.clrPitaya);
                     }
 
                     {
@@ -55,8 +55,8 @@ namespace Leap71
                         LocalFrame oLocalFrame  = new LocalFrame(new Vector3(150, 0, 0));
                         BaseSphere oShape       = new BaseSphere(oLocalFrame);
                         oShape.SetRadius(new SurfaceModulation(fGetSphereRadius1));
-                        Voxels oVoxels          = oShape.oConstructVoxels();
-                        Sh.PreviewVoxels(oVoxels, Cp.strWarning);
+                        Voxels oVoxels          = oShape.voxConstruct();
+                        Sh.PreviewVoxels(oVoxels, Cp.clrWarning);
                     }
                 }
                 catch (Exception e)
