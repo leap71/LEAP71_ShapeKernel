@@ -50,8 +50,6 @@ Now, go into the Program.cs file and modify it to make it look like this by copy
 using Leap71.ShapeKernel;
 using PicoGK;
 
-Console.WriteLine("Hello, World!");
-
 string strOutputFolder = "/Users/josefinelissner/Documents/Code++/Examples";
 
 try
