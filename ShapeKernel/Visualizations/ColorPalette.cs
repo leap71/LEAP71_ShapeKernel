@@ -67,7 +67,7 @@ namespace Leap71
             /// Returns a random color that is always consistent for the specified index.
             /// Color is random but reproducible.
             /// </summary>
-            public static ColorFloat strRandom(int j)
+            public static ColorFloat clrRandom(int j)
             {
                 Random oRand    = new Random(j);
                 return ColorFloat.clrRandom(oRand);
