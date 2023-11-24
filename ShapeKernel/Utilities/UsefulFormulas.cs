@@ -128,11 +128,15 @@ namespace Leap71
             /// Mean±1 SD contains 68.2% of all values.
             /// Mean±2 SD contains 95.5% of all values.
             /// Mean±3 SD contains 99.7% of all values.
+            /// https://gist.github.com/tansey/1444070
             /// </summary>
             public static float fGetRandomGaussian(float fMean, float fStdDev)
             {
-                MathNet.Numerics.Distributions.Normal oNormalDist = new MathNet.Numerics.Distributions.Normal(fMean, fStdDev);
-                return (float)oNormalDist.Sample();
+                double dX1      = 1 - m_oRandom.NextDouble();
+                double dX2      = 1 - m_oRandom.NextDouble();
+                double dY1      = Math.Sqrt(-2.0 * Math.Log(dX1)) * Math.Cos(2.0 * Math.PI * dX2);
+                float fValue    = (float)dY1 * fStdDev + fMean;
+                return fValue;
             }
 
             /// <summary>
