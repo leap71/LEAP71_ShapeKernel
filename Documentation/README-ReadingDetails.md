@@ -101,7 +101,7 @@ Implicits describe a shape via a signed-distance function (SDF). This function s
 
   ```c#
   IImplicit sdfSphere  = new ImplicitSphere(vecCentre, fRadius);
-  IImplicit sdfPattern = new ImplicitPattern(ImplicitPattern.EPattern.GYROID, 15, 3);
+  IImplicit sdfPattern = new ImplicitGyroid(15, 3);
   ```
 
 - Render an implicit into a new voxel field:

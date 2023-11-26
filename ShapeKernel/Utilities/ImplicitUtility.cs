@@ -41,37 +41,32 @@ namespace Leap71
 {
 	namespace ShapeKernel
 	{
-		public class ImplicitPattern : IImplicit
+        public class ImplicitGyroid : IImplicit
 		{
-			public enum EPattern    { GYROID };
-			protected EPattern	    m_ePattern;
-			protected float		    m_fUnitSize;
-            protected float         m_fScale;
+            protected float         m_fFrequencyScale;
 			protected float		    m_fWallThickness;
 
             /// <summary>
-            /// Helper class for an implicit (gyroid) pattern.
+            /// Helper class for an implicit gyroid pattern.
             /// </summary>
-            public ImplicitPattern(EPattern ePattern, float fUnitSize, float fWallThickness)
+            public ImplicitGyroid(float fUnitSize, float fWallThickness)
 			{
-                m_fScale            = MathF.PI / 0.5f;
-                m_fUnitSize         = fUnitSize;
+                m_fFrequencyScale   = (2f * MathF.PI) / fUnitSize;
                 m_fWallThickness    = fWallThickness;
             }
 
 			public float fSignedDistance(in Vector3 vecPt)
 			{
-                // Calculate the normalized coordinates within the gyroid space
-                double nx = vecPt.X / m_fUnitSize;
-                double ny = vecPt.Y / m_fUnitSize;
-                double nz = vecPt.Z / m_fUnitSize;
+                double dX = vecPt.X;
+                double dY = vecPt.Y;
+                double dZ = vecPt.Z;
 
-                // Calculate the gyroid surface equation
-                double fDist =   Math.Sin(m_fScale * nx) * Math.Cos(m_fScale * ny) +
-                                 Math.Sin(m_fScale * ny) * Math.Cos(m_fScale * nz) +
-                                 Math.Sin(m_fScale * nz) * Math.Cos(m_fScale * nx);
+                //calculate the gyroid surface equation
+                double fDist =   Math.Sin(m_fFrequencyScale * dX) * Math.Cos(m_fFrequencyScale * dY) +
+                                 Math.Sin(m_fFrequencyScale * dY) * Math.Cos(m_fFrequencyScale * dZ) +
+                                 Math.Sin(m_fFrequencyScale * dZ) * Math.Cos(m_fFrequencyScale * dX);
 
-                // Apply thickness to the gyroid surface
+                //apply thickness to the gyroid surface
                 return (float)(Math.Abs(fDist) - 0.5f * m_fWallThickness);
             }
 		}

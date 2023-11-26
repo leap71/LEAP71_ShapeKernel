@@ -37,7 +37,7 @@ namespace Leap71
                     Vector3 vecCentre       = new Vector3();
                     float fRadius           = 10f;
                     IImplicit sdfSphere     = new ImplicitSphere(vecCentre, fRadius);
-                    IImplicit sdfPattern    = new ImplicitPattern(ImplicitPattern.EPattern.GYROID, 3, 1);
+                    IImplicit sdfPattern    = new ImplicitGyroid(3, 1);
                     BBox3 oBBox             = new BBox3(1.2f * new Vector3(-fRadius, -fRadius, -fRadius), 1.2f * new Vector3(fRadius, fRadius, fRadius));
 
                     //render a simple shape into voxels.
