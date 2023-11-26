@@ -24,20 +24,6 @@ At this point, your **Visual Studio (VS) project** should have a folder named Pi
 
 
 
-## Adding MathNet.Numerics NuGet Package
-
-The ShapeKernel library relies on a few functions from the **MathNet.Numerics** NuGet Package. Chances are that this is not added to your VS project yet. If you try to run the code and you get the following error, you can simply add the package by clicking on the upper task bar:
-
-- Tools > Manage NuGet Packages > Search: MathNet... > Add MathNet.Numerics
-
-<img src="error0.png" alt="image-20231019213901141" style="zoom:100%;" />
-
-<img src="error1.png" alt="image-20231019213901141" style="zoom:50%;" />
-
-<img src="error2.png" alt="image-20231019213901141" style="zoom:100%;" />
-
-
-
 ## Calling a new Task from Program.cs
 
 You have run the `BooleanShowCase.Task` from the PicoGKExamples before. When the project is run and the PicoGK library is initialized, this **Task** function will be excuted. This means that the Task function is the entry point and all the code you want to run should be inside or called from within this function. 
