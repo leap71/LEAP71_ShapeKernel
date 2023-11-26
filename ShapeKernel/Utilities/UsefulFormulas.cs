@@ -128,6 +128,7 @@ namespace Leap71
             /// Mean±1 SD contains 68.2% of all values.
             /// Mean±2 SD contains 95.5% of all values.
             /// Mean±3 SD contains 99.7% of all values.
+            /// This randomness is not reproducable.
             /// https://gist.github.com/tansey/1444070
             /// </summary>
             public static float fGetRandomGaussian(float fMean, float fStdDev)
@@ -140,7 +141,25 @@ namespace Leap71
             }
 
             /// <summary>
+            /// Returns a random sample according to the specified gauss distribution.
+            /// Mean±1 SD contains 68.2% of all values.
+            /// Mean±2 SD contains 95.5% of all values.
+            /// Mean±3 SD contains 99.7% of all values.
+            /// This randomness can be made reproducable by passing custom randomness with a seed.
+            /// https://gist.github.com/tansey/1444070
+            /// </summary>
+            public static float fGetRandomGaussian(float fMean, float fStdDev, Random oRandom)
+            {
+                double dX1      = 1 - oRandom.NextDouble();
+                double dX2      = 1 - oRandom.NextDouble();
+                double dY1      = Math.Sqrt(-2.0 * Math.Log(dX1)) * Math.Cos(2.0 * Math.PI * dX2);
+                float fValue    = (float)dY1 * fStdDev + fMean;
+                return fValue;
+            }
+
+            /// <summary>
             /// Renturns a random sample according to a linear propability distribution.
+            /// This randomness is not reproducable.
             /// </summary>
             protected static Random m_oRandom = new Random();
             public static float fGetRandomLinear(float fMin, float fMax)
@@ -150,11 +169,39 @@ namespace Leap71
             }
 
             /// <summary>
+            /// Renturns a random sample according to a linear propability distribution.
+            /// This randomness can be made reproducable by passing custom randomness with a seed.
+            /// </summary>
+            public static float fGetRandomLinear(float fMin, float fMax, Random oRandom)
+            {
+                float fValue = (float)(fMin + (fMax - fMin) * oRandom.NextDouble());
+                return fValue;
+            }
+
+            /// <summary>
             /// Renturns a random boolean value according to a linear propability distribution.
+            /// This randomness is not reproducable.
             /// </summary>
             public static bool bGetRandomBool()
             {
                 float fValue = (float)m_oRandom.NextDouble();
+                if (fValue > 0.5f)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            /// <summary>
+            /// Renturns a random boolean value according to a linear propability distribution.
+            /// This randomness can be made reproducable by passing custom randomness with a seed.
+            /// </summary>
+            public static bool bGetRandomBool(Random oRandom)
+            {
+                float fValue = (float)oRandom.NextDouble();
                 if (fValue > 0.5f)
                 {
                     return true;
