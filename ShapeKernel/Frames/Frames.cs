@@ -256,11 +256,12 @@ namespace Leap71
             //access
             public Vector3 vecGetSpineAlongLength(float fLengthRatio)
             {
-                float fStep = fLengthRatio * (m_aPoints.Count - 1);
+                fLengthRatio    = Uf.fLimitValue(fLengthRatio, 0f, 1f);
+                float fStep     = fLengthRatio * (m_aPoints.Count - 1);
 
-                int iLowerStep = (int)Math.Min(fStep, m_aPoints.Count - 1);
-                int iUpperStep = (int)Math.Min(fStep + 1, m_aPoints.Count - 1);
-                float dS = fStep - iLowerStep;
+                int iLowerStep  = (int)Math.Min(fStep, m_aPoints.Count - 1);
+                int iUpperStep  = (int)Math.Min(fStep + 1, m_aPoints.Count - 1);
+                float dS        = fStep - iLowerStep;
 
                 Vector3 vecLowerVector = m_aPoints[iLowerStep];
                 Vector3 vecUpperVector = m_aPoints[iUpperStep];
@@ -271,11 +272,12 @@ namespace Leap71
 
             public Vector3 vecGetLocalXAlongLength(float fLengthRatio)
             {
-                float fStep = fLengthRatio * (m_aPoints.Count - 1);
+                fLengthRatio    = Uf.fLimitValue(fLengthRatio, 0f, 1f);
+                float fStep     = fLengthRatio * (m_aPoints.Count - 1);
 
-                int iLowerStep = (int)Math.Min(fStep, m_aPoints.Count - 1);
-                int iUpperStep = (int)Math.Min(fStep + 1, m_aPoints.Count - 1);
-                float dS = fStep - iLowerStep;
+                int iLowerStep  = (int)Math.Min(fStep, m_aPoints.Count - 1);
+                int iUpperStep  = (int)Math.Min(fStep + 1, m_aPoints.Count - 1);
+                float dS        = fStep - iLowerStep;
 
                 Vector3 vecLowerVector = m_aLocalX[iLowerStep];
                 Vector3 vecUpperVector = m_aLocalX[iUpperStep];
@@ -286,11 +288,12 @@ namespace Leap71
 
             public Vector3 vecGetLocalYAlongLength(float fLengthRatio)
             {
-                float fStep = fLengthRatio * (m_aPoints.Count - 1);
+                fLengthRatio    = Uf.fLimitValue(fLengthRatio, 0f, 1f);
+                float fStep     = fLengthRatio * (m_aPoints.Count - 1);
 
-                int iLowerStep = (int)Math.Min(fStep, m_aPoints.Count - 1);
-                int iUpperStep = (int)Math.Min(fStep + 1, m_aPoints.Count - 1);
-                float dS = fStep - iLowerStep;
+                int iLowerStep  = (int)Math.Min(fStep, m_aPoints.Count - 1);
+                int iUpperStep  = (int)Math.Min(fStep + 1, m_aPoints.Count - 1);
+                float dS        = fStep - iLowerStep;
 
                 Vector3 vecLowerVector = m_aLocalY[iLowerStep];
                 Vector3 vecUpperVector = m_aLocalY[iUpperStep];
@@ -301,11 +304,12 @@ namespace Leap71
 
             public Vector3 vecGetLocalZAlongLength(float fLengthRatio)
             {
-                float fStep = fLengthRatio * (m_aPoints.Count - 1);
+                fLengthRatio    = Uf.fLimitValue(fLengthRatio, 0f, 1f);
+                float fStep     = fLengthRatio * (m_aPoints.Count - 1);
 
-                int iLowerStep = (int)Math.Min(fStep, m_aPoints.Count - 1);
-                int iUpperStep = (int)Math.Min(fStep + 1, m_aPoints.Count - 1);
-                float dS = fStep - iLowerStep;
+                int iLowerStep  = (int)Math.Min(fStep, m_aPoints.Count - 1);
+                int iUpperStep  = (int)Math.Min(fStep + 1, m_aPoints.Count - 1);
+                float dS        = fStep - iLowerStep;
 
                 Vector3 vecLowerVector = m_aLocalZ[iLowerStep];
                 Vector3 vecUpperVector = m_aLocalZ[iUpperStep];
@@ -316,10 +320,10 @@ namespace Leap71
 
             public LocalFrame oGetLocalFrame(float fLengthRatio)
             {
-                Vector3 vecPos = vecGetSpineAlongLength(fLengthRatio);
-                Vector3 vecLocalX = vecGetLocalXAlongLength(fLengthRatio);
-                Vector3 vecLocalZ = vecGetLocalZAlongLength(fLengthRatio);
-                LocalFrame oFrame = new LocalFrame(vecPos, vecLocalZ, vecLocalX);
+                Vector3 vecPos      = vecGetSpineAlongLength(fLengthRatio);
+                Vector3 vecLocalX   = vecGetLocalXAlongLength(fLengthRatio);
+                Vector3 vecLocalZ   = vecGetLocalZAlongLength(fLengthRatio);
+                LocalFrame oFrame   = new LocalFrame(vecPos, vecLocalZ, vecLocalX);
                 return oFrame;
             }
 
