@@ -1,12 +1,12 @@
-# Tutorial 1: ShapeKernel setup and running example tasks
+# Tutorial 1: ShapeKernel Setup and Running Example Tasks
 
 ## Prep
 
-The LEAP 71 ShapeKernel library [uses PicoGK as the foundational Geometry Engine](https://github.com/leap71/PicoGK). Before going through this tutorial, make sure you were able to run the [example Task from PicoGK](https://github.com/leap71/PicoGK/blob/main/Documentation/README.md).
+The LEAP 71 ShapeKernel library [uses PicoGK as the foundational Geometry Engine](https://github.com/leap71/PicoGK). Before going through this tutorial, make sure you were able to run the [Example Task from PicoGK](https://github.com/leap71/PicoGK/blob/main/Documentation/README.md).
 
 
 
-## Including the ShapeKernel library
+## Including the ShapeKernel Library
 
 At this point, your **Visual Studio (VS) project** should have a folder named PicoGK, holding the PicoGK library files and a "Program.cs". As a next step, we are adding the ShapeKernel library. This can be done in two ways:
 
@@ -24,7 +24,7 @@ At this point, your **Visual Studio (VS) project** should have a folder named Pi
 
 
 
-## Calling a new Task from Program.cs
+## Calling a New Task from Program.cs
 
 You have run the `BooleanShowCase.Task` from the PicoGKExamples before. When the project is run and the PicoGK library is initialized, this **Task** function will be excuted. This means that the Task function is the entry point and all the code you want to run should be inside or called from within this function. 
 
@@ -45,7 +45,6 @@ try
         Leap71.ShapeKernelExamples.BaseLensShowCase.Task,
         strOutputFolder
         );
-    Library.Log("Finished Task successfully.");
 }
 catch (Exception e)
 {
