@@ -65,7 +65,7 @@ namespace Leap71
             {
                 if (eSuperShape == ESuperShape.HEX)
                 {
-                    return fGetSuperShapeRadius(fPhi, 6f, 2f, 1.2f, 1.2f);
+                    return fGetSuperShapeRadius(fPhi, 6f, 2f, 1f, 1f);
                 }
                 else if (eSuperShape == ESuperShape.QUAD)
                 {
