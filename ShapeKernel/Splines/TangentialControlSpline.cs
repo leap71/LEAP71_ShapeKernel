@@ -74,6 +74,34 @@ namespace Leap71
                 m_oBSpline                      = new ControlPointSpline(aControlPoints);
             }
 
+            public TangentialControlSpline(
+                LocalFrame  oStartFrame,
+                LocalFrame  oEndFrame,
+                float       fStartTangentStrength   = -1,
+                float       fEndTangentStrenth      = -1)
+            {
+                Vector3 vecStart                = oStartFrame.vecGetPosition();
+                Vector3 vecEnd                  = oEndFrame.vecGetPosition();
+                Vector3 vecStartDir             = oStartFrame.vecGetLocalZ();
+                Vector3 vecEndDir               = oEndFrame.vecGetLocalZ();
+
+                if (fStartTangentStrength == -1)
+                {
+                    fStartTangentStrength = 0.3f * (vecStart - vecEnd).Length();
+                }
+                if (fEndTangentStrenth == -1)
+                {
+                    fEndTangentStrenth = 0.3f * (vecStart - vecEnd).Length();
+                }
+
+                Vector3 vecPt1                  = vecStart;
+                Vector3 vecPt2                  = vecStart   + fStartTangentStrength * vecStartDir.Normalize();
+                Vector3 vecPt3                  = vecEnd     - fEndTangentStrenth    * vecEndDir.Normalize();
+                Vector3 vecPt4                  = vecEnd;
+                List<Vector3> aControlPoints    = new List<Vector3>() { vecPt1, vecPt2, vecPt3, vecPt4 };
+                m_oBSpline                      = new ControlPointSpline(aControlPoints);
+            }
+
             public List<Vector3> aGetPoints(uint nSamples = 500)
             {
                 return m_oBSpline.aGetPoints(nSamples);

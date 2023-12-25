@@ -33,6 +33,7 @@
 //
 
 
+using System;
 using System.Numerics;
 
 
@@ -66,12 +67,26 @@ namespace Leap71
                     aControlPoints.Add(new Vector3(0, 0, 0.5f));
                     aControlPoints.Add(new Vector3(1, 0, 0.5f));
                     aControlPoints.Add(new Vector3(1, 0, 1.0f));
+                    aControlPoints.Add(new Vector3(1, 0, 1.01f));
                     m_oBSpline = new ControlPointSpline(aControlPoints);
                 }
                 Vector3 vecPt = m_oBSpline.vecGetPointAt(fS);
                 float fRatio = vecPt.X;
                 float fValue = fValue1 + fRatio * (fValue2 - fValue1);
                 return fValue;
+            }
+
+            /// <summary>
+            /// Returns a smoothly interpolated point between the two specified points.
+            /// The transition is determined by an open BSpline.
+            /// The start and end point will be fixed.
+            /// </summary>
+            public static Vector3 vecTransFixed(Vector3 vecPt1, Vector3 vecPt2, float fS)
+            {
+                Vector3 vecPt = fTransFixed(vecPt1.X, vecPt2.X, fS) * Vector3.UnitX +
+                                fTransFixed(vecPt1.Y, vecPt2.Y, fS) * Vector3.UnitY +
+                                fTransFixed(vecPt1.Z, vecPt2.Z, fS) * Vector3.UnitZ;
+                return vecPt;
             }
 
             /// <summary>
@@ -106,11 +121,11 @@ namespace Leap71
             /// <param name="fTransitionS"> Position of transition. </param>
             /// <param name="fSmooth"> Smoothness of transition. The lower the value, the sharper the transition and the shorter the transition interval. </param>
             /// <returns></returns>
-            public static Vector3 vecTransSmooth(Vector3 fValue1, Vector3 fValue2, float fS, float fTransitionS, float fSmooth)
+            public static Vector3 vecTransSmooth(Vector3 vecPt1, Vector3 vecPt2, float fS, float fTransitionS, float fSmooth)
             {
-                Vector3 fValue = fValue1 * (1 - fGetNormalizedTangensHyperbolicus(fS, fTransitionS, fSmooth)) +
-                                 fValue2 * (fGetNormalizedTangensHyperbolicus(fS, fTransitionS, fSmooth));
-                return fValue;
+                Vector3 vecPt =  vecPt1 * (1 - fGetNormalizedTangensHyperbolicus(fS, fTransitionS, fSmooth)) +
+                                 vecPt2 * (fGetNormalizedTangensHyperbolicus(fS, fTransitionS, fSmooth));
+                return vecPt;
             }
 
             /// <summary>
@@ -222,11 +237,32 @@ namespace Leap71
                 for (int i = 0; i < nSamples; i++)
                 {
                     float fK        = i + 0.5f;
-                    float fR        = MathF.Sqrt((fK) / nSamples);
+                    float fR        = MathF.Sqrt((fK) / (float)nSamples);
                     float fPhi      = MathF.PI * (1 + MathF.Sqrt(5f)) * fK;
                     float fX        = fR * fOuterRadius * MathF.Cos(fPhi);
                     float fY        = fR * fOuterRadius * MathF.Sin(fPhi);
                     Vector3 vecPt   = new Vector3(fX, fY, 0f);
+                    aPoints.Add(vecPt);
+                }
+                return aPoints;
+            }
+
+            /// <summary>
+            /// Distributes points on the surface of a 3D sphere (with outer radius) according to the fibonacci sequence.
+            /// https://medium.com/@vagnerseibert/distributing-points-on-a-sphere-6b593cc05b42
+            /// </summary>
+            public static List<Vector3> aGetFibonacciSpherePoints(float fOuterRadius, uint nSamples)
+            {
+                List<Vector3> aPoints = new List<Vector3>();
+                for (int i = 0; i < nSamples; i++)
+                {
+                    float fK        = i + 0.5f;
+                    float fPhi      = MathF.Acos(1f - 2f * fK / (float)nSamples);
+                    float fTheta    = MathF.PI * (1 + MathF.Sqrt(5f)) * fK;
+                    float fX        = fOuterRadius * MathF.Cos(fTheta) * MathF.Sin(fPhi);
+                    float fY        = fOuterRadius * MathF.Sin(fTheta) * MathF.Sin(fPhi);
+                    float fZ        = fOuterRadius * MathF.Cos(fPhi);
+                    Vector3 vecPt   = new Vector3(fX, fY, fZ);
                     aPoints.Add(vecPt);
                 }
                 return aPoints;
