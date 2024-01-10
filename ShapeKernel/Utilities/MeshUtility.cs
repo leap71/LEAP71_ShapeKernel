@@ -80,6 +80,20 @@ namespace Leap71
             }
 
             /// <summary>
+            /// Uses the referenced mesh object and adds four points that form a quad shape.
+            /// </summary>
+            public static void AddQuad(
+                ref Mesh oMesh,
+                Vector3 vecPt1,
+                Vector3 vecPt2,
+                Vector3 vecPt3,
+                Vector3 vecPt4)
+            {
+                oMesh.nAddTriangle(vecPt4, vecPt1, vecPt2);
+                oMesh.nAddTriangle(vecPt2, vecPt3, vecPt4);
+            }
+
+            /// <summary>
             /// Creates a new mesh by applying a transformation function to each vertex of the input mesh.
             /// </summary>
             public static Mesh mshApplyTransformation(Mesh oMesh, BaseShape.TrafoFunc oTrafo)

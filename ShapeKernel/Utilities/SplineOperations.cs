@@ -326,6 +326,21 @@ namespace Leap71
             }
 
             /// <summary>
+            /// Returns the average of all list positions.
+            /// </summary>
+            public static Vector3 vecGetAverage(List<Vector3> aPoints)
+            {
+                Vector3 vecCentre = Vector3.Zero;
+                for (int i = 0; i < aPoints.Count; i++)
+                {
+                    Vector3 vecPt = aPoints[i];
+                    vecCentre += vecPt;
+                }
+                vecCentre /= aPoints.Count;
+                return vecCentre;
+            }
+
+            /// <summary>
             /// Returns the point from the list that is closest to the given start position.
             /// </summary>
             public static Vector3 vecGetClosestPoint(List<Vector3> aPoints, Vector3 vecStart)
