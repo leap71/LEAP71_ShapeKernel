@@ -108,7 +108,7 @@ namespace Leap71
                     float fBeam0 = fGetRadius(fLengthRatio0);
                     float fBeam1 = fGetRadius(fLengthRatio1);
 
-                    oLattice.AddSphere(vecPt0, fBeam0);
+                    oLattice.AddBeam(vecPt0, fBeam0, vecPt1, fBeam1);
                 }
                 return oLattice;
             }
