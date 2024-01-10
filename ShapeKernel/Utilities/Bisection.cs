@@ -52,7 +52,9 @@ namespace Leap71
 
 
             /// <summary>
-            /// Class to perform a bisection method to approximate a input point for the given function that returns the desired target output value.
+            /// Class to perform a bisection method to approximate an input point
+            /// for the given function that returns the desired target output value.
+            /// The allowable error epsilon is absolute.
             /// https://en.wikipedia.org/wiki/Bisection_method
             /// </summary>
             public Bisection(
@@ -79,10 +81,11 @@ namespace Leap71
 
             public float fFindOptimalInput()
             {
-                float fMin = m_fMinInput;
-                float fMax = m_fMaxInput;
-
-                if (fGetOutputFromFunc(fMin) * fGetOutputFromFunc(fMax) >= 0)
+                float fMin          = m_fMinInput;
+                float fMax          = m_fMaxInput;
+                float fOutputAtMin  = fGetOutputFromFunc(fMin);
+                float fOutputAtMax  = fGetOutputFromFunc(fMax);
+                if (fOutputAtMin * fOutputAtMax >= 0)
                 {
                     throw new BisectionException("No valid limits.");
                 }
