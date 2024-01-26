@@ -108,13 +108,14 @@ namespace Leap71
                     vecAxisUnit = Vector3.UnitZ;
                 }
 
+                m_oFunc             = oPointsDummyFunc;
+                m_eInput            = EInput.FUNC;
+
                 Vector3 vecLast     = fLastValue * vecValueUnit + 1.01f * vecAxisUnit;
                 Vector3 vecVeryLast = fLastValue * vecValueUnit + 1.1f * vecAxisUnit;
                 m_aDiscretePoints.Add(vecLast);
                 m_aDiscretePoints.Add(vecVeryLast);
 
-                m_oFunc             = oPointsDummyFunc;
-                m_eInput            = EInput.FUNC;
             }
 
             protected float fConstLineDummyFunc(float fRatio)
@@ -125,44 +126,44 @@ namespace Leap71
             protected float oPointsDummyFunc(float fRatio)
             {
                 //initialise for the first point
-                float dS = 0;
-                float fLowerRatio = 0;
-                float fUpperRatio = 1f;
-                int iLowerIndex = 0;
+                float dS            = 0;
+                float fLowerRatio   = 0;
+                float fUpperRatio   = 1f;
+                int iLowerIndex     = 0;
 
                 for (int i = 0; i < m_aDiscretePoints.Count - 2; i++)
                 {
                     float fCurrentRatio = 0;
-                    float fNextRatio = 0;
+                    float fNextRatio    = 0;
                     if (m_eAxis == ECoord.X)
                     {
-                        fCurrentRatio = m_aDiscretePoints[i].X;
-                        fNextRatio = m_aDiscretePoints[i + 1].X;
+                        fCurrentRatio   = m_aDiscretePoints[i].X;
+                        fNextRatio      = m_aDiscretePoints[i + 1].X;
                     }
                     else if (m_eAxis == ECoord.Y)
                     {
-                        fCurrentRatio = m_aDiscretePoints[i].Y;
-                        fNextRatio = m_aDiscretePoints[i + 1].Y;
+                        fCurrentRatio   = m_aDiscretePoints[i].Y;
+                        fNextRatio      = m_aDiscretePoints[i + 1].Y;
                     }
                     else if (m_eAxis == ECoord.Z)
                     {
-                        fCurrentRatio = m_aDiscretePoints[i].Z;
-                        fNextRatio = m_aDiscretePoints[i + 1].Z;
+                        fCurrentRatio   = m_aDiscretePoints[i].Z;
+                        fNextRatio      = m_aDiscretePoints[i + 1].Z;
                     }
                     if (fCurrentRatio >= fRatio)
                     {
-                        fLowerRatio = fCurrentRatio;
-                        dS = fRatio - fLowerRatio;
-                        fUpperRatio = fNextRatio;
-                        iLowerIndex = i;
+                        fLowerRatio     = fCurrentRatio;
+                        dS              = fRatio - fLowerRatio;
+                        fUpperRatio     = fNextRatio;
+                        iLowerIndex     = i;
                         break;
                     }
                 }
 
                 //restrict
                 iLowerIndex = Math.Max(0, Math.Min(iLowerIndex, m_aDiscretePoints.Count - 2));
-                int iUpperIndex = (int)(iLowerIndex + 1);
-                float dRatio = fUpperRatio - fLowerRatio;
+                int iUpperIndex         = (int)(iLowerIndex + 1);
+                float dRatio            = fUpperRatio - fLowerRatio;
 
                 float fValue = 0;
                 if (m_eValues == ECoord.X)

@@ -61,7 +61,20 @@ namespace Leap71
                 ExportMeshToSTLFile(oMesh, strFilePath);
             }
 
-            public enum EExport { STL, TGA, CSV };
+            public static void ExportVoxelsToVDBFile(Voxels oVoxels, string strFilePath)
+            {
+                try
+                {
+                    oVoxels.SaveToVdbFile(strFilePath);
+                    Library.Log($"VDB Export: {strFilePath} exported.");
+                }
+                catch (Exception e)
+                {
+                    Library.Log("Could not save VDB: " + e.Message);
+                }
+            }
+
+            public enum EExport { STL, TGA, CSV, VDB };
             public static string strGetExportPath(EExport eExport, string strFilename)
             {
                 string strFormatStub    = "." + eExport.ToString();
