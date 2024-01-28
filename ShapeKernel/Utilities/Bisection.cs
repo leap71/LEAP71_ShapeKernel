@@ -49,6 +49,7 @@ namespace Leap71
             protected uint  m_nIterations;
             protected uint  m_nMaxIterations;
             protected float m_fRemainingDiff;
+            protected float m_fBestGuess;
 
 
             /// <summary>
@@ -62,8 +63,8 @@ namespace Leap71
                 float fMinInput,
                 float fMaxInput,
                 float fTargetOutput,
-                float fEpsilon      = 0.01f,
-                uint nMaxIterations = 500)
+                float fEpsilon       = 0.01f,
+                uint  nMaxIterations = 500)
             {
                 m_oFunc             = oFunc;
                 m_fEpsilon          = fEpsilon;
@@ -108,8 +109,9 @@ namespace Leap71
                         fMin = fMid;
                     }
 
-                    m_fRemainingDiff = fMax - fMin;
+                    m_fRemainingDiff    = fMax - fMin;
                     m_nIterations++;
+                    m_fBestGuess        = fMid;
 
                     if (m_nIterations == m_nMaxIterations)
                     {
@@ -127,6 +129,11 @@ namespace Leap71
             public float fGetRemainingDiff()
             {
                 return m_fRemainingDiff;
+            }
+
+            public float fGetBestGuess()
+            {
+                return m_fBestGuess;
             }
         }
     }
