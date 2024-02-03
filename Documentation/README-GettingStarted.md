@@ -48,9 +48,8 @@ try
 }
 catch (Exception e)
 {
-    Library.Log("Failed to run Task.");
-    Library.Log(e.ToString());
-    Library.oViewer().SetBackgroundColor(Cp.clrWarning);
+    Console.WriteLine("Failed to run Task.");
+    Console.WriteLine(e.ToString());
 }
 ```
 
