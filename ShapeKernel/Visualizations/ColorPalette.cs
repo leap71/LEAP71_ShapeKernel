@@ -62,7 +62,6 @@ namespace Leap71
             public static readonly ColorFloat clrToothpaste   = new ColorFloat("#25e6c9");
 
 
-
             /// <summary>
             /// Returns a random color that is always consistent for the specified index.
             /// Color is random but reproducible.
