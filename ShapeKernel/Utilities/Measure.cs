@@ -61,7 +61,17 @@ namespace Leap71
             /// </summary>
             public static float fGetSurfaceArea(Voxels oVoxels)
 			{
-				Mesh oMesh			= new Mesh(oVoxels);
+				Mesh oMesh = new Mesh(oVoxels);
+				return fGetSurfaceArea(oMesh);
+            }
+
+			/// <summary>
+            /// Calculates the area of each mesh triangle.
+            /// Adds all triangle areas to obtain the final result.
+            /// The area is measured in mm^2.
+            /// </summary>
+            public static float fGetSurfaceArea(Mesh oMesh)
+			{
 				int nTriangleCount	= oMesh.nTriangleCount();
 
 				float fArea			= 0;
