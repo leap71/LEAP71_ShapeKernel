@@ -27,19 +27,29 @@ namespace Leap71
         public class ExampleSpline : ISpline
         {
             protected ControlPointSpline m_oBSpline;
+
+            /// <summary>
+            /// This class gives an example of how control point splines can be generated.
+            /// See: https://en.wikipedia.org/wiki/B-spline
+            /// </summary>
             public ExampleSpline()
             {
+                //Define a few control points in space via their x-y-z coordinates.
                 List<Vector3> aControlPoints = new List<Vector3>() {
                     new Vector3(0, 0, 0),
                     new Vector3(0, 40, 0),
                     new Vector3(0, 50, 20),
                     new Vector3(0, 60, 60),
                 };
+
+                //Use a ControlPointSpline object (B-Spline) to derive a smooth curve from the control points.
+                //This curve is continuous and can later be samples into a new point list.
                 m_oBSpline = new ControlPointSpline(aControlPoints);
             }
 
             public List<Vector3> aGetPoints(uint nSamples = 500)
             {
+                //Query 500 (or nSamples) point along the B-Spline.
                 return m_oBSpline.aGetPoints(nSamples);
             }
         }
