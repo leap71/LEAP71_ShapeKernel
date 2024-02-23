@@ -60,12 +60,14 @@ namespace Leap71
             /// <summary>
             /// Returns the radius at a given polar angle of a supershape from preset inputs.
             /// The supershape has a reference radius = 1.
+            /// The supershape will touch the unit cicle multiple times depending on the symmetry.
+            /// The maximum and minimum radius depend on the supershape specified.
             /// </summary>
             public static float fGetSuperShapeRadius(float fPhi, ESuperShape eSuperShape)
             {
                 if (eSuperShape == ESuperShape.HEX)
                 {
-                    return fGetSuperShapeRadius(fPhi, 6f, 2f, 1f, 1f);
+                    return fGetSuperShapeRadius(fPhi, 6f, 2f, 1.2f, 1.2f);
                 }
                 else if (eSuperShape == ESuperShape.QUAD)
                 {
@@ -73,12 +75,12 @@ namespace Leap71
                 }
                 else if (eSuperShape == ESuperShape.TRI)
                 {
-                    return fGetSuperShapeRadius(fPhi, 3f, 10f, 4f, 4f);
+                    return fGetSuperShapeRadius(fPhi, 3f, 3f, 4f, 4f);
                 }
                 else
                 {
                     //round
-                    return fGetSuperShapeRadius(fPhi, 2f, 2f, 2f, 2f);
+                    return 1f;
                 }
             }
         }
