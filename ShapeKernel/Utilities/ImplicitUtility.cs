@@ -90,5 +90,39 @@ namespace Leap71
                 return (vecPt - m_vecCentre).Length() - m_fRadius;
             }
         }
+	        public class ImplicitSuperEllipsoid : IImplicit
+        {
+            protected float m_fAx;
+            protected float m_fAy;
+            protected float m_fAz;
+            protected float m_fEpsilon1;
+            protected float m_fEpsilon2;
+            protected Vector3 m_vecCentre;
+            /// <summary>
+            /// Helper class for an implicit Super Ellipsoid.
+            /// https://en.wikipedia.org/wiki/Superellipsoid
+            /// </summary>
+            public ImplicitSuperEllipsoid(Vector3 vecCentre, float fAx, float fAy, float fAz,  float fEpsilon1, float fEpsilon2)
+            {
+                m_fAx = fAx;                
+                m_fAy = fAy;
+                m_fAz = fAz;
+                m_fEpsilon1 = fEpsilon1;
+                m_fEpsilon2 = fEpsilon2;
+                m_vecCentre = vecCentre;
+            }
+
+            public float fSignedDistance(in Vector3 vecPt)
+            {
+                double dX = Math.Abs(vecPt.X + m_vecCentre.X)/ m_fAx;
+                double dY = Math.Abs(vecPt.Y + m_vecCentre.Y)/ m_fAy;
+                double dZ = Math.Abs(vecPt.Z + m_vecCentre.Z)/ m_fAz;
+
+                double dDist = Math.Pow((Math.Pow(dX, 2 / m_fEpsilon2) + Math.Pow(dY, 2 / m_fEpsilon2)), m_fEpsilon2 / m_fEpsilon1)
+                              +Math.Pow(dZ, 2 / m_fEpsilon1) ;
+                float fFinalDist = (float)(dDist - 1);
+                return fFinalDist;
+            }
+        }
     }
 }
