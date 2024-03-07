@@ -34,6 +34,7 @@
 
 
 using System.Numerics;
+using PicoGK;
 
 
 namespace Leap71
@@ -55,6 +56,21 @@ namespace Leap71
                     aPoints.Add(vecPt);
                 }
                 return aPoints;
+            }
+
+            /// <summary>
+            /// Returns a list points on the surface of the target voxelfield.
+            /// The function bClosestPointOnSurface() is applied to each input point. 
+            /// </summary>
+            public static List<Vector3> aGetSnappedSpline(List<Vector3> aPoints, Voxels voxTarget)
+            {
+                List<Vector3> aNewPoints = new List<Vector3>();
+                for (int i = 0; i < aPoints.Count; i++)
+                {
+                    voxTarget.bClosestPointOnSurface(aPoints[i], out Vector3 vecSurf);
+                    aNewPoints.Add(vecSurf);
+                }
+                return aNewPoints;
             }
 
             /// <summary>
