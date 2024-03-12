@@ -324,16 +324,15 @@ namespace Leap71
                 return vecPt;
             }
 
-
             protected float fGetInnerRadius(float fPhi, float fLengthRatio)
             {
-                float fRadius = fRadius = m_oInnerRadiusModulation.fGetModulation(fPhi, fLengthRatio);
+                float fRadius = m_oInnerRadiusModulation.fGetModulation(fPhi, fLengthRatio);
                 return fRadius;
             }
 
             protected float fGetOuterRadius(float fPhi, float fLengthRatio)
             {
-                float fRadius = fRadius = m_oOuterRadiusModulation.fGetModulation(fPhi, fLengthRatio);
+                float fRadius = m_oOuterRadiusModulation.fGetModulation(fPhi, fLengthRatio);
                 return fRadius;
             }
         }
