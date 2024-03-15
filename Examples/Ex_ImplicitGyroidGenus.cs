@@ -31,6 +31,7 @@ namespace Leap71
         {
             public static void Task()
             {
+                //note: genus shape is very small. Use voxel size 0.01mm for good resolution.
                 float fGap    = 0.3f;
                 float fExtent = 2.5f;
 

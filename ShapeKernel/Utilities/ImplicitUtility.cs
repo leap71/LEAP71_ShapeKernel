@@ -128,12 +128,12 @@ namespace Leap71
             /// </summary>
             public ImplicitSuperEllipsoid(Vector3 vecCentre, float fAx, float fAy, float fAz,  float fEpsilon1, float fEpsilon2)
             {
-                m_fAx       = fAx;                
-                m_fAy       = fAy;
-                m_fAz       = fAz;
-                m_fEpsilon1 = fEpsilon1;
-                m_fEpsilon2 = fEpsilon2;
-                m_vecCentre = vecCentre;
+                m_fAx           = fAx;                
+                m_fAy           = fAy;
+                m_fAz           = fAz;
+                m_fEpsilon1     = fEpsilon1;
+                m_fEpsilon2     = fEpsilon2;
+                m_vecCentre     = vecCentre;
             }
 
             public float fSignedDistance(in Vector3 vecPt)

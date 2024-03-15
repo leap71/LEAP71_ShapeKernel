@@ -31,79 +31,78 @@ namespace Leap71
         {
             public static void Task()
             {
+                //note: ellipsoid shape is very small. Use voxel size 0.01mm for good resolution.
+                //note: https://en.wikipedia.org/wiki/Superellipsoid
+                //note: parameter n is fEpsilon1
+                //note: parameter e is fEpsilon2
                 try
                 {
-                  {                    
-                    // fEpsilon1=n, fEpsilon2=e in WolframAlpha equation
-                    float fAx = 1f;
-                    float fAy = 1f;
-                    float fAz = 1f;
-                    float fEpsilon1 = 1f;
-                    float fEpsilon2 = 1f;
-                    Vector3 vecCentre = new Vector3(0f, 0, 0);
+                    {                    
+                        float fAx                   = 1f;
+                        float fAy                   = 1f;
+                        float fAz                   = 1f;
+                        float fEpsilon1             = 3.00f;
+                        float fEpsilon2             = 0.25f;
+                        Vector3 vecCentre           = new Vector3(0f, 0, 0);
 
-
-                    //Step 1: generate SDF
-                    IImplicit sdfEllipsoid     = new ImplicitSuperEllipsoid(vecCentre, fAx, fAz, fAy, fEpsilon1, fEpsilon2);
-
-                    //Step 2: define bounding object
-                    BBox3 oBBox = new BBox3(1f * new Vector3(-fAx - vecCentre.X, -fAy - vecCentre.Y, -fAz - vecCentre.Z),
-                                            1f * new Vector3(fAx - vecCentre.X, fAy - vecCentre.Y, fAz - vecCentre.Z));
-
-                    //Step 3: render the implicit shape into voxels.
-                    Voxels voxEllipsoid = new Voxels(sdfEllipsoid, oBBox);
-
-                    //Step 4: visualization
-                    Sh.PreviewVoxels(voxEllipsoid, Cp.clrBlack,  0.7f);
-                      
-                  }
-
-                    {                        
-                        // fEpsilon1=n, fEpsilon2=e in WolframAlpha equation
-                        float fAx = 1f;
-                        float fAy = 1f;
-                        float fAz = 1f;
-                        float fEpsilon1 = 1f;
-                        float fEpsilon2 = 1f;
-                        Vector3 vecCentre = new Vector3(-4, 0, 0);
 
                         //Step 1: generate SDF
-                        IImplicit sdfEllipsoid = new ImplicitSuperEllipsoid(vecCentre, fAx, fAz, fAy, fEpsilon1, fEpsilon2);
+                        IImplicit sdfEllipsoid      = new ImplicitSuperEllipsoid(vecCentre, fAx, fAz, fAy, fEpsilon1, fEpsilon2);
 
                         //Step 2: define bounding object
-                        BBox3 oBBox = new BBox3(1f * new Vector3(-fAx - vecCentre.X, -fAy - vecCentre.Y, -fAz - vecCentre.Z),
-                                                1f * new Vector3( fAx - vecCentre.X,  fAy - vecCentre.Y,  fAz - vecCentre.Z));
+                        BBox3 oBBox                 = new BBox3(1f * new Vector3(-fAx - vecCentre.X, -fAy - vecCentre.Y, -fAz - vecCentre.Z),
+                                                                1f * new Vector3(fAx - vecCentre.X, fAy - vecCentre.Y, fAz - vecCentre.Z));
 
-                        //Step 3: render the implicit shape into voxels.
-                        Voxels voxEllipsoid = new Voxels(sdfEllipsoid, oBBox);
+                        //Step 3: render the implicit shape into voxels
+                        Voxels voxEllipsoid         = new Voxels(sdfEllipsoid, oBBox);
 
                         //Step 4: visualization
-                        Sh.PreviewVoxels(voxEllipsoid, Cp.clrBlue, 0.7f);
+                        Sh.PreviewVoxels(voxEllipsoid, Cp.clrRuby);
+                    }
+
+                    {                        
+                        float fAx                   = 1f;
+                        float fAy                   = 1f;
+                        float fAz                   = 1f;
+                        float fEpsilon1             = 1.50f;
+                        float fEpsilon2             = 1.50f;
+                        Vector3 vecCentre           = new Vector3(-4, 0, 0);
+
+                        //Step 1: generate SDF
+                        IImplicit sdfEllipsoid      = new ImplicitSuperEllipsoid(vecCentre, fAx, fAz, fAy, fEpsilon1, fEpsilon2);
+
+                        //Step 2: define bounding object
+                        BBox3 oBBox                 = new BBox3(1f * new Vector3(-fAx - vecCentre.X, -fAy - vecCentre.Y, -fAz - vecCentre.Z),
+                                                                1f * new Vector3( fAx - vecCentre.X,  fAy - vecCentre.Y,  fAz - vecCentre.Z));
+
+                        //Step 3: render the implicit shape into voxels
+                        Voxels voxEllipsoid         = new Voxels(sdfEllipsoid, oBBox);
+
+                        //Step 4: visualization
+                        Sh.PreviewVoxels(voxEllipsoid, Cp.clrBlue);
                     }
 
                     {
-                        // fEpsilon1=n, fEpsilon2=e in WolframAlpha equation
-                        float fAx = 1f;
-                        float fAy = 1f;
-                        float fAz = 1f;
-                        float fEpsilon1 = .25f;
-                        float fEpsilon2 = 0.25f;
-                        Vector3 vecCentre = new Vector3(4, 0, 0);
+                        float fAx                   = 1f;
+                        float fAy                   = 1f;
+                        float fAz                   = 1f;
+                        float fEpsilon1             = 0.25f;
+                        float fEpsilon2             = 0.25f;
+                        Vector3 vecCentre           = new Vector3(4, 0, 0);
 
                         //Step 1: generate SDF
-                        IImplicit sdfEllipsoid = new ImplicitSuperEllipsoid(vecCentre, fAx, fAy, fAz, fEpsilon1, fEpsilon2);
+                        IImplicit sdfEllipsoid      = new ImplicitSuperEllipsoid(vecCentre, fAx, fAy, fAz, fEpsilon1, fEpsilon2);
 
                         //Step 2: define bounding object
-                        BBox3 oBBox = new BBox3(1f * new Vector3(-fAx - vecCentre.X, -fAy - vecCentre.Y, -fAz - vecCentre.Z),
-                                                1f * new Vector3(fAx - vecCentre.X, fAy - vecCentre.Y, fAz - vecCentre.Z));
+                        BBox3 oBBox                 = new BBox3(1f * new Vector3(-fAx - vecCentre.X, -fAy - vecCentre.Y, -fAz - vecCentre.Z),
+                                                                1f * new Vector3(fAx - vecCentre.X, fAy - vecCentre.Y, fAz - vecCentre.Z));
 
-                        //Step 3: render the implicit shape into voxels.
-                        Voxels voxEllipsoid = new Voxels(sdfEllipsoid, oBBox);
+                        //Step 3: render the implicit shape into voxels
+                        Voxels voxEllipsoid         = new Voxels(sdfEllipsoid, oBBox);
 
                         //Step 4: visualization
-                        Sh.PreviewVoxels(voxEllipsoid, Cp.clrBlue, 0.7f);
+                        Sh.PreviewVoxels(voxEllipsoid, Cp.clrBubblegum);
                     }
-
                 }
                 catch (Exception e)
                 {
