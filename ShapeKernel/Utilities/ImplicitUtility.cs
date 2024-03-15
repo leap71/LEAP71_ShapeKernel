@@ -90,5 +90,26 @@ namespace Leap71
                 return (vecPt - m_vecCentre).Length() - m_fRadius;
             }
         }
+	public class ImplicitGenus : IImplicit
+        {
+            protected float m_fGap;
+
+            /// <summary>
+            /// Helper class for an implicit Genus.
+            /// https://en.wikipedia.org/wiki/Implicit_surface
+            /// fGap controls the size of the hole in center
+            /// </summary>
+            public ImplicitGenus(float fGap)
+            {
+                m_fGap = fGap;
+            }
+
+            public float fSignedDistance(in Vector3 vecPt)
+            {
+                return 3 * vecPt.Y * (vecPt.Y * vecPt.Y - 3 * vecPt.X * vecPt.X) * (1 - vecPt.Z * vecPt.Z)
+                    + (vecPt.X * vecPt.X + vecPt.Y * vecPt.Y) * (vecPt.X * vecPt.X + vecPt.Y * vecPt.Y)
+                    - 2 * (9 * vecPt.Z * vecPt.Z - 1) * (1 - vecPt.Z * vecPt.Z) - m_fGap;
+            }
+        }
     }
 }
