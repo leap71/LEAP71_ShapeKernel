@@ -40,16 +40,21 @@ namespace Leap71
 {
     namespace ShapeKernel
     {
+        public interface ISpectrum
+        {
+            public List<Vector3> aGetRawRGBList();
+        }
+
         public class RainboxSpectrum : ISpectrum
         {
             public List<Vector3> aGetRawRGBList()
             {
                 List<Vector3> aRGBList = new List<Vector3>();
-                aRGBList.Add(new Vector3(255, 0, 0));                           // red
-                aRGBList.Add(new Vector3(255, 130, 0));                         // orange
-                aRGBList.Add(new Vector3(255, 255, 0));                         // yellow
-                aRGBList.Add(new Vector3(0, 255, 0));                           // green
                 aRGBList.Add(new Vector3(0, 0, 255));                           // blue
+                aRGBList.Add(new Vector3(0, 255, 0));                           // green
+                aRGBList.Add(new Vector3(255, 255, 0));                         // yellow
+                aRGBList.Add(new Vector3(255, 130, 0));                         // orange
+                aRGBList.Add(new Vector3(255, 0, 0));                           // red
                 return aRGBList;
             }
         }

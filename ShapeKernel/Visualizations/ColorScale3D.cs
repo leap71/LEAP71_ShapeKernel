@@ -41,33 +41,37 @@ namespace Leap71
 {
     namespace ShapeKernel
     {
-        public interface ISpectrum
+        public class ColorScale3D : IColorScale
         {
-            public List<Vector3> aGetRawRGBList();
-        }
+            protected List<Vector3>    m_aSmoothRGBList;
+            protected List<float>      m_aLengths;
+            protected float            m_fPathLength;
+            protected float            m_fMinValue;
+            protected float            m_fMaxValue;
 
-        public class ColorScale
-        {
-            public List<Vector3>    m_aSmoothRGBList;
-            public List<float>      m_aLengths;
-            public float            m_fPathLength;
-            public float            m_fMinValue;
-            public float            m_fMaxValue;
 
             /// <summary>
-            /// Color scale returns a color within a spectrum based on
-            /// where the specified value is situated in relation to the min and max values.
-            /// The spectrum is defined separately.
+            /// 3D color scale that interpolates smoothly between the sequence of colors in the specified spectrum.
             /// </summary>
-            public ColorScale(  ISpectrum xSpectrum,
-                                float fMinValue,
-                                float fMaxValue)
+            public ColorScale3D(    ISpectrum xSpectrum,
+                                    float fMinValue,
+                                    float fMaxValue)
             {
                 m_fMaxValue         = fMaxValue;
                 m_fMinValue         = fMinValue;
                 m_aSmoothRGBList    = SplineOperations.aGetNURBSpline(xSpectrum.aGetRawRGBList(), 500);
                 m_aSmoothRGBList    = SplineOperations.aGetReparametrizedSpline(m_aSmoothRGBList, (uint)500);
                 m_fPathLength       = SplineOperations.fGetTotalLength(m_aSmoothRGBList);
+            }
+
+            public float fGetMinValue()
+            {
+                return m_fMinValue;
+            }
+
+            public float fGetMaxValue()
+            {
+                return m_fMaxValue;
             }
 
             public ColorFloat clrGetColor(float fValue)
