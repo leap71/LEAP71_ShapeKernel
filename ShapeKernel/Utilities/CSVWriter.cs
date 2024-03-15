@@ -32,9 +32,7 @@
 // limitations under the License.   
 //
 
-using System;
-using System.Globalization;
-using System.IO;
+using PicoGK;
 
 
 namespace Leap71
@@ -43,11 +41,13 @@ namespace Leap71
     {
         public class CSVWriter
         {
-            protected StreamWriter m_oWriter;
+            protected StreamWriter  m_oWriter;
+            protected string        m_strFilename;
 
             public CSVWriter(string strFilename)
             {
-                m_oWriter = new StreamWriter(strFilename);
+                m_strFilename       = strFilename;
+                m_oWriter           = new StreamWriter(m_strFilename);
             }
 
             public void AddLine(string strLine)
@@ -57,7 +57,15 @@ namespace Leap71
 
             public void ExportCSVFile()
             {
-                m_oWriter.Flush();
+                try
+                {
+                    m_oWriter.Flush();
+                    Library.Log($"CSV Export: {m_strFilename} exported.");
+                }
+                catch (Exception e)
+                {
+                    Library.Log("Could not save CSV: " + e.Message);
+                }
             }
         }
     }

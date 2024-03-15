@@ -55,12 +55,11 @@ namespace Leap71
             /// Width correlates to local x dimension.
             /// Depth correlates to local y dimension.
             /// </summary>
-            public BaseLogoBox(
-                LocalFrame oFrame,
-                float fLength,
-                float fRefWidth,
-                Image oImage,
-                MappingFunc oMappingFunc) : base()
+            public BaseLogoBox( LocalFrame  oFrame,
+                                float       fLength,
+                                float       fRefWidth,
+                                Image       oImage,
+                                MappingFunc oMappingFunc) : base()
             {
                 m_aFrames           = new Frames(fLength, oFrame);
                 int iImageWidth     = oImage.nWidth;
@@ -77,6 +76,16 @@ namespace Leap71
                 m_bTransformed      = false;
 
                 m_oTopModulation    = new SurfaceModulation(oImage, oMappingFunc);
+            }
+
+            public float fGetWidth()
+            {
+                return m_oWidthModulation.m_fConstValue;
+            }
+
+            public float fGetDepth()
+            {
+                return m_oDepthModulation.m_fConstValue;
             }
 
             public override Vector3 vecGetSurfacePoint(float fWidthRatio, float fDepthRatio, float fLengthRatio)
