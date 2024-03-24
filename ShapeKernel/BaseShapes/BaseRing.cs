@@ -94,9 +94,14 @@ namespace Leap71
             {
                 Mesh oMesh          = new Mesh();
                 float fRadiusRatio  = 1f;
-                for (int iAlphaStep = 1; iAlphaStep < m_nRadialSteps; iAlphaStep++)
+                for (int iAlphaStep = 0; iAlphaStep < m_nRadialSteps; iAlphaStep++)
                 {
-                    float fAlphaRatio1 = fGetAlphaRatioFromStep(iAlphaStep - 1);
+                    int iLowerIndex = iAlphaStep - 1;
+                    if (iLowerIndex < 0)
+                    {
+                        iLowerIndex += (int)m_nRadialSteps;
+                    }
+                    float fAlphaRatio1 = fGetAlphaRatioFromStep(iLowerIndex);   
                     float fAlphaRatio2 = fGetAlphaRatioFromStep(iAlphaStep);
 
                     for (int iPhiStep = 1; iPhiStep < m_nPolarSteps; iPhiStep++)
