@@ -67,12 +67,11 @@ namespace Leap71
                     aControlPoints.Add(new Vector3(0, 0, 0.5f));
                     aControlPoints.Add(new Vector3(1, 0, 0.5f));
                     aControlPoints.Add(new Vector3(1, 0, 1.0f));
-                    aControlPoints.Add(new Vector3(1, 0, 1.01f));
                     m_oBSpline = new ControlPointSpline(aControlPoints);
                 }
-                Vector3 vecPt = m_oBSpline.vecGetPointAt(fS);
-                float fRatio = vecPt.X;
-                float fValue = fValue1 + fRatio * (fValue2 - fValue1);
+                Vector3 vecPt   = m_oBSpline.vecGetPointAt(fS);
+                float fRatio    = vecPt.X;
+                float fValue    = fValue1 + fRatio * (fValue2 - fValue1);
                 return fValue;
             }
 
