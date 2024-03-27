@@ -44,18 +44,32 @@ namespace Leap71
         public class ImplicitGyroid : IImplicit
 		{
             protected float         m_fFrequencyScale;
-			protected float		    m_fWallThickness;
+			protected float		    m_fThicknessRatio;
 
             /// <summary>
             /// Helper class for an implicit gyroid pattern.
+            /// The unit size in mm will determine the length after which the pattern repreats.
+            /// The thickness ratio is a measure (!) for the wall thickness.
+            /// Use fGetThicknessRatio function to determine the correct ratio value
+            /// to meet a target physical wall thickness in mm.
             /// </summary>
-            public ImplicitGyroid(float fUnitSize, float fWallThickness)
+            public ImplicitGyroid(float fUnitSize, float fThicknessRatio)
 			{
                 m_fFrequencyScale   = (2f * MathF.PI) / fUnitSize;
-                m_fWallThickness    = fWallThickness;
+                m_fThicknessRatio   = fThicknessRatio;
             }
 
-			public float fSignedDistance(in Vector3 vecPt)
+            /// <summary>
+            /// Function to determine the correct gyroid thickness ratio value
+            /// to meet a target physical wall thickness in mm.
+            /// </summary>
+            public static float fGetThicknessRatio(float fWallThickness, float fUnitSize)
+            {
+                float fRefWallRatio = fWallThickness * 10f / fUnitSize;
+                return fRefWallRatio;
+            }
+
+            public float fSignedDistance(in Vector3 vecPt)
 			{
                 double dX = vecPt.X;
                 double dY = vecPt.Y;
@@ -67,7 +81,7 @@ namespace Leap71
                                  Math.Sin(m_fFrequencyScale * dZ) * Math.Cos(m_fFrequencyScale * dX);
 
                 //apply thickness to the gyroid surface
-                return (float)(Math.Abs(fDist) - 0.5f * m_fWallThickness);
+                return (float)(Math.Abs(fDist) - 0.5f * m_fThicknessRatio);
             }
 		}
 
