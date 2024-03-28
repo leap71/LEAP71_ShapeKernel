@@ -184,8 +184,21 @@ namespace Leap71
             /// </summary>
             public static LocalFrame oGetTranslatedFrame(LocalFrame oFrame, Vector3 vecTranslate)
             {
-                Vector3 vecNewPosition = oFrame.vecGetPosition() + vecTranslate;
-                LocalFrame oNewFrame = new LocalFrame(vecNewPosition, oFrame.vecGetLocalZ(), oFrame.vecGetLocalX());
+                Vector3 vecNewPosition  = oFrame.vecGetPosition() + vecTranslate;
+                LocalFrame oNewFrame    = new LocalFrame(vecNewPosition, oFrame.vecGetLocalZ(), oFrame.vecGetLocalX());
+                return oNewFrame;
+            }
+
+            /// <summary>
+            /// Returns a local frame that is rotated compared to the specified local frame.
+            /// The position remains constant.
+            /// All local axes are rotated around the specified axis by angle phi in rad.
+            /// </summary>
+            public static LocalFrame oGetRotatedFrame(LocalFrame oFrame, float dPhi, Vector3 vecAxis)
+            {
+                Vector3 vecNewLocalX = VecOperations.vecRotateAroundAxis(oFrame.vecGetLocalX(), dPhi, vecAxis);
+                Vector3 vecNewLocalZ = VecOperations.vecRotateAroundAxis(oFrame.vecGetLocalZ(), dPhi, vecAxis);
+                LocalFrame oNewFrame = new LocalFrame(oFrame.vecGetPosition(), vecNewLocalZ, vecNewLocalX);
                 return oNewFrame;
             }
 
