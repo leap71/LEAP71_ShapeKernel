@@ -54,16 +54,26 @@ namespace Leap71
                 Vector3 vecEnd,
                 Vector3 vecStartDir,
                 Vector3 vecEndDir,
-                float   fStartTangentStrength = -1,
-                float   fEndTangentStrenth = -1)
+                float   fStartTangentStrength   = -1,
+                float   fEndTangentStrenth      = -1,
+                bool bRelativeStartStrength     = false,
+                bool bRelativeEndStrength       = false)
             {
                 if (fStartTangentStrength == -1)
                 {
-                    fStartTangentStrength = 0.3f * (vecStart - vecEnd).Length();
+                    fStartTangentStrength   = 0.3f * (vecStart - vecEnd).Length();
                 }
                 if (fEndTangentStrenth == -1)
                 {
-                    fEndTangentStrenth = 0.3f * (vecStart - vecEnd).Length();
+                    fEndTangentStrenth      = 0.3f * (vecStart - vecEnd).Length();
+                }
+                if (bRelativeStartStrength == true)
+                {
+                    fStartTangentStrength   = fStartTangentStrength * (vecStart - vecEnd).Length();
+                }
+                if (bRelativeEndStrength == true)
+                {
+                    fEndTangentStrenth      = fEndTangentStrenth * (vecStart - vecEnd).Length();
                 }
 
                 Vector3 vecPt1                  = vecStart;
@@ -78,7 +88,9 @@ namespace Leap71
                 LocalFrame  oStartFrame,
                 LocalFrame  oEndFrame,
                 float       fStartTangentStrength   = -1,
-                float       fEndTangentStrenth      = -1)
+                float       fEndTangentStrenth      = -1,
+                bool        bRelativeStartStrength  = false,
+                bool        bRelativeEndStrength    = false)
             {
                 Vector3 vecStart                = oStartFrame.vecGetPosition();
                 Vector3 vecEnd                  = oEndFrame.vecGetPosition();
@@ -92,6 +104,14 @@ namespace Leap71
                 if (fEndTangentStrenth == -1)
                 {
                     fEndTangentStrenth = 0.3f * (vecStart - vecEnd).Length();
+                }
+                if (bRelativeStartStrength == true)
+                {
+                    fStartTangentStrength   = fStartTangentStrength * (vecStart - vecEnd).Length();
+                }
+                if (bRelativeEndStrength == true)
+                {
+                    fEndTangentStrenth      = fEndTangentStrenth * (vecStart - vecEnd).Length();
                 }
 
                 Vector3 vecPt1                  = vecStart;
