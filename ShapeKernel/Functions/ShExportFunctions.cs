@@ -74,7 +74,7 @@ namespace Leap71
                 }
             }
 
-            public enum EExport { STL, TGA, CSV, VDB };
+            public enum EExport { STL, TGA, PNG, CSV, VDB };
             public static string strGetExportPath(EExport eExport, string strFilename)
             {
                 string strFormatStub    = "." + eExport.ToString();
