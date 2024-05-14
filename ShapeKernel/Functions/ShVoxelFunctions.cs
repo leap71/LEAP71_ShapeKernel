@@ -71,54 +71,6 @@ namespace Leap71
                 oVoxels.CalculateProperties(out float fCubicMM, out BBox3 oBox);
                 return oBox;
             }
-
-            /// <summary>
-            /// Returns the centre of gravity of a voxelfield.
-            /// The function creates a slice stack from the voxelfield and
-            /// sums up all the "inside" voxel positions in each slice.
-            /// The centre of gravity results from the sum being devided by the counted number of voxels.
-            /// "Outside" voxels with no matter are ignored.
-            /// </summary>
-            public static Vector3 vecGetCentreOfGravity(Voxels oVoxels)
-            {
-                oVoxels.GetVoxelDimensions(out int iXSize, out int iYSize, out int iZSize);
-                BBox3 oBBox             = oGetBoundingBox(oVoxels);
-                ImageGrayScale oImage   = new ImageGrayScale(iXSize, iYSize);
-                Vector3 vecCoG          = new Vector3();
-                float fCounter          = 0f;
-
-                for (int iSlice = 0; iSlice < iZSize; iSlice++)
-                {
-                    try
-                    {
-                        oVoxels.GetVoxelSlice(in iSlice, ref oImage);
-
-                        for (int i = 0; i < oImage.nHeight; i++)
-                        {
-                            for (int j = 0; j < oImage.nWidth; j++)
-                            {
-                                float fValue = oImage.fValue(j, i);
-                                if (fValue <= 0)
-                                {
-                                    float fXRatio = (float)j / (float)oImage.nWidth;
-                                    float fYRatio = (float)i / (float)oImage.nHeight;
-                                    float fZRatio = (float)iSlice / (float)iZSize;
-                                    Vector3 vecPt = oBBox.vecMin +
-                                                        fXRatio * oBBox.vecSize().X * Vector3.UnitX +
-                                                        fYRatio * oBBox.vecSize().Y * Vector3.UnitY +
-                                                        fZRatio * oBBox.vecSize().Z * Vector3.UnitZ;
-
-                                    fCounter    += 1f;
-                                    vecCoG      += vecPt;
-                                }
-                            }
-                        }
-                    }
-                    catch { }
-                }
-                vecCoG = vecCoG / fCounter;
-                return vecCoG;
-            }
         }
     }
 }
