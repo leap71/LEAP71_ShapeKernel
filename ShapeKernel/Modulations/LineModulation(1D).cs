@@ -214,29 +214,67 @@ namespace Leap71
                 return m_oFunc(fRatio);
             }
 
-            protected static LineModulation m_oMod1, m_oMod2;
+            /// <summary>
+            /// Adds one modulation to another.
+            /// </summary>
             public static LineModulation operator +(LineModulation oMod1, LineModulation oMod2)
             {
-                m_oMod1 = oMod1;
-                m_oMod2 = oMod2;
-                return new LineModulation(fGetAddedModulation);
+                return ModulationUtil.oGetSumOfModulations(oMod1, oMod2);
             }
 
-            protected static float fGetAddedModulation(float fLengthRatio)
-            {
-                return m_oMod1.fGetModulation(fLengthRatio) + m_oMod2.fGetModulation(fLengthRatio);
-            }
-
+            /// <summary>
+            /// Subtract one modulation from another.
+            /// </summary>
             public static LineModulation operator -(LineModulation oMod1, LineModulation oMod2)
             {
-                m_oMod1 = oMod1;
-                m_oMod2 = oMod2;
-                return new LineModulation(fGetSubtractedModulation);
+                return ModulationUtil.oGetDifferenceOfModulations(oMod1, oMod2);
             }
 
-            protected static float fGetSubtractedModulation(float fLengthRatio)
+            protected class ModulationUtil
             {
-                return m_oMod1.fGetModulation(fLengthRatio) - m_oMod2.fGetModulation(fLengthRatio);
+                protected LineModulation m_oMod1;
+                protected LineModulation m_oMod2;
+
+                protected ModulationUtil(   LineModulation oMod1,
+                                            LineModulation oMod2)
+                {
+                    m_oMod1 = oMod1;
+                    m_oMod2 = oMod2;
+                }
+
+                public static LineModulation oGetSumOfModulations(  LineModulation oMod1,
+                                                                    LineModulation oMod2)
+                {
+                    ModulationUtil oUtil = new (oMod1, oMod2);
+                    return oUtil.oGetSumOfModulations();
+                }
+
+                public static LineModulation oGetDifferenceOfModulations(   LineModulation oMod1,
+                                                                            LineModulation oMod2)
+                {
+                    ModulationUtil oUtil = new(oMod1, oMod2);
+                    return oUtil.oGetDifferenceOfModulations();
+                }
+
+                protected LineModulation oGetSumOfModulations()
+                {
+                    return new LineModulation(fGetAddedModulation);
+                }
+
+                protected LineModulation oGetDifferenceOfModulations()
+                {
+                    return new LineModulation(fGetSubtractedModulation);
+                }
+
+                protected float fGetAddedModulation(float fLengthRatio)
+                {
+                    return m_oMod1.fGetModulation(fLengthRatio) + m_oMod2.fGetModulation(fLengthRatio);
+                }
+
+                protected float fGetSubtractedModulation(float fLengthRatio)
+                {
+                    return m_oMod1.fGetModulation(fLengthRatio) - m_oMod2.fGetModulation(fLengthRatio);
+                }
             }
         }
     }
