@@ -41,6 +41,8 @@ namespace Leap71
 {
 	namespace ShapeKernel
 	{
+        using static BaseShape;
+
         public class MeshPainter
 		{
             public delegate float ColorScaleFunc(Vector3 vecA, Vector3 vecB, Vector3 vecC);
@@ -50,7 +52,10 @@ namespace Leap71
             /// Each sub-mesh is previewed in a color that represents its overhang angle on the specified color scale.
             /// Overhang angles are specified in deg. Zero deg is vertical (minimum), 90 deg is horizontal (maximum).
             /// </summary>
-            public static void PreviewOverhangAngle(Mesh oMesh, IColorScale xScale, bool bShowOnlyDownFacing, uint nClasses = 10)
+            public static void PreviewOverhangAngle(        Mesh            oMesh,
+                                                            IColorScale     xScale,
+                                                            bool            bShowOnlyDownFacing,
+                                                            uint            nClasses = 30)
             {
                 Mesh[] aSubMeshes   = new Mesh[nClasses];
                 float fMinAngle     = xScale.fGetMinValue();
@@ -62,7 +67,7 @@ namespace Leap71
                     aSubMeshes[i] = new Mesh();
                 }
 
-                uint nNumberOfTriangles = (uint)oMesh.nTriangleCount();
+                uint nNumberOfTriangles  = (uint)oMesh.nTriangleCount();
                 for (int i = 0; i < nNumberOfTriangles; i++)
                 {
                     oMesh.GetTriangle(i, out Vector3 vecA, out Vector3 vecB, out Vector3 vecC);
@@ -99,8 +104,12 @@ namespace Leap71
 
             /// <summary>
             /// Divides the specified mesh into multiple sub-meshes from triangles that share a similar custom properties.
+            /// Each sub-mesh is previewed in a color that represents its custom property on the specified color scale.
             /// </summary>
-            public static void PreviewCustomProperty(Mesh oMesh, IColorScale xScale, ColorScaleFunc oFunc, uint nClasses = 10)
+            public static void PreviewCustomProperty(       Mesh            oMesh,
+                                                            IColorScale     xScale,
+                                                            ColorScaleFunc  oColorFunc,
+                                                            uint            nClasses = 30)
             {
                 Mesh[] aSubMeshes   = new Mesh[nClasses];
                 float fMinValue     = xScale.fGetMinValue();
@@ -117,7 +126,7 @@ namespace Leap71
                 {
                     oMesh.GetTriangle(i, out Vector3 vecA, out Vector3 vecB, out Vector3 vecC);
 
-                    float fValue        = oFunc(vecA, vecB, vecC);
+                    float fValue        = oColorFunc(vecA, vecB, vecC);
                     float fRatio        = (fValue - fMinValue) / (fMaxValue - fMinValue);
                     fRatio              = Uf.fLimitValue(fRatio, 0f, 1f);
 
@@ -131,6 +140,53 @@ namespace Leap71
                     try
                     {
                         Sh.PreviewMesh(aSubMeshes[i], clr);
+                    }
+                    catch { }
+                }
+            }
+
+            /// <summary>
+            /// Creates a new mesh that is deformed by the vertex-wise application of the trafo func.
+            /// Divides this new mesh into multiple sub-meshes based on old mesh triangles that share a similar custom properties.
+            /// Each sub-mesh is previewed in a color that represents its custom property on the specified color scale.
+            /// </summary>
+            public static void PreviewCustomDeformation(    Mesh            oMesh,
+                                                            IColorScale     xScale,
+                                                            ColorScaleFunc  oColorFunc,
+                                                            TrafoFunc       oTrafoFunc,
+                                                            uint            nClasses = 30)
+            {
+                Mesh[] aSubMeshes   = new Mesh[nClasses];
+                float fMinValue     = xScale.fGetMinValue();
+                float fMaxValue     = xScale.fGetMaxValue();
+                float dValue        = (fMaxValue - fMinValue) / (nClasses - 1f);
+
+                for (int i = 0; i < nClasses; i++)
+                {
+                    aSubMeshes[i] = new Mesh();
+                }
+
+                uint nNumberOfTriangles = (uint)oMesh.nTriangleCount();
+                for (int i = 0; i < nNumberOfTriangles; i++)
+                {
+                    oMesh.GetTriangle(i, out Vector3 vecA, out Vector3 vecB, out Vector3 vecC);
+
+                    float fValue        = oColorFunc(vecA, vecB, vecC);
+                    float fRatio        = (fValue - fMinValue) / (fMaxValue - fMinValue);
+                    fRatio              = Uf.fLimitValue(fRatio, 0f, 1f);
+
+                    uint nSubMeshIndex  = (uint)(fRatio * (nClasses - 1));
+                    aSubMeshes[nSubMeshIndex].nAddTriangle(vecA, vecB, vecC);
+                }
+
+                for (int i = 0; i < nClasses; i++)
+                {
+                    ColorFloat clr       = xScale.clrGetColor(fMinValue + (i * dValue));
+                    try
+                    {
+                        Mesh msh         = aSubMeshes[i];
+                        Mesh mshDeformed = MeshUtility.mshApplyTransformation(msh, oTrafoFunc);
+                        Sh.PreviewMesh(mshDeformed, clr);
                     }
                     catch { }
                 }
