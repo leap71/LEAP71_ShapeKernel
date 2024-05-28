@@ -280,17 +280,15 @@ namespace Leap71
             /// </summary>
             public static float fGetAngleBetween(Vector3 vecA, Vector3 vecB)
             {
-                float fNormA = vecA.Length();
-                float fNormB = vecB.Length();
-                vecA        /= fNormA;
-                vecB        /= fNormB;
+                vecA         = vecA.Normalize();
+                vecB         = vecB.Normalize();
                 float fDot   = Uf.fLimitValue(Vector3.Dot(vecA, vecB), -1, 1);
                 float fTheta = MathF.Acos(fDot);
 
-                if (float.IsNaN(fTheta))
+                if ((float.IsNaN(fTheta)) &&
+                    (MathF.Abs(fDot) == 1))
                 {
-                    Library.Log("Invalid rotation angle.");
-                    throw new Exception("Invalid rotation angle.");
+                    return MathF.PI;
                 }
                 return fTheta;
             }
