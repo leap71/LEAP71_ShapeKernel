@@ -234,7 +234,7 @@ There are multiple options (application-specific) of how local x and local y can
 
 
 
-Below are some examples of how to get started with Frames. `BasicSpline()` is a class that retruns a predefined spline object.
+Below are some examples of how to get started with Frames. `BasicSpline` is a class that retruns a predefined spline object.
 
 - Create Y-targeted Frames from a spline:
 
