@@ -234,19 +234,19 @@ There are multiple options (application-specific) of how local x and local y can
 
 
 
-Here are some examples of how to get started with Frames:
+Below are some examples of how to get started with Frames. `BasicSpline()` is a class that retruns a predefined spline object.
 
 - Create Y-targeted Frames from a spline:
 
   ```c#
   ISpline oSpline = new BasicSpline();
-  Frames aFrames  = new Frames(oSpine.aGetPoints(), Vector3.UnitY);
+  Frames aFrames  = new Frames(oSpline.aGetPoints(), Vector3.UnitY);
   ```
 
 - Create radially-targeted Frames from a spline:
 
   ```c#
-  Frames aFrames = new Frames(oSpine.aGetPoints(), Frames.EFrameType.CYLINDRICAL);
+  Frames aFrames = new Frames(oSpline.aGetPoints(), Frames.EFrameType.CYLINDRICAL);
   ```
 
 - Create Frames along a straight line with constant target directions:
