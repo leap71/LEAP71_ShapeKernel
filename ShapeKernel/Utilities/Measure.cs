@@ -94,7 +94,7 @@ namespace Leap71
             /// Returns the area for an individual triangle.
             /// The area is measured in mm^2.
             /// </summary>
-            protected static float fGetTriangleArea(Vector3 vecA, Vector3 vecB, Vector3 vecC)
+            public static float fGetTriangleArea(Vector3 vecA, Vector3 vecB, Vector3 vecC)
 			{
 				Vector3 vecSideAB	= vecB - vecA;
                 Vector3 vecSideAC	= vecC - vecA;
