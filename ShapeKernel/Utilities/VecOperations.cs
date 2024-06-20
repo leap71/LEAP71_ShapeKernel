@@ -32,6 +32,7 @@
 // limitations under the License.   
 //
 
+
 using System.Numerics;
 using PicoGK;
 
@@ -335,31 +336,17 @@ namespace Leap71
             /// The axis origin can be customised.
             /// The angle increment is measured in radiant.
             /// </summary>
-            public static Vector3 vecRotateAroundAxis(Vector3 vecPt, float dPhi, Vector3 vecAxis, Vector3 vecAxisOrigin = new Vector3())
+            public static Vector3 vecRotateAroundAxis(Vector3 vecPt, float dPhi, Vector3 vecAxis, Vector3? vecAxisOrigin = null)
             {
-                vecAxis                 = vecAxis.Normalize();
-                LocalFrame oAxisFrame   = new LocalFrame(vecAxisOrigin, vecAxis);
-                Vector3 vecLocalX       = oAxisFrame.vecGetLocalX();
-                Vector3 vecLocalY       = oAxisFrame.vecGetLocalY();
-                Vector3 vecLocalZ       = oAxisFrame.vecGetLocalZ();
-
-                vecPt -= vecAxisOrigin;
-
-                float fX = Vector3.Dot(vecPt, vecLocalX);
-                float fY = Vector3.Dot(vecPt, vecLocalY);
-                float fZ = Vector3.Dot(vecPt, vecLocalZ);
-
-                float fRadius   = MathF.Sqrt(fX * fX + fY * fY);
-                float fPhi      = MathF.Atan2(fY, fX);
-
-                float fNewX     = fRadius * MathF.Cos(fPhi + dPhi);
-                float fNewY     = fRadius * MathF.Sin(fPhi + dPhi);
-
-                Vector3 vecNewPt =
-                    vecAxisOrigin +
-                    fNewX * vecLocalX +
-                    fNewY * vecLocalY +
-                    fZ * vecLocalZ;
+                Vector3 vecOrigin   = new Vector3();
+                if (vecAxisOrigin  != null)
+                {
+                    vecOrigin = (Vector3)vecAxisOrigin;
+                }
+                Vector3 vecRel      = vecPt - vecOrigin;
+                Quaternion mat      = Quaternion.CreateFromAxisAngle(vecAxis, dPhi);
+                Vector3 vecNewRel   = Vector3.Transform(vecRel, mat);
+                Vector3 vecNewPt    = vecNewRel + vecOrigin;
                 return vecNewPt;
             }
 
