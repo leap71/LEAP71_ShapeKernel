@@ -186,8 +186,8 @@ namespace Leap71
                         Vector3 vecPt1 = vecGetSurfacePoint(fLengthRatio2, fPhi1, fRadiusRatio);
                         Vector3 vecPt2 = vecGetSurfacePoint(fLengthRatio2, fPhi2, fRadiusRatio);
                         Vector3 vecPt3 = vecGetSurfacePoint(fLengthRatio1, fPhi2, fRadiusRatio);
-                        oMesh.nAddTriangle(vecPt0, vecPt2, vecPt1);
-                        oMesh.nAddTriangle(vecPt0, vecPt3, vecPt2);
+                        oMesh.nAddTriangle(vecPt0, vecPt1, vecPt2);
+                        oMesh.nAddTriangle(vecPt0, vecPt2, vecPt3);
                     }
                 }
             }
