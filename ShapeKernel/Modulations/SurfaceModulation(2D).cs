@@ -133,7 +133,7 @@ namespace Leap71
                 }
                 else if (m_eInput == EInput.IMAGE)
                 {
-                    int nXRange         = m_oImage.nWidth-1;
+                    int nXRange         = m_oImage.nWidth - 1;
                     int x               = nXRange - (int) (fPhi * nXRange);
                     int y               = (int) (fLengthRatio * (m_oImage.nHeight - 1));
                     float fGrayValue    = m_oImage.fValue(x, y);
