@@ -60,7 +60,6 @@ namespace Leap71
                 SetPolarSteps(180);
                 m_oFrame            = oFrame;
                 m_oRadiusModulation = new SurfaceModulation(fRadius);
-                m_bTransformed      = false;
             }
 
 
@@ -140,11 +139,7 @@ namespace Leap71
                     + fY * m_oFrame.vecGetLocalY()
                     + fZ * m_oFrame.vecGetLocalZ();
 
-                if (m_bTransformed == true)
-                {
-                    vecPt = m_oTrafo(vecPt);
-                }
-                return vecPt;
+                return m_fnTrafo(vecPt);
             }
         }
     }

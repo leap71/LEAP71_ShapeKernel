@@ -150,11 +150,11 @@ namespace Leap71
             /// Divides this new mesh into multiple sub-meshes based on old mesh triangles that share a similar custom properties.
             /// Each sub-mesh is previewed in a color that represents its custom property on the specified color scale.
             /// </summary>
-            public static void PreviewCustomDeformation(    Mesh            oMesh,
-                                                            IColorScale     xScale,
-                                                            ColorScaleFunc  oColorFunc,
-                                                            TrafoFunc       oTrafoFunc,
-                                                            uint            nClasses = 30)
+            public static void PreviewCustomDeformation(    Mesh                    oMesh,
+                                                            IColorScale             xScale,
+                                                            ColorScaleFunc          oColorFunc,
+                                                            fnVertexTransformation  oTrafoFunc,
+                                                            uint                    nClasses = 30)
             {
                 Mesh[] aSubMeshes   = new Mesh[nClasses];
                 float fMinValue     = xScale.fGetMinValue();

@@ -66,10 +66,7 @@ namespace Leap71
 
 			public override Voxels voxConstruct()
 			{
-                if (m_bTransformed == true)
-                {
-                    m_oCyl.SetTransformation(m_oTrafo);
-                }
+				m_oCyl.SetTransformation(m_fnTrafo);
                 return m_oCyl.voxConstruct();
             }
 		}

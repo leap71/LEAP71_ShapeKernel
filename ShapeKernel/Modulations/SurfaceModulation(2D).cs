@@ -134,10 +134,14 @@ namespace Leap71
                 else if (m_eInput == EInput.IMAGE)
                 {
                     int nXRange         = m_oImage.nWidth-1;
-                    int x               = nXRange - (int) (fPhi * nXRange);
-                    int y               = (int) (fLengthRatio * (m_oImage.nHeight - 1));
+                    int nYRange         = m_oImage.nHeight-1;
+
+                    int x               = (int) float.Round(nXRange - fPhi * nXRange);
+                    int y               = (int) float.Round(fLengthRatio * nYRange);
+
                     float fGrayValue    = m_oImage.fValue(x, y);
                     float fValue        = m_oMappingFunc(fGrayValue);
+
                     return fValue;
                 }
                 else
