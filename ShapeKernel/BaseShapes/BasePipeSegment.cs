@@ -221,11 +221,7 @@ namespace Leap71
                 float fY            = fRadius * MathF.Sin(fPhi);
                 Vector3 vecPt       = vecSpinePos + fX * vecLocalX + fY * vecLocalY;
 
-                if (m_bTransformed == true)
-                {
-                    vecPt = m_oTrafo(vecPt);
-                }
-                return vecPt;
+                return m_fnTrafo(vecPt);
             }
 
             protected float fGetEndPhi(float fLengthRatio)

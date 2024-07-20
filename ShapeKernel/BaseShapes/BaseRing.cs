@@ -61,9 +61,7 @@ namespace Leap71
                 m_oFrame            = oFrame;
                 m_fRingRadius       = fRingRadius;
                 m_oRadiusModulation = new SurfaceModulation(fRadius);
-                m_bTransformed      = false;
             }
-
 
             //settings
             public void SetRadius(SurfaceModulation oModulation)
@@ -166,11 +164,7 @@ namespace Leap71
                 float fLocalY       = fRadius * MathF.Sin(fPhi);
                 Vector3 vecPt       = vecSpine + fLocalX * vecLocalX + fLocalY * vecLocalY;
 
-                if (m_bTransformed == true)
-                {
-                    vecPt = m_oTrafo(vecPt);
-                }
-                return vecPt;
+                return m_fnTrafo(vecPt);
             }
 
             protected float fGetRadius(float fPhi, float fLengthRatio)

@@ -72,7 +72,6 @@ namespace Leap71
                 m_fOuterRadius      = fOuterRadius;
                 m_oLowerModulation  = new SurfaceModulation(0);
                 m_oUpperModulation  = new SurfaceModulation(fHeight);
-                m_bTransformed      = false;
             }
 
 
@@ -297,11 +296,7 @@ namespace Leap71
                     + fY * m_oFrame.vecGetLocalY()
                     + fZ * m_oFrame.vecGetLocalZ();
 
-                if (m_bTransformed == true)
-                {
-                    vecPt = m_oTrafo(vecPt);
-                }
-                return vecPt;
+                return m_fnTrafo(vecPt);
             }
 
             protected float fGetHeight(float fHeightRatio, float fPhi, float fRadiusRatio)

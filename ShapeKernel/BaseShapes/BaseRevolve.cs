@@ -70,7 +70,6 @@ namespace Leap71
                 m_oOuterRadiusModulation = new LineModulation(fOutwardRadius);
                 m_oInnerRadiusModulation = new LineModulation(fInwardRadius);
                 m_aFrames                = aFrames;
-                m_bTransformed           = false;
             }
 
             public void SetRadius(LineModulation oInnerRadiusOverCylinder, LineModulation oOuterRadiusOverCylinder)
@@ -263,11 +262,7 @@ namespace Leap71
                 Vector3 vecPt           = vecSpinePos + fRadius * vecLocalX;
                 vecPt                   = VecOperations.vecRotateAroundAxis(vecPt, fPhi, m_oFrame.vecGetLocalZ(), m_oFrame.vecGetPosition());
 
-                if (m_bTransformed == true)
-                {
-                    vecPt = m_oTrafo(vecPt);
-                }
-                return vecPt;
+                return m_fnTrafo(vecPt);
             }
 
             public Vector3 vecGetSpineAlongLength(float fLengthRatio)

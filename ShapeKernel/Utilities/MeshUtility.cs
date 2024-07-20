@@ -96,7 +96,7 @@ namespace Leap71
             /// <summary>
             /// Creates a new mesh by applying a transformation function to each vertex of the input mesh.
             /// </summary>
-            public static Mesh mshApplyTransformation(Mesh oMesh, BaseShape.TrafoFunc oTrafo)
+            public static Mesh mshApplyTransformation(Mesh oMesh, BaseShape.fnVertexTransformation fnTrafo)
             {
                 Mesh oNewMesh       = new Mesh();
                 int nTriangles      = oMesh.nTriangleCount();
@@ -109,9 +109,9 @@ namespace Leap71
                     Vector3 vecA    = oMesh.vecVertexAt(iIndexA);
                     Vector3 vecB    = oMesh.vecVertexAt(iIndexB);
                     Vector3 vecC    = oMesh.vecVertexAt(iIndexC);
-                    Vector3 vecNewA = oTrafo(vecA);
-                    Vector3 vecNewB = oTrafo(vecB);
-                    Vector3 vecNewC = oTrafo(vecC);
+                    Vector3 vecNewA = fnTrafo(vecA);
+                    Vector3 vecNewB = fnTrafo(vecB);
+                    Vector3 vecNewC = fnTrafo(vecC);
                     oNewMesh.nAddTriangle(vecNewA, vecNewB, vecNewC);
                 }
                 return oNewMesh;

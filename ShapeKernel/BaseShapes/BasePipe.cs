@@ -68,7 +68,6 @@ namespace Leap71
 
                 m_oInnerRadiusModulation = new SurfaceModulation(fInnerRadius);
                 m_oOuterRadiusModulation = new SurfaceModulation(fOuterRadius);
-                m_bTransformed           = false;
             }
 
             /// <summary>
@@ -88,7 +87,6 @@ namespace Leap71
 
                 m_oInnerRadiusModulation = new SurfaceModulation(fInnerRadius);
                 m_oOuterRadiusModulation = new SurfaceModulation(fOuterRadius);
-                m_bTransformed           = false;
             }
 
 
@@ -316,12 +314,7 @@ namespace Leap71
                 float fX            = fRadius * MathF.Cos(fPhi);
                 float fY            = fRadius * MathF.Sin(fPhi);
                 Vector3 vecPt       = vecSpinePos + fX * vecLocalX + fY * vecLocalY;
-
-                if (m_bTransformed == true)
-                {
-                    vecPt = m_oTrafo(vecPt);
-                }
-                return vecPt;
+                return m_fnTrafo(vecPt);
             }
 
             protected float fGetInnerRadius(float fPhi, float fLengthRatio)

@@ -47,7 +47,7 @@ namespace Leap71
                 Mesh        oMesh,
                 ColorFloat  clrColor,
                 float       fTransparency   = 0.9f,
-                float       fMetallic       = 0.3f,
+                float       fMetallic       = 0.4f,
                 float       fRoughness      = 0.7f)
             {
                 int iNextGroupId    = (int)nNumberOfGroups;
@@ -64,7 +64,7 @@ namespace Leap71
                 Voxels      oVoxels,
                 ColorFloat  clrColor,
                 float       fTransparency   = 0.9f,
-                float       fMetallic       = 0.3f,
+                float       fMetallic       = 0.4f,
                 float       fRoughness      = 0.7f)
             {
                 int iNextGroupId    = (int)nNumberOfGroups;
@@ -82,7 +82,7 @@ namespace Leap71
                 Lattice     oLattice,
                 ColorFloat  clrColor,
                 float       fTransparency   = 0.9f,
-                float       fMetallic       = 0.3f,
+                float       fMetallic       = 0.4f,
                 float       fRoughness      = 0.7f)
             {
                 int iNextGroupId    = (int)nNumberOfGroups;
@@ -101,7 +101,7 @@ namespace Leap71
                 float       fBeam,
                 ColorFloat  clrColor,
                 float       fTransparency   = 0.9f,
-                float       fMetallic       = 0.3f,
+                float       fMetallic       = 0.4f,
                 float       fRoughness      = 0.7f)
             {
                 Lattice oLattice = new Lattice();
@@ -116,7 +116,7 @@ namespace Leap71
                 float       fBeam2,
                 ColorFloat  clrColor,
                 float       fTransparency   = 0.9f,
-                float       fMetallic       = 0.3f,
+                float       fMetallic       = 0.4f,
                 float       fRoughness      = 0.7f)
             {
                 Lattice oLattice = new Lattice();
@@ -168,7 +168,7 @@ namespace Leap71
                 float           fBeam,
                 ColorFloat      clrColor,
                 float           fTransparency   = 0.9f,
-                float           fMetallic       = 0.3f,
+                float           fMetallic       = 0.4f,
                 float           fRoughness      = 0.7f)
             {
                 Lattice oLattice = new Lattice();
@@ -247,7 +247,7 @@ namespace Leap71
                 float       fRadius,
                 ColorFloat  clrColor,
                 float       fTransparency   = 0.9f,
-                float       fMetallic       = 0.3f,
+                float       fMetallic       = 0.4f,
                 float       fRoughness      = 0.7f)
             {
                 Lattice oLattice    = new Lattice();
@@ -365,9 +365,9 @@ namespace Leap71
                 PreviewLine(new List<Vector3>()
                 {
                     oBox.vecGetSurfacePoint(-1, -1, 0),
-                    oBox.vecGetSurfacePoint(-1, 1, 0),
-                    oBox.vecGetSurfacePoint(1, 1, 0),
-                    oBox.vecGetSurfacePoint(1, -1, 0),
+                    oBox.vecGetSurfacePoint(-1,  1, 0),
+                    oBox.vecGetSurfacePoint( 1,  1, 0),
+                    oBox.vecGetSurfacePoint( 1, -1, 0),
                     oBox.vecGetSurfacePoint(-1, -1, 0)
                 }, clrColor);
 
@@ -376,9 +376,9 @@ namespace Leap71
                 PreviewLine(new List<Vector3>()
                 {
                     oBox.vecGetSurfacePoint(-1, -1, 1),
-                    oBox.vecGetSurfacePoint(-1, 1, 1),
-                    oBox.vecGetSurfacePoint(1, 1, 1),
-                    oBox.vecGetSurfacePoint(1, -1, 1),
+                    oBox.vecGetSurfacePoint(-1,  1, 1),
+                    oBox.vecGetSurfacePoint( 1,  1, 1),
+                    oBox.vecGetSurfacePoint( 1, -1, 1),
                     oBox.vecGetSurfacePoint(-1, -1, 1)
                 }, clrColor);
 

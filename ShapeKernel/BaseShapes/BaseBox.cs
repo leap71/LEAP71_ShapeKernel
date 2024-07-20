@@ -43,9 +43,9 @@ namespace Leap71
     {
         public class BaseBox : BaseShape, IMeshBaseShape,ISurfaceBaseShape
         {
-            protected uint              m_nLengthSteps;
-            protected uint              m_nWidthSteps;
-            protected uint              m_nDepthSteps;
+            protected int               m_nLengthSteps;
+            protected int               m_nWidthSteps;
+            protected int               m_nDepthSteps;
             protected LineModulation    m_oWidthModulation;
             protected LineModulation    m_oDepthModulation;
             protected Frames            m_aFrames;
@@ -69,7 +69,6 @@ namespace Leap71
 
                 m_oWidthModulation  = new LineModulation(fWidth);
                 m_oDepthModulation  = new LineModulation(fDepth);
-                m_bTransformed      = false;
             }
 
             protected BaseBox() { }
@@ -92,7 +91,6 @@ namespace Leap71
 
                 m_oWidthModulation  = new LineModulation(fWidth);
                 m_oDepthModulation  = new LineModulation(fDepth);
-                m_bTransformed      = false;
             }
 
 
@@ -111,17 +109,17 @@ namespace Leap71
                 SetLengthSteps(500);
             }
 
-            public void SetWidthSteps(uint nWidthSteps)
+            public void SetWidthSteps(int nWidthSteps)
             {
                 m_nWidthSteps = Math.Max(5, nWidthSteps);
             }
 
-            public void SetDepthSteps(uint nDepthSteps)
+            public void SetDepthSteps(int nDepthSteps)
             {
                 m_nDepthSteps = Math.Max(5, nDepthSteps);
             }
 
-            public void SetLengthSteps(uint nLengthSteps)
+            public void SetLengthSteps(int nLengthSteps)
             {
                 m_nLengthSteps = Math.Max(5, nLengthSteps);
             }
@@ -151,7 +149,7 @@ namespace Leap71
             protected void AddTopSurface(ref Mesh oMesh, bool bFlip = false)
             {
                 //iterate across width and depth
-                int iLengthStep     = (int)m_nLengthSteps - 1;
+                int iLengthStep     = m_nLengthSteps - 1;
                 float fLengthRatio  = fGetLengthRatioFromStep(iLengthStep);
 
                 for (int iWidthStep = 1; iWidthStep < m_nWidthSteps; iWidthStep++)
@@ -399,11 +397,7 @@ namespace Leap71
                 float fY            = 0.5f * fDepthRatio * fGetDepth(fLengthRatio);
                 Vector3 vecPt       = vecSpinePos + fX * vecLocalX + fY * vecLocalY;
 
-                if (m_bTransformed == true)
-                {
-                    vecPt = m_oTrafo(vecPt);
-                }
-                return vecPt;
+                return m_fnTrafo(vecPt);;
             }
 
             protected float fGetDepth(float fLengthRatio)

@@ -64,8 +64,8 @@ namespace Leap71
                 m_aFrames           = new Frames(fLength, oFrame);
                 int iImageWidth     = oImage.nWidth;
                 int iImageHeight    = oImage.nHeight;
-                SetWidthSteps((uint)iImageWidth);
-                SetDepthSteps((uint)iImageHeight);
+                SetWidthSteps(iImageWidth);
+                SetDepthSteps(iImageHeight);
                 SetLengthSteps(5);
 
                 float fWidth        = fRefWidth;
@@ -73,8 +73,6 @@ namespace Leap71
 
                 m_oWidthModulation  = new LineModulation(fWidth);
                 m_oDepthModulation  = new LineModulation(fDepth);
-                m_bTransformed      = false;
-
                 m_oTopModulation    = new SurfaceModulation(oImage, oMappingFunc);
             }
 
@@ -88,7 +86,9 @@ namespace Leap71
                 return m_oDepthModulation.m_fConstValue;
             }
 
-            public override Vector3 vecGetSurfacePoint(float fWidthRatio, float fDepthRatio, float fLengthRatio)
+            public override Vector3 vecGetSurfacePoint( float fWidthRatio,
+                                                        float fDepthRatio,
+                                                        float fLengthRatio)
             {
                 Vector3 vecSpinePos = m_aFrames.vecGetSpineAlongLength(fLengthRatio);
                 Vector3 vecLocalX   = m_aFrames.vecGetLocalXAlongLength(fLengthRatio);
@@ -108,11 +108,7 @@ namespace Leap71
                     vecPt += dZ * vecLocalZ;
                 }
 
-                if (m_bTransformed == true)
-                {
-                    vecPt = m_oTrafo(vecPt);
-                }
-                return vecPt;
+                return m_fnTrafo(vecPt);
             }
         }
     }
