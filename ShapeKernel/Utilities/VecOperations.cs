@@ -43,6 +43,14 @@ namespace Leap71
         public static class VecOperations
         {
             /// <summary>
+            /// Returns the planar radius (XY) of the point with respect to the Z axis on origin.
+            /// </summary>
+            public static float R(this Vector3 vecPt)
+            {
+                return fGetRadius(vecPt);
+            }
+
+            /// <summary>
             /// Sets the vector's length to 1.
             /// </summary>
             public static Vector3 Normalize(this Vector3 vecA)
