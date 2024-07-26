@@ -74,7 +74,20 @@ namespace Leap71
                 }
             }
 
-            public enum EExport { STL, TGA, PNG, CSV, VDB };
+            public static void ExportVoxelsToCLIFile(Voxels oVoxels, string strFilePath)
+            {
+                try
+                {
+                    oVoxels.SaveToCliFile(strFilePath);
+                    Library.Log($"CLI Export: {strFilePath} exported.");
+                }
+                catch (Exception e)
+                {
+                    Library.Log("Could not save CLI: " + e.Message);
+                }
+            }
+
+            public enum EExport { STL, TGA, PNG, CSV, VDB, CLI };
             public static string strGetExportPath(EExport eExport, string strFilename)
             {
                 string strFormatStub    = "." + eExport.ToString();

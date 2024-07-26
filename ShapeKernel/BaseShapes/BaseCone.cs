@@ -40,8 +40,8 @@ namespace Leap71
 {
 	namespace ShapeKernel
 	{
-		public class BaseCone
-		{
+		public class BaseCone : BaseShape
+        {
 			protected BaseCylinder	m_oCyl;
 			protected float			m_fStartRadius;
 			protected float			m_fEndRadius;
@@ -64,9 +64,10 @@ namespace Leap71
 				return m_fStartRadius + fLengthRatio * (m_fEndRadius - m_fStartRadius);
 			}
 
-			public Voxels voxConstruct()
+			public override Voxels voxConstruct()
 			{
-				return m_oCyl.voxConstruct();
+				m_oCyl.SetTransformation(m_fnTrafo);
+                return m_oCyl.voxConstruct();
             }
 		}
 	}

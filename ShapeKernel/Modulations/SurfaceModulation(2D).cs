@@ -133,9 +133,11 @@ namespace Leap71
                 }
                 else if (m_eInput == EInput.IMAGE)
                 {
-                    int iWidth          = (int)(fPhi * (m_oImage.nWidth - 1));
-                    int iHeight         = (int)(fLengthRatio * (m_oImage.nHeight - 1));
-                    float fGrayValue    = m_oImage.fValue(iWidth, iHeight);
+                    int nXRange         = m_oImage.nWidth - 1;
+                    int nYRange         = m_oImage.nHeight - 1;
+                    int x               = (int)float.Round(nXRange - fPhi * nXRange);
+                    int y               = (int)float.Round(fLengthRatio * nYRange);
+                    float fGrayValue    = m_oImage.fValue(x, y);
                     float fValue        = m_oMappingFunc(fGrayValue);
                     return fValue;
                 }

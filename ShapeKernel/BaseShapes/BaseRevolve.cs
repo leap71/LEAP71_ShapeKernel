@@ -1,4 +1,39 @@
-﻿using System.Numerics;
+﻿//
+// SPDX-License-Identifier: Apache-2.0
+//
+// The LEAP 71 ShapeKernel is an open source geometry engine
+// specifically for use in Computational Engineering Models (CEM).
+//
+// For more information, please visit https://leap71.com/shapekernel
+// 
+// This project is developed and maintained by LEAP 71 - © 2023 by LEAP 71
+// https://leap71.com
+//
+// Computational Engineering will profoundly change our physical world in the
+// years ahead. Thank you for being part of the journey.
+//
+// We have developed this library to be used widely, for both commercial and
+// non-commercial projects alike. Therefore, have released it under a permissive
+// open-source license.
+// 
+// The LEAP 71 ShapeKernel is based on the PicoGK compact computational geometry 
+// framework. See https://picogk.org for more information.
+//
+// LEAP 71 licenses this file to you under the Apache License, Version 2.0
+// (the "License"); you may not use this file except in compliance with the
+// License. You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, THE SOFTWARE IS
+// PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED.
+//
+// See the License for the specific language governing permissions and
+// limitations under the License.   
+//
+
+
+using System.Numerics;
 using PicoGK;
 
 
@@ -35,7 +70,6 @@ namespace Leap71
                 m_oOuterRadiusModulation = new LineModulation(fOutwardRadius);
                 m_oInnerRadiusModulation = new LineModulation(fInwardRadius);
                 m_aFrames                = aFrames;
-                m_bTransformed           = false;
             }
 
             public void SetRadius(LineModulation oInnerRadiusOverCylinder, LineModulation oOuterRadiusOverCylinder)
@@ -186,8 +220,8 @@ namespace Leap71
                         Vector3 vecPt1 = vecGetSurfacePoint(fLengthRatio2, fPhi1, fRadiusRatio);
                         Vector3 vecPt2 = vecGetSurfacePoint(fLengthRatio2, fPhi2, fRadiusRatio);
                         Vector3 vecPt3 = vecGetSurfacePoint(fLengthRatio1, fPhi2, fRadiusRatio);
-                        oMesh.nAddTriangle(vecPt0, vecPt2, vecPt1);
-                        oMesh.nAddTriangle(vecPt0, vecPt3, vecPt2);
+                        oMesh.nAddTriangle(vecPt0, vecPt1, vecPt2);
+                        oMesh.nAddTriangle(vecPt0, vecPt2, vecPt3);
                     }
                 }
             }
@@ -228,11 +262,7 @@ namespace Leap71
                 Vector3 vecPt           = vecSpinePos + fRadius * vecLocalX;
                 vecPt                   = VecOperations.vecRotateAroundAxis(vecPt, fPhi, m_oFrame.vecGetLocalZ(), m_oFrame.vecGetPosition());
 
-                if (m_bTransformed == true)
-                {
-                    vecPt = m_oTrafo(vecPt);
-                }
-                return vecPt;
+                return m_fnTrafo(vecPt);
             }
 
             public Vector3 vecGetSpineAlongLength(float fLengthRatio)
@@ -262,6 +292,28 @@ namespace Leap71
             public Vector3 vecGetInnerSurfacePoint(float fPhi, float fLengthRatio)
             {
                 return vecGetSurfacePoint(fLengthRatio, fPhi / (2f * MathF.PI), 0f);
+            }
+
+            public static Frames aGetFramesFromContour(GenericContour oContour, LocalFrame? oFrame = null)
+            {
+                if (oFrame == null)
+                {
+                    oFrame = new LocalFrame();
+                }
+
+                uint nSamples = 500;
+                List<Vector3> aPoints = new List<Vector3>();
+                for (int i = 0; i < nSamples; i++)
+                {
+                    float fLR = 1f / (nSamples - 1f) * i;
+                    float fZ = fLR * oContour.m_fTotalLength;
+                    float fRadius = oContour.m_oModulation.fGetModulation(fLR);
+                    Vector3 vecRel = new Vector3(fRadius, 0, fZ);
+                    Vector3 vecPt = VecOperations.vecTranslatePointOntoFrame(oFrame, vecRel);
+                    aPoints.Add(vecPt);
+                }
+                Frames aFrames = new Frames(aPoints, Frames.EFrameType.CYLINDRICAL, 0.5f);
+                return aFrames;
             }
         }
     }

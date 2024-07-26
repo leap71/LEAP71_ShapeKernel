@@ -277,5 +277,32 @@ namespace Leap71
                 }
             }
         }
+
+        public class Distribution
+        {
+            public float          m_fTotalLength;
+            public LineModulation m_oModulation;
+
+            /// <summary>
+            /// This class bundles a line modulation (which is normalized) with a physical length.
+            /// It can be used to store data distributions consistently.
+            /// </summary>
+            public Distribution(float           fTotalLength,
+                                LineModulation  oModulation)
+            {
+                m_fTotalLength = fTotalLength;
+                m_oModulation  = oModulation;
+            }
+        }
+
+        public class GenericContour : Distribution
+        {
+            /// <summary>
+            /// This class bundles a line modulation (which is normalized) with a physical length.
+            /// It is a special case of a distribution that describes countours of rotationally symmetric objects.
+            /// </summary>
+            public GenericContour(  float          fTotalLength,
+                                    LineModulation oModulation) : base(fTotalLength, oModulation) { }
+        }
     }
 }

@@ -57,7 +57,6 @@ namespace Leap71
                 SetLengthSteps(100);
 
                 m_oRadiusModulation = new LineModulation(fRadius);
-                m_bTransformed      = false;
             }
 
             /// <summary>
@@ -70,7 +69,6 @@ namespace Leap71
                 SetLengthSteps(500);
 
                 m_oRadiusModulation = new LineModulation(fRadius);
-                m_bTransformed      = false;
             }
 
 
@@ -118,18 +116,12 @@ namespace Leap71
             /// </summary>
             public Vector3 vecGetSpinePoint(float fLengthRatio)
             {
-                Vector3 vecPt = vecPt = m_aFrames.vecGetSpineAlongLength(fLengthRatio);
-                if (m_bTransformed == true)
-                {
-                    vecPt = m_oTrafo(vecPt);
-                }
-                return vecPt;
+                return m_fnTrafo(m_aFrames.vecGetSpineAlongLength(fLengthRatio));
             }
 
             protected float fGetRadius(float fLengthRatio)
             {
-                float fRadius = m_oRadiusModulation.fGetModulation(fLengthRatio);
-                return fRadius;
+                return m_oRadiusModulation.fGetModulation(fLengthRatio);
             }
         }
     }

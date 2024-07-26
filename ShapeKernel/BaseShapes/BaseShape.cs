@@ -63,20 +63,23 @@ namespace Leap71
 
         public abstract class BaseShape
         {
-            public delegate Vector3     TrafoFunc(Vector3 vecPt);
-            protected TrafoFunc         m_oTrafo;
-            protected bool              m_bTransformed;
-
             public BaseShape() { }
 
-            //settings
             /// <summary>
             /// Set a transformation to the shape that will be applies point-wise during construction.
             /// </summary>
-            public void SetTransformation(TrafoFunc oTrafo)
+            public void SetTransformation(fnVertexTransformation fnTrafo)
             {
-                m_oTrafo        = oTrafo;
-                m_bTransformed  = true;
+                m_fnTrafo = fnTrafo;
+            }
+
+            public delegate Vector3 fnVertexTransformation(Vector3 vecPt);
+
+            protected fnVertexTransformation m_fnTrafo = vecNoTransform;
+
+            public static Vector3 vecNoTransform(Vector3 vecPt)
+            {
+                return vecPt;
             }
 
             //construction
