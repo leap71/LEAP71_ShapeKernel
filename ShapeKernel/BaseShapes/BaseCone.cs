@@ -69,6 +69,11 @@ namespace Leap71
 				m_oCyl.SetTransformation(m_fnTrafo);
                 return m_oCyl.voxConstruct();
             }
+
+			public BaseCylinder oGetBaseCylinder()
+			{
+				return m_oCyl;
+			}
 		}
 	}
 }
