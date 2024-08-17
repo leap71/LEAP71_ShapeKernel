@@ -42,33 +42,16 @@ namespace Leap71
     {
         public partial class Sh
         {
-            public static Voxels voxShell(Voxels oVoxels, float fNegOffset, float fPosOffset, float fSmooth = 0f)
-            {
-                if (fNegOffset > fPosOffset)
-                {
-                    float fTemp     = fNegOffset;
-                    fNegOffset      = fPosOffset;
-                    fPosOffset      = fTemp;
-                }
-                Voxels voxInner     = voxOffset(oVoxels, fNegOffset);
-                if (fSmooth > 0)
-                {
-                    voxInner        = voxSmoothen(voxInner, fSmooth);
-                }
-                Voxels voxOuter     = voxOffset(oVoxels, fPosOffset);
-                Voxels voxGResult   = voxSubtract(voxOuter, voxInner);
-                return voxGResult;
-            }
+            [Obsolete("Use PicoGK.Voxels.voxShell instead")]
+            public static Voxels voxShell(  Voxels vox, 
+                                            float fNegOffset, 
+                                            float fPosOffset, 
+                                            float fSmooth = 0f)
+                => vox.voxShell(fNegOffset, fPosOffset, fSmooth);
 
+            [Obsolete("Use PicoGK.Voxels.voxCombineAll instead")]
             public static Voxels voxUnion(List<Voxels> aVoxelList)
-            {
-                Voxels voxAccum = aVoxelList[0];
-                for (int i = 1; i < aVoxelList.Count; i++)
-                {
-                    voxAccum = voxUnion(voxAccum, aVoxelList[i]);
-                }
-                return voxAccum;
-            }
+                => Voxels.voxCombineAll(aVoxelList);
         }
     }
 }

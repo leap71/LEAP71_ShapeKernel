@@ -32,9 +32,7 @@
 // limitations under the License.   
 //
 
-
 using PicoGK;
-
 
 namespace Leap71
 {
@@ -42,61 +40,39 @@ namespace Leap71
     {
         public partial class Sh
         {
-            public static Voxels voxOffset(Voxels oVoxels, float fDistInMM)
-            {
-                Voxels oNewVoxels = new Voxels(oVoxels);
-                oNewVoxels.Offset(fDistInMM);
-                return oNewVoxels;
-            }
+            [Obsolete("Use PicoGK.Voxels.voxOffset instead")]
+            public static Voxels voxOffset(Voxels vox, float fDistInMM)
+                => vox.voxOffset(fDistInMM);
+            
+            [Obsolete("Use PicoGK.Voxels.voxSmoothen instead")]
+            public static Voxels voxSmoothen(Voxels vox, float fSmoothInMM)
+                => vox.voxSmoothen(fSmoothInMM);
 
-            public static Voxels voxSmoothen(Voxels oVoxels, float fSmoothInMM)
-            {
-                Voxels oNewVoxels = new Voxels(oVoxels);
-                oNewVoxels.TripleOffset(fSmoothInMM);
-                return oNewVoxels;
-            }
+            [Obsolete("Use PicoGK.Voxels.voxOverOffset instead")]
+            public static Voxels voxOverOffset( Voxels vox, 
+                                                float fInitialDistInMM, 
+                                                float fFinalDistInMM)
+                => vox.voxOverOffset(fInitialDistInMM, fFinalDistInMM);
 
-            public static Voxels voxOverOffset(Voxels oVoxels, float fInitialDistInMM, float fFinalDistInMM)
-            {
-                Voxels oNewVoxels = new Voxels(oVoxels);
-                oNewVoxels.DoubleOffset(fInitialDistInMM, -(fInitialDistInMM - fFinalDistInMM));
-                return oNewVoxels;
-            }
+            [Obsolete("Use PicoGK.Voxels.voxProjectZSlice instead")]
+            public static Voxels voxExtrudeZSlice(Voxels vox, float fStartHeight, float fEndHeight)
+                => vox.voxProjectZSlice(fStartHeight, fEndHeight);
 
-            public static Voxels voxExtrudeZSlice(Voxels oVoxels, float fStartHeight, float fEndHeight)
-            {
-                Voxels oNewVoxels = new Voxels(oVoxels);
-                oNewVoxels.ProjectZSlice(fStartHeight, fEndHeight);
-                return oNewVoxels;
-            }
+            [Obsolete("Use PicoGK.Voxels.voxBoolAdd instead")]
+            public static Voxels voxUnion(Voxels vox1, Voxels vox2)
+                => vox1.voxBoolAdd(vox2);
 
-            public static Voxels voxUnion(Voxels oVoxels1, Voxels oVoxels2)
-            {
-                Voxels oNewVoxels = new Voxels(oVoxels1);
-                oNewVoxels.BoolAdd(oVoxels2);
-                return oNewVoxels;
-            }
+            [Obsolete("Use PicoGK.Voxels.voxBoolSubtract instead")]
+            public static Voxels voxSubtract(in Voxels vox1, Voxels vox2)
+                => vox1.voxBoolSubtract(vox2);
 
-            public static Voxels voxSubtract(in Voxels oVoxels1, Voxels oVoxels2)
-            {
-                Voxels oNewVoxels = new Voxels(oVoxels1);
-                oNewVoxels.BoolSubtract(oVoxels2);
-                return oNewVoxels;
-            }
+            [Obsolete("Use PicoGK.Voxels.voxBoolIntersect instead")]
+            public static Voxels voxIntersect(Voxels vox1, Voxels vox2)
+                => vox1.voxBoolIntersect(vox2);
 
-            public static Voxels voxIntersect(Voxels oVoxels1, Voxels oVoxels2)
-            {
-                Voxels oNewVoxels = new Voxels(oVoxels1);
-                oNewVoxels.BoolIntersect(oVoxels2);
-                return oNewVoxels;
-            }
-
-            public static Voxels voxIntersectImplicit(Voxels oVoxels, IImplicit sdfObject)
-            {
-                Voxels oNewVoxels = new Voxels(oVoxels);
-                oNewVoxels.IntersectImplicit(sdfObject);
-                return oNewVoxels;
-            }
+            [Obsolete("Use PicoGK.Voxels.voxIntersectImplicit instead")]
+            public static Voxels voxIntersectImplicit(Voxels vox, IImplicit sdfObject)
+                => vox.voxIntersectImplicit(sdfObject);
         }
     }
 }

@@ -32,10 +32,8 @@
 // limitations under the License.   
 //
 
-
 using System.Numerics;
 using PicoGK;
-
 
 namespace Leap71
 {
@@ -43,34 +41,28 @@ namespace Leap71
     {
         public partial class Sh
         {
+            [Obsolete("Use PicoGK.Voxels.vecClosestPointOnSurface instead")]
             /// <summary>
             /// Returns a point on the voxelfield that is closest to the specified point.
-            /// "Snapp to surface".
+            /// "Snap to surface".
             /// </summary>
-            public static Vector3 vecGetClosestSurfacePoint(Voxels oVoxels, Vector3 vecPt)
-            {
-                bool bValid = oVoxels.bClosestPointOnSurface(in vecPt, out Vector3 vecSurface);
-                return vecSurface;
-            }
+            public static Vector3 vecGetClosestSurfacePoint(Voxels vox, Vector3 vecPt)
+                => vox.vecClosestPointOnSurface(vecPt);
 
+            [Obsolete("Use PicoGK.Voxels.vecRayCastToSurface instead")]
             /// <summary>
             /// Returns a point on the voxelfield as a result from raycasting from the specified point into the specidied direction.
             /// "Project to surface".
             /// </summary>
-            public static Vector3 vecGetProjectedSurfacePoint(Voxels oVoxels, Vector3 vecPt, Vector3 vecDir)
-            {
-                bool bValid = oVoxels.bRayCastToSurface(in vecPt, in vecDir, out Vector3 vecSurface);
-                return vecSurface;
-            }
+            public static Vector3 vecGetProjectedSurfacePoint(Voxels vox, Vector3 vecPt, Vector3 vecDir)
+                => vox.vecRayCastToSurface(vecPt, vecDir);
 
+            [Obsolete("Use PicoGK.Voxels.oCalculateBoundingBox instead")]
             /// <summary>
             /// Returns the axis-aligned bounding box of a voxelfield.
             /// </summary>
-            public static BBox3 oGetBoundingBox(Voxels oVoxels)
-            {
-                oVoxels.CalculateProperties(out float fCubicMM, out BBox3 oBox);
-                return oBox;
-            }
+            public static BBox3 oGetBoundingBox(Voxels vox)
+                => vox.oCalculateBoundingBox();
         }
     }
 }
