@@ -126,6 +126,7 @@ namespace Leap71
                 return vecPt;
             }
 
+            [Obsolete("Use float.Clamp() instead")]
             /// <summary>
             /// Clips a value at min and max limits.
             /// </summary>
