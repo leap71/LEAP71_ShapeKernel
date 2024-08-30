@@ -215,11 +215,19 @@ namespace Leap71
             }
 
             /// <summary>
+            /// Multiplies a modulation with a factor.
+            /// </summary>
+            public static LineModulation operator *(float fFactor, LineModulation oMod)
+            {
+                return ModulationMultiplication.oGetScaledModulation(fFactor, oMod);
+            }
+
+            /// <summary>
             /// Adds one modulation to another.
             /// </summary>
             public static LineModulation operator +(LineModulation oMod1, LineModulation oMod2)
             {
-                return ModulationUtil.oGetSumOfModulations(oMod1, oMod2);
+                return ModulationAddition.oGetSumOfModulations(oMod1, oMod2);
             }
 
             /// <summary>
@@ -227,16 +235,16 @@ namespace Leap71
             /// </summary>
             public static LineModulation operator -(LineModulation oMod1, LineModulation oMod2)
             {
-                return ModulationUtil.oGetDifferenceOfModulations(oMod1, oMod2);
+                return ModulationAddition.oGetDifferenceOfModulations(oMod1, oMod2);
             }
 
-            protected class ModulationUtil
+            protected class ModulationAddition
             {
                 protected LineModulation m_oMod1;
                 protected LineModulation m_oMod2;
 
-                protected ModulationUtil(   LineModulation oMod1,
-                                            LineModulation oMod2)
+                protected ModulationAddition(   LineModulation oMod1,
+                                                LineModulation oMod2)
                 {
                     m_oMod1 = oMod1;
                     m_oMod2 = oMod2;
@@ -245,14 +253,14 @@ namespace Leap71
                 public static LineModulation oGetSumOfModulations(  LineModulation oMod1,
                                                                     LineModulation oMod2)
                 {
-                    ModulationUtil oUtil = new (oMod1, oMod2);
+                    ModulationAddition oUtil = new (oMod1, oMod2);
                     return oUtil.oGetSumOfModulations();
                 }
 
                 public static LineModulation oGetDifferenceOfModulations(   LineModulation oMod1,
                                                                             LineModulation oMod2)
                 {
-                    ModulationUtil oUtil = new(oMod1, oMod2);
+                    ModulationAddition oUtil = new(oMod1, oMod2);
                     return oUtil.oGetDifferenceOfModulations();
                 }
 
@@ -274,6 +282,37 @@ namespace Leap71
                 protected float fGetSubtractedModulation(float fLengthRatio)
                 {
                     return m_oMod1.fGetModulation(fLengthRatio) - m_oMod2.fGetModulation(fLengthRatio);
+                }
+            }
+
+            protected class ModulationMultiplication
+            {
+                protected float             m_fFactor;
+                protected LineModulation    m_oMod;
+                
+
+                protected ModulationMultiplication( float fFactor,
+                                                    LineModulation oMod)
+                {
+                    m_fFactor   = fFactor;
+                    m_oMod      = oMod;
+                }
+
+                public static LineModulation oGetScaledModulation(  float fFactor,
+                                                                    LineModulation oMod)
+                {
+                    ModulationMultiplication oUtil = new (fFactor, oMod);
+                    return oUtil.oGetMultipliedModulation();
+                }
+
+                protected LineModulation oGetMultipliedModulation()
+                {
+                    return new LineModulation(fGetScaledModulation);
+                }
+
+                protected float fGetScaledModulation(float fLengthRatio)
+                {
+                    return m_fFactor * m_oMod.fGetModulation(fLengthRatio);
                 }
             }
         }
