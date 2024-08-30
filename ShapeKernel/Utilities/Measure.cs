@@ -70,20 +70,18 @@ namespace Leap71
             /// Adds all triangle areas to obtain the final result.
             /// The area is measured in mm^2.
             /// </summary>
-            public static float fGetSurfaceArea(Mesh oMesh)
+            public static float fGetSurfaceArea(Mesh msh)
 			{
-				int nTriangleCount	= oMesh.nTriangleCount();
+				int nTriangleCount	= msh.nTriangleCount();
 
-				float fArea			= 0;
-				for (int i = 0; i < nTriangleCount; i++)
+				float fArea = 0;
+                
+				for (int n = 0; n < nTriangleCount; n++)
 				{
-					Triangle oTri	= oMesh.oTriangleAt(i);
-					int nIndexA		= oTri.A;
-                    int nIndexB		= oTri.B;
-                    int nIndexC		= oTri.C;
-					Vector3 vecA	= oMesh.vecVertexAt(nIndexA);
-                    Vector3 vecB	= oMesh.vecVertexAt(nIndexB);
-                    Vector3 vecC	= oMesh.vecVertexAt(nIndexC);
+                    msh.GetTriangle(    n, 
+                                        out Vector3 vecA, 
+                                        out Vector3 vecB, 
+                                        out Vector3 vecC);
 
 					fArea += fGetTriangleArea(vecA, vecB, vecC);
                 }
