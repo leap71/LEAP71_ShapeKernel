@@ -6,7 +6,7 @@
 //
 // For more information, please visit https://leap71.com/shapekernel
 // 
-// This project is developed and maintained by LEAP 71 - © 2023 by LEAP 71
+// This project is developed and maintained by LEAP 71 - © 2024 by LEAP 71
 // https://leap71.com
 //
 // Computational Engineering will profoundly change our physical world in the
@@ -69,6 +69,11 @@ namespace Leap71
 				m_oCyl.SetTransformation(m_fnTrafo);
                 return m_oCyl.voxConstruct();
             }
+
+			public BaseCylinder oGetBaseCylinder()
+			{
+				return m_oCyl;
+			}
 		}
 	}
 }
