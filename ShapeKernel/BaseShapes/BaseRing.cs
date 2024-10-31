@@ -107,13 +107,12 @@ namespace Leap71
                         float fPhiRatio1 = fGetPhiRatioFromStep(iPhiStep - 1);
                         float fPhiRatio2 = fGetPhiRatioFromStep(iPhiStep);
 
-                        Vector3 vec0 = vecGetSurfacePoint(fAlphaRatio1, fPhiRatio1, fRadiusRatio);
-                        Vector3 vec1 = vecGetSurfacePoint(fAlphaRatio2, fPhiRatio1, fRadiusRatio);
-                        Vector3 vec2 = vecGetSurfacePoint(fAlphaRatio2, fPhiRatio2, fRadiusRatio);
-                        Vector3 vec3 = vecGetSurfacePoint(fAlphaRatio1, fPhiRatio2, fRadiusRatio);
+                        Vector3 vecPt0 = vecGetSurfacePoint(fAlphaRatio1, fPhiRatio1, fRadiusRatio);
+                        Vector3 vecPt1 = vecGetSurfacePoint(fAlphaRatio2, fPhiRatio1, fRadiusRatio);
+                        Vector3 vecPt2 = vecGetSurfacePoint(fAlphaRatio2, fPhiRatio2, fRadiusRatio);
+                        Vector3 vecPt3 = vecGetSurfacePoint(fAlphaRatio1, fPhiRatio2, fRadiusRatio);
 
-                        oMesh.nAddTriangle(vec0, vec1, vec2);
-                        oMesh.nAddTriangle(vec0, vec2, vec3);
+                        oMesh.AddQuad(vecPt0, vecPt1, vecPt2, vecPt3);
                     }
                 }
                 return oMesh;

@@ -167,16 +167,7 @@ namespace Leap71
                         Vector3 vecPt2 = vecGetSurfacePoint(fWidthRatio2, fDepthRatio2, fLengthRatio);
                         Vector3 vecPt3 = vecGetSurfacePoint(fWidthRatio2, fDepthRatio1, fLengthRatio);
 
-                        if (bFlip == false)
-                        {
-                            oMesh.nAddTriangle(vecPt0, vecPt1, vecPt2);
-                            oMesh.nAddTriangle(vecPt0, vecPt2, vecPt3);
-                        }
-                        else
-                        {
-                            oMesh.nAddTriangle(vecPt0, vecPt2, vecPt1);
-                            oMesh.nAddTriangle(vecPt0, vecPt3, vecPt2);
-                        }
+                        oMesh.AddQuad(vecPt0, vecPt1, vecPt2, vecPt3, bFlip);
                     }
                 }
             }
@@ -202,16 +193,7 @@ namespace Leap71
                         Vector3 vecPt2 = vecGetSurfacePoint(fWidthRatio2, fDepthRatio2, fLengthRatio);
                         Vector3 vecPt3 = vecGetSurfacePoint(fWidthRatio2, fDepthRatio1, fLengthRatio);
 
-                        if (bFlip == false)
-                        {
-                            oMesh.nAddTriangle(vecPt0, vecPt1, vecPt2);
-                            oMesh.nAddTriangle(vecPt0, vecPt2, vecPt3);
-                        }
-                        else
-                        {
-                            oMesh.nAddTriangle(vecPt0, vecPt2, vecPt1);
-                            oMesh.nAddTriangle(vecPt0, vecPt3, vecPt2);
-                        }
+                        oMesh.AddQuad(vecPt0, vecPt1, vecPt2, vecPt3, bFlip);
                     }
                 }
             }
@@ -237,16 +219,7 @@ namespace Leap71
                         Vector3 vecPt2 = vecGetSurfacePoint(fWidthRatio, fDepthRatio2, fLengthRatio2);
                         Vector3 vecPt3 = vecGetSurfacePoint(fWidthRatio, fDepthRatio1, fLengthRatio2);
 
-                        if (bFlip == false)
-                        {
-                            oMesh.nAddTriangle(vecPt0, vecPt1, vecPt2);
-                            oMesh.nAddTriangle(vecPt0, vecPt2, vecPt3);
-                        }
-                        else
-                        {
-                            oMesh.nAddTriangle(vecPt0, vecPt2, vecPt1);
-                            oMesh.nAddTriangle(vecPt0, vecPt3, vecPt2);
-                        }
+                        oMesh.AddQuad(vecPt0, vecPt1, vecPt2, vecPt3, bFlip);
                     }
                 }
             }
@@ -272,16 +245,7 @@ namespace Leap71
                         Vector3 vecPt2 = vecGetSurfacePoint(fWidthRatio, fDepthRatio2, fLengthRatio2);
                         Vector3 vecPt3 = vecGetSurfacePoint(fWidthRatio, fDepthRatio1, fLengthRatio2);
 
-                        if (bFlip == false)
-                        {
-                            oMesh.nAddTriangle(vecPt0, vecPt1, vecPt2);
-                            oMesh.nAddTriangle(vecPt0, vecPt2, vecPt3);
-                        }
-                        else
-                        {
-                            oMesh.nAddTriangle(vecPt0, vecPt2, vecPt1);
-                            oMesh.nAddTriangle(vecPt0, vecPt3, vecPt2);
-                        }
+                        oMesh.AddQuad(vecPt0, vecPt1, vecPt2, vecPt3, bFlip);
                     }
                 }
             }
@@ -307,16 +271,7 @@ namespace Leap71
                         Vector3 vecPt2 = vecGetSurfacePoint(fWidthRatio2, fDepthRatio, fLengthRatio2);
                         Vector3 vecPt3 = vecGetSurfacePoint(fWidthRatio1, fDepthRatio, fLengthRatio2);
 
-                        if (bFlip == false)
-                        {
-                            oMesh.nAddTriangle(vecPt0, vecPt1, vecPt2);
-                            oMesh.nAddTriangle(vecPt0, vecPt2, vecPt3);
-                        }
-                        else
-                        {
-                            oMesh.nAddTriangle(vecPt0, vecPt2, vecPt1);
-                            oMesh.nAddTriangle(vecPt0, vecPt3, vecPt2);
-                        }
+                        oMesh.AddQuad(vecPt0, vecPt1, vecPt2, vecPt3, bFlip);
                     }
                 }
             }
@@ -342,16 +297,7 @@ namespace Leap71
                         Vector3 vecPt2 = vecGetSurfacePoint(fWidthRatio2, fDepthRatio, fLengthRatio2);
                         Vector3 vecPt3 = vecGetSurfacePoint(fWidthRatio1, fDepthRatio, fLengthRatio2);
 
-                        if (bFlip == false)
-                        {
-                            oMesh.nAddTriangle(vecPt0, vecPt1, vecPt2);
-                            oMesh.nAddTriangle(vecPt0, vecPt2, vecPt3);
-                        }
-                        else
-                        {
-                            oMesh.nAddTriangle(vecPt0, vecPt2, vecPt1);
-                            oMesh.nAddTriangle(vecPt0, vecPt3, vecPt2);
-                        }
+                        oMesh.AddQuad(vecPt0, vecPt1, vecPt2, vecPt3, bFlip);
                     }
                 }
             }

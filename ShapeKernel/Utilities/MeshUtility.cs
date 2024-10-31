@@ -53,12 +53,12 @@ namespace Leap71
                 {
                     for (int j = 1; j < aGrid[i].Count; j++)
                     {
-                        Vector3 vecPt1 = aGrid[i - 1][j - 1];
-                        Vector3 vecPt2 = aGrid[i - 1][j];
-                        Vector3 vecPt3 = aGrid[i][j];
-                        Vector3 vecPt4 = aGrid[i][j - 1];
-                        oMesh.nAddTriangle(vecPt4, vecPt1, vecPt2);
-                        oMesh.nAddTriangle(vecPt2, vecPt3, vecPt4);
+                        Vector3 vecPt0 = aGrid[i - 1][j - 1];
+                        Vector3 vecPt1 = aGrid[i - 1][j];
+                        Vector3 vecPt2 = aGrid[i][j];
+                        Vector3 vecPt3 = aGrid[i][j - 1];
+
+                        oMesh.AddQuad(vecPt0, vecPt1, vecPt2, vecPt3);
                     }
                 }
                 return oMesh;
@@ -74,8 +74,7 @@ namespace Leap71
                 Vector3 vecPt4)
             {
                 Mesh oMesh = new Mesh();
-                oMesh.nAddTriangle(vecPt4, vecPt1, vecPt2);
-                oMesh.nAddTriangle(vecPt2, vecPt3, vecPt4);
+                oMesh.AddQuad(vecPt1, vecPt2, vecPt3, vecPt4);
                 return oMesh;
             }
 
@@ -89,8 +88,7 @@ namespace Leap71
                 Vector3 vecPt3,
                 Vector3 vecPt4)
             {
-                oMesh.nAddTriangle(vecPt4, vecPt1, vecPt2);
-                oMesh.nAddTriangle(vecPt2, vecPt3, vecPt4);
+                oMesh.AddQuad(vecPt1, vecPt2, vecPt3, vecPt4);
             }
 
             /// <summary>
