@@ -6,7 +6,7 @@
 //
 // For more information, please visit https://leap71.com/shapekernel
 // 
-// This project is developed and maintained by LEAP 71 - © 2023 by LEAP 71
+// This project is developed and maintained by LEAP 71 - © 2024 by LEAP 71
 // https://leap71.com
 //
 // Computational Engineering will profoundly change our physical world in the
@@ -45,8 +45,6 @@ namespace Leap71
         {
             public enum EMethod         { START_END, MID_RANGE };
             protected EMethod           m_eMethod;
-            protected LineModulation    m_oStartModulation;
-            protected LineModulation    m_oEndModulation;
             protected LineModulation    m_oRangeModulation;
             protected LineModulation    m_oMidModulation;
 
@@ -68,17 +66,13 @@ namespace Leap71
                 m_eMethod = eMethod;
                 if (m_eMethod == EMethod.START_END)
                 {
-                    m_oStartModulation  = oStartOrMidModulation;
-                    m_oEndModulation    = oEndOrRangeModulation;
-                    m_oMidModulation    = new LineModulation(1f);
-                    m_oRangeModulation  = new LineModulation(1f);
+                    m_oMidModulation    = oStartOrMidModulation + 0.5f * oEndOrRangeModulation;
+                    m_oRangeModulation  = oEndOrRangeModulation - oStartOrMidModulation;
                 }
                 else
                 {
                     m_oMidModulation    = oStartOrMidModulation;
                     m_oRangeModulation  = oEndOrRangeModulation;
-                    m_oStartModulation  = new LineModulation(1f);
-                    m_oEndModulation    = new LineModulation(1f);
                 }
             }
 
@@ -99,17 +93,13 @@ namespace Leap71
                 m_eMethod = eMethod;
                 if (m_eMethod == EMethod.START_END)
                 {
-                    m_oStartModulation  = oStartOrMidModulation;
-                    m_oEndModulation    = oEndOrRangeModulation;
-                    m_oMidModulation    = new LineModulation(1f);
-                    m_oRangeModulation  = new LineModulation(1f);
+                    m_oMidModulation    = oStartOrMidModulation + 0.5f * oEndOrRangeModulation;
+                    m_oRangeModulation  = oEndOrRangeModulation - oStartOrMidModulation;
                 }
                 else
                 {
                     m_oMidModulation    = oStartOrMidModulation;
                     m_oRangeModulation  = oEndOrRangeModulation;
-                    m_oStartModulation  = new LineModulation(1f);
-                    m_oEndModulation    = new LineModulation(1f);
                 }
             }
 
@@ -193,7 +183,7 @@ namespace Leap71
                 Vector3 vecLocalY   = m_aFrames.vecGetLocalYAlongLength(fLengthRatio);
 
                 float fPhiRange     = fGetEndPhi(fLengthRatio) - fGetStartPhi(fLengthRatio);
-                float fPhi          = (fPhiRange) * fPhiRatio + fGetStartPhi(fLengthRatio);
+                float fPhi          = m_oMidModulation.fGetModulation(fLengthRatio) + (fPhiRatio - 0.5f) * m_oRangeModulation.fGetModulation(fLengthRatio);
 
                 float fOuterRadius  = fGetOuterRadius(fPhi, fLengthRatio);
                 float fInnerRadius  = fGetInnerRadius(fPhi, fLengthRatio);
@@ -208,31 +198,17 @@ namespace Leap71
 
             protected float fGetEndPhi(float fLengthRatio)
             {
-                float fPhi          = 0;
-                if (m_eMethod == EMethod.START_END)
-                {
-                    fPhi            = m_oEndModulation.fGetModulation(fLengthRatio);
-                }
-                else
-                {
-                    float fMid      = m_oMidModulation.fGetModulation(fLengthRatio);
-                    float fRange    = m_oRangeModulation.fGetModulation(fLengthRatio);
-                    fPhi            = fMid + 0.5f * fRange;
-                }
+                float fMid      = m_oMidModulation.fGetModulation(fLengthRatio);
+                float fRange    = m_oRangeModulation.fGetModulation(fLengthRatio);
+                float fPhi      = fMid + 0.5f * fRange;
                 return fPhi;
             }
 
             protected float fGetStartPhi(float fLengthRatio)
             {
-                float fPhi = 0;
-                if (m_eMethod == EMethod.START_END)
-                {
-                    fPhi = m_oStartModulation.fGetModulation(fLengthRatio);
-                }
-                else
-                {
-                    fPhi = m_oMidModulation.fGetModulation(fLengthRatio) - 0.5f * m_oRangeModulation.fGetModulation(fLengthRatio);
-                }
+                float fMid      = m_oMidModulation.fGetModulation(fLengthRatio);
+                float fRange    = m_oRangeModulation.fGetModulation(fLengthRatio);
+                float fPhi      = fMid - 0.5f * fRange;
                 return fPhi;
             }
         }

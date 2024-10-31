@@ -6,7 +6,7 @@
 //
 // For more information, please visit https://leap71.com/shapekernel
 // 
-// This project is developed and maintained by LEAP 71 - © 2023 by LEAP 71
+// This project is developed and maintained by LEAP 71 - © 2024 by LEAP 71
 // https://leap71.com
 //
 // Computational Engineering will profoundly change our physical world in the
@@ -114,6 +114,46 @@ namespace Leap71
                     oNewMesh.nAddTriangle(vecNewA, vecNewB, vecNewC);
                 }
                 return oNewMesh;
+            }
+
+            /// <summary>
+            /// Returns a mesh that has been translated from the input to the output frame.
+            /// </summary>
+            public static Mesh mshTranslateMeshOntoFrame(Mesh oMesh,
+                                                         LocalFrame oInputFrame,
+                                                         LocalFrame oOutputFrame)
+            {
+                return Mover.mshTranslateMeshOntoFrame(oMesh, oInputFrame, oOutputFrame);
+            }
+
+            protected class Mover
+            {
+                LocalFrame m_oInputFrame;
+                LocalFrame m_oOutputFrame;
+
+                /// <summary>
+                /// Returns a mesh that has been translated from the input to the output frame.
+                /// </summary>
+                public static Mesh mshTranslateMeshOntoFrame(Mesh msh, LocalFrame oInputFrame, LocalFrame oOutputFrame)
+                {
+                    Mover oMover  = new(oInputFrame, oOutputFrame);
+                    Mesh mshMoved = mshApplyTransformation(msh, oMover.vecTrafo);
+                    return mshMoved;
+                }
+
+                protected Mover(LocalFrame oInputFrame,
+                                LocalFrame oOutputFrame)
+                {
+                    m_oInputFrame  = oInputFrame;
+                    m_oOutputFrame = oOutputFrame;
+                }
+
+                public Vector3 vecTrafo(Vector3 vecPt)
+                {
+                    Vector3 vecRel = VecOperations.vecExpressPointInFrame(m_oInputFrame, vecPt);
+                    Vector3 vecNew = VecOperations.vecTranslatePointOntoFrame(m_oOutputFrame, vecRel);
+                    return vecNew;
+                }
             }
         }
     }
