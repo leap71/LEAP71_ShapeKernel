@@ -61,12 +61,12 @@ namespace Leap71
                 float           fOuterRadius,
                 LineModulation  oStartOrMidModulation,
                 LineModulation  oEndOrRangeModulation,
-                EMethod eMethod) : base(oFrame, fLength, fInnerRadius, fOuterRadius)
+                EMethod         eMethod) : base(oFrame, fLength, fInnerRadius, fOuterRadius)
             {
                 m_eMethod = eMethod;
                 if (m_eMethod == EMethod.START_END)
                 {
-                    m_oMidModulation    = oStartOrMidModulation + 0.5f * oEndOrRangeModulation;
+                    m_oMidModulation    = 0.5f * (oStartOrMidModulation + oEndOrRangeModulation);
                     m_oRangeModulation  = oEndOrRangeModulation - oStartOrMidModulation;
                 }
                 else
@@ -83,17 +83,17 @@ namespace Leap71
             /// The spine replaces the length dimension.
             /// </summary>
             public BasePipeSegment(
-                Frames aFrames,
-                float fInnerRadius,
-                float fOuterRadius,
-                LineModulation oStartOrMidModulation,
-                LineModulation oEndOrRangeModulation,
-                EMethod eMethod) : base(aFrames, fInnerRadius, fOuterRadius)
+                Frames          aFrames,
+                float           fInnerRadius,
+                float           fOuterRadius,
+                LineModulation  oStartOrMidModulation,
+                LineModulation  oEndOrRangeModulation,
+                EMethod         eMethod) : base(aFrames, fInnerRadius, fOuterRadius)
             {
                 m_eMethod = eMethod;
                 if (m_eMethod == EMethod.START_END)
                 {
-                    m_oMidModulation    = oStartOrMidModulation + 0.5f * oEndOrRangeModulation;
+                    m_oMidModulation    = 0.5f * (oStartOrMidModulation + oEndOrRangeModulation);
                     m_oRangeModulation  = oEndOrRangeModulation - oStartOrMidModulation;
                 }
                 else
