@@ -291,7 +291,7 @@ namespace Leap71
             {
                 vecA         = vecA.Normalize();
                 vecB         = vecB.Normalize();
-                float fDot   = Uf.fLimitValue(Vector3.Dot(vecA, vecB), -1, 1);
+                float fDot   = float.Clamp(Vector3.Dot(vecA, vecB), -1, 1);
                 float fTheta = MathF.Acos(fDot);
 
                 if ((float.IsNaN(fTheta)) &&
@@ -313,7 +313,7 @@ namespace Leap71
                 float fNormB = vecB.Length();
                 vecA        /= fNormA;
                 vecB        /= fNormB;
-                float fDot   = Uf.fLimitValue(Vector3.Dot(vecA, vecB), -1, 1);
+                float fDot   = float.Clamp(Vector3.Dot(vecA, vecB), -1, 1);
                 float fTheta = MathF.Acos(fDot);
 
                 if (float.IsNaN(fTheta))

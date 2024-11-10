@@ -76,7 +76,7 @@ namespace Leap71
 
             public ColorFloat clrGetColor(float fValue)
             {
-                fValue              = Uf.fLimitValue(fValue, m_fMinValue, m_fMaxValue);
+                fValue              = float.Clamp(fValue, m_fMinValue, m_fMaxValue);
                 float fLengthRatio  = (fValue - m_fMinValue) / (m_fMaxValue - m_fMinValue);
                 Vector3 vecRGB      = m_aSmoothRGBList[(int)(fLengthRatio * (m_aSmoothRGBList.Count - 1))];
                 int R               = (int)(vecRGB.X);

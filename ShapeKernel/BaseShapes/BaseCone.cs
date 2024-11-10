@@ -60,7 +60,7 @@ namespace Leap71
 
 			protected float fGetLinearRadius(float fPhi, float fLengthRatio)
 			{
-				fLengthRatio = Uf.fLimitValue(fLengthRatio, 0f, 1f);
+				fLengthRatio = float.Clamp(fLengthRatio, 0f, 1f);
 				return m_fStartRadius + fLengthRatio * (m_fEndRadius - m_fStartRadius);
 			}
 

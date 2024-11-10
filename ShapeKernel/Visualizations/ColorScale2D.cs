@@ -86,7 +86,7 @@ namespace Leap71
 
             public ColorFloat clrGetColor(float fValue)
             {
-                fValue              = Uf.fLimitValue(fValue, m_fMinValue, m_fMaxValue);
+                fValue              = float.Clamp(fValue, m_fMinValue, m_fMaxValue);
                 int R               = (int)(255f * fGetInterpolated(m_clrMin.R, m_clrMax.R, fValue));
                 int G               = (int)(255f * fGetInterpolated(m_clrMin.G, m_clrMax.G, fValue));
                 int B               = (int)(255f * fGetInterpolated(m_clrMin.B, m_clrMax.B, fValue));

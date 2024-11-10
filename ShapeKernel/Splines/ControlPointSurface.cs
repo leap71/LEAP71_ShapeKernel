@@ -109,7 +109,7 @@ namespace Leap71
                     for (int i = 0; i < nNumberOfKnots; i++)
                     {
                         float fValue    = -(dR * nDegree) + dR * i;
-                        fValue          = Uf.fLimitValue(fValue, 0f, 1f);
+                        fValue          = float.Clamp(fValue, 0f, 1f);
                         aVector[i]      = fValue;
                     }
                     return aVector;
@@ -153,7 +153,7 @@ namespace Leap71
                     for (int i = 0; i < nNumberOfKnots; i++)
                     {
                         float fValue    = -(dR * nDegree) + dR * i;
-                        fValue          = Uf.fLimitValue(fValue, 0f, 1f);
+                        fValue          = float.Clamp(fValue, 0f, 1f);
                         aVector[i]      = fValue;
                     }
                     return aVector;

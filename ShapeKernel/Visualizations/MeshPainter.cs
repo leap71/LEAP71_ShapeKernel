@@ -76,7 +76,7 @@ namespace Leap71
                     float dR             = MathF.Sqrt(vecNormal.X * vecNormal.X + vecNormal.Y * vecNormal.Y);
                     float dZ             = MathF.Abs(vecNormal.Z);
                     float fOverhangAngle = MathF.Atan2(dZ, dR) / MathF.PI * 180f;
-                    fOverhangAngle       = Uf.fLimitValue(fOverhangAngle, 0f, 90f);
+                    fOverhangAngle       = float.Clamp(fOverhangAngle, 0f, 90f);
 
                     //only show downfacing
                     if (bShowOnlyDownFacing == true &&
@@ -128,7 +128,7 @@ namespace Leap71
 
                     float fValue        = oColorFunc(vecA, vecB, vecC);
                     float fRatio        = (fValue - fMinValue) / (fMaxValue - fMinValue);
-                    fRatio              = Uf.fLimitValue(fRatio, 0f, 1f);
+                    fRatio              = float.Clamp(fRatio, 0f, 1f);
 
                     uint nSubMeshIndex  = (uint)(fRatio * (nClasses - 1));
                     aSubMeshes[nSubMeshIndex].nAddTriangle(vecA, vecB, vecC);
@@ -173,7 +173,7 @@ namespace Leap71
 
                     float fValue        = oColorFunc(vecA, vecB, vecC);
                     float fRatio        = (fValue - fMinValue) / (fMaxValue - fMinValue);
-                    fRatio              = Uf.fLimitValue(fRatio, 0f, 1f);
+                    fRatio              = float.Clamp(fRatio, 0f, 1f);
 
                     uint nSubMeshIndex  = (uint)(fRatio * (nClasses - 1));
                     aSubMeshes[nSubMeshIndex].nAddTriangle(vecA, vecB, vecC);
