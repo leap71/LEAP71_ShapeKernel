@@ -301,15 +301,15 @@ namespace Leap71
                     oFrame = new LocalFrame();
                 }
 
-                uint nSamples = 500;
-                List<Vector3> aPoints = new List<Vector3>();
+                uint nSamples           = 500;
+                List<Vector3> aPoints   = new List<Vector3>();
                 for (int i = 0; i < nSamples; i++)
                 {
-                    float fLR = 1f / (nSamples - 1f) * i;
-                    float fZ = fLR * oContour.m_fTotalLength;
-                    float fRadius = oContour.m_oModulation.fGetModulation(fLR);
-                    Vector3 vecRel = new Vector3(fRadius, 0, fZ);
-                    Vector3 vecPt = VecOperations.vecTranslatePointOntoFrame(oFrame, vecRel);
+                    float fLR       = 1f / (nSamples - 1f) * i;
+                    float fZ        = fLR * oContour.m_fTotalLength;
+                    float fRadius   = oContour.m_oModulation.fGetModulation(fLR);
+                    Vector3 vecRel  = new Vector3(fRadius, 0, fZ);
+                    Vector3 vecPt   = VecOperations.vecTranslatePointOntoFrame(oFrame, vecRel);
                     aPoints.Add(vecPt);
                 }
                 Frames aFrames = new Frames(aPoints, Frames.EFrameType.CYLINDRICAL, 0.5f);
