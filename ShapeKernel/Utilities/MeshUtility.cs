@@ -48,7 +48,7 @@ namespace Leap71
             /// </summary>
             public static Mesh mshFromGrid(List<List<Vector3>> aGrid)
             {
-                Mesh oMesh = new Mesh();
+                Mesh msh = new Mesh();
                 for (int i = 1; i < aGrid.Count; i++)
                 {
                     for (int j = 1; j < aGrid[i].Count; j++)
@@ -57,11 +57,11 @@ namespace Leap71
                         Vector3 vecPt2 = aGrid[i - 1][j];
                         Vector3 vecPt3 = aGrid[i][j];
                         Vector3 vecPt4 = aGrid[i][j - 1];
-                        oMesh.nAddTriangle(vecPt4, vecPt1, vecPt2);
-                        oMesh.nAddTriangle(vecPt2, vecPt3, vecPt4);
+                        msh.nAddTriangle(vecPt4, vecPt1, vecPt2);
+                        msh.nAddTriangle(vecPt2, vecPt3, vecPt4);
                     }
                 }
-                return oMesh;
+                return msh;
             }
 
             /// <summary>
@@ -73,43 +73,43 @@ namespace Leap71
                 Vector3 vecPt3,
                 Vector3 vecPt4)
             {
-                Mesh oMesh = new Mesh();
-                oMesh.nAddTriangle(vecPt4, vecPt1, vecPt2);
-                oMesh.nAddTriangle(vecPt2, vecPt3, vecPt4);
-                return oMesh;
+                Mesh msh = new Mesh();
+                msh.nAddTriangle(vecPt4, vecPt1, vecPt2);
+                msh.nAddTriangle(vecPt2, vecPt3, vecPt4);
+                return msh;
             }
 
             /// <summary>
             /// Uses the referenced mesh object and adds four points that form a quad shape.
             /// </summary>
             public static void AddQuad(
-                ref Mesh oMesh,
+                ref Mesh msh,
                 Vector3 vecPt1,
                 Vector3 vecPt2,
                 Vector3 vecPt3,
                 Vector3 vecPt4)
             {
-                oMesh.nAddTriangle(vecPt4, vecPt1, vecPt2);
-                oMesh.nAddTriangle(vecPt2, vecPt3, vecPt4);
+                msh.nAddTriangle(vecPt4, vecPt1, vecPt2);
+                msh.nAddTriangle(vecPt2, vecPt3, vecPt4);
             }
 
             /// <summary>
             /// Creates a new mesh by applying a transformation function to each vertex of the input mesh.
             /// </summary>
-            public static Mesh mshApplyTransformation(  Mesh oMesh,
+            public static Mesh mshApplyTransformation(  Mesh msh,
                                                         BaseShape.fnVertexTransformation fnTrafo)
             {
                 Mesh oNewMesh       = new Mesh();
-                int nTriangles      = oMesh.nTriangleCount();
+                int nTriangles      = msh.nTriangleCount();
                 for (int i = 0; i < nTriangles; i++)
                 {
-                    Triangle oTri   = oMesh.oTriangleAt(i);
+                    Triangle oTri   = msh.oTriangleAt(i);
                     int iIndexA     = oTri.A;
                     int iIndexB     = oTri.B;
                     int iIndexC     = oTri.C;
-                    Vector3 vecA    = oMesh.vecVertexAt(iIndexA);
-                    Vector3 vecB    = oMesh.vecVertexAt(iIndexB);
-                    Vector3 vecC    = oMesh.vecVertexAt(iIndexC);
+                    Vector3 vecA    = msh.vecVertexAt(iIndexA);
+                    Vector3 vecB    = msh.vecVertexAt(iIndexB);
+                    Vector3 vecC    = msh.vecVertexAt(iIndexC);
                     Vector3 vecNewA = fnTrafo(vecA);
                     Vector3 vecNewB = fnTrafo(vecB);
                     Vector3 vecNewC = fnTrafo(vecC);
@@ -121,11 +121,28 @@ namespace Leap71
             /// <summary>
             /// Returns a mesh that has been translated from the input to the output frame.
             /// </summary>
-            public static Mesh mshTranslateMeshOntoFrame(Mesh oMesh,
+            public static Mesh mshTranslateMeshOntoFrame(Mesh msh,
                                                          LocalFrame oInputFrame,
                                                          LocalFrame oOutputFrame)
             {
-                return Mover.mshTranslateMeshOntoFrame(oMesh, oInputFrame, oOutputFrame);
+                return Mover.mshTranslateMeshOntoFrame(msh, oInputFrame, oOutputFrame);
+            }
+
+            public static Mesh Append(this Mesh msh1, Mesh msh2)
+            {
+                int nTriangles      = msh2.nTriangleCount();
+                for (int i = 0; i < nTriangles; i++)
+                {
+                    Triangle oTri   = msh2.oTriangleAt(i);
+                    int iIndexA     = oTri.A;
+                    int iIndexB     = oTri.B;
+                    int iIndexC     = oTri.C;
+                    Vector3 vecA    = msh2.vecVertexAt(iIndexA);
+                    Vector3 vecB    = msh2.vecVertexAt(iIndexB);
+                    Vector3 vecC    = msh2.vecVertexAt(iIndexC);
+                    msh1.nAddTriangle(vecA, vecB, vecC);
+                }
+                return msh1;
             }
 
             protected class Mover
