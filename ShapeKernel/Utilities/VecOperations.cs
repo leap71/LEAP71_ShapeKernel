@@ -376,6 +376,22 @@ namespace Leap71
             }
 
             /// <summary>
+            /// Rotates and translates a direction in absolute carthesian coordinates onto the specified local reference frame.
+            /// The relative coordinates of the result with respect to the local frame will mach those of the input point in absolute reference.
+            /// The absolute coordinated of the result will update depending on the position and orientation of the local frame.
+            /// "How would this direction look like when it was referenced to a this local frame?".
+            /// </summary>
+            public static  Vector3 vecTranslateDirectionOntoFrame(LocalFrame oFrame, Vector3 vecDir)
+            {
+                Vector3 vecPt1      = new Vector3();
+                Vector3 vecPt2      = vecPt1 + vecDir;
+                vecPt1              = VecOperations.vecTranslatePointOntoFrame(oFrame, vecPt1);
+                vecPt2              = VecOperations.vecTranslatePointOntoFrame(oFrame, vecPt2);
+                Vector3 vecNewDir   = vecPt2 - vecPt1;
+                return vecNewDir;
+            }
+
+            /// <summary>
             /// Returns the relative coordinates expression of an absolute, carthesian point with respect to a given local reference frame.
             /// "How would this point look like when viewed from this local frame?".
             /// </summary>
