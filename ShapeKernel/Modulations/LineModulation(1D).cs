@@ -5,7 +5,7 @@
 // specifically for use in Computational Engineering Models (CEM).
 //
 // For more information, please visit https://leap71.com/shapekernel
-// 
+//
 // This project is developed and maintained by LEAP 71 - © 2024 by LEAP 71
 // https://leap71.com
 //
@@ -15,8 +15,8 @@
 // We have developed this library to be used widely, for both commercial and
 // non-commercial projects alike. Therefore, have released it under a permissive
 // open-source license.
-// 
-// The LEAP 71 ShapeKernel is based on the PicoGK compact computational geometry 
+//
+// The LEAP 71 ShapeKernel is based on the PicoGK compact computational geometry
 // framework. See https://picogk.org for more information.
 //
 // LEAP 71 licenses this file to you under the Apache License, Version 2.0
@@ -29,7 +29,7 @@
 // PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED.
 //
 // See the License for the specific language governing permissions and
-// limitations under the License.   
+// limitations under the License.
 //
 
 
@@ -150,7 +150,7 @@ namespace Leap71
                         fCurrentRatio   = m_aDiscretePoints[i].Z;
                         fNextRatio      = m_aDiscretePoints[i + 1].Z;
                     }
-                    if (fCurrentRatio >= fRatio)
+                    if (fNextRatio >= fRatio)
                     {
                         fLowerRatio     = fCurrentRatio;
                         dS              = fRatio - fLowerRatio;
@@ -289,7 +289,7 @@ namespace Leap71
             {
                 protected float             m_fFactor;
                 protected LineModulation    m_oMod;
-                
+
 
                 protected ModulationMultiplication( float fFactor,
                                                     LineModulation oMod)
