@@ -289,7 +289,7 @@ namespace Leap71
                 uint            nRadialSamples = 5,
                 uint            nLengthSamples = 10)
             {
-                //length samples
+                // length samples
                 for (uint nLengthSample = 0; nLengthSample < nLengthSamples; nLengthSample++)
                 {
                     uint nSamples           = 100;
@@ -304,7 +304,7 @@ namespace Leap71
                     PreviewLine(aPoints, clrColor);
                 }
 
-                //radial samples
+                // radial samples
                 for (uint nRadialSample = 0; nRadialSample < nRadialSamples; nRadialSample++)
                 {
                     uint nSamples           = 1000;
@@ -326,7 +326,7 @@ namespace Leap71
                 uint        nRadialSamples = 5,
                 uint        nLengthSamples = 10)
             {
-                //length samples
+                // length samples
                 for (uint nLengthSample = 0; nLengthSample < nLengthSamples; nLengthSample++)
                 {
                     uint nSamples           = 100;
@@ -341,11 +341,41 @@ namespace Leap71
                     PreviewLine(aPoints, clrColor);
                 }
 
-                //radial samples
+                // length samples
+                for (uint nLengthSample = 0; nLengthSample < nLengthSamples; nLengthSample++)
+                {
+                    uint nSamples           = 100;
+                    float fRadiusRatio      = 0f;
+                    float fLengthRatio      = 1f / (float)(nLengthSamples - 1) * nLengthSample;
+                    List<Vector3> aPoints   = new List<Vector3>();
+                    for (uint i = 0; i < nSamples; i++)
+                    {
+                        float fPhiRatio     = 1f / (float)(nSamples - 1) * i;
+                        aPoints.Add(oCyl.vecGetSurfacePoint(fLengthRatio, fPhiRatio, fRadiusRatio));
+                    }
+                    PreviewLine(aPoints, clrColor);
+                }
+
+                // radial samples
                 for (uint nRadialSample = 0; nRadialSample < nRadialSamples; nRadialSample++)
                 {
                     uint nSamples           = 100;
                     float fRadiusRatio      = 1f;
+                    float fPhiRatio         = 1f / (float)(nRadialSamples - 1) * nRadialSample;
+                    List<Vector3> aPoints   = new List<Vector3>();
+                    for (uint i = 0; i < nSamples; i++)
+                    {
+                        float fLengthRatio  = 1f / (float)(nSamples - 1) * i;
+                        aPoints.Add(oCyl.vecGetSurfacePoint(fLengthRatio, fPhiRatio, fRadiusRatio));
+                    }
+                    PreviewLine(aPoints, clrColor);
+                }
+
+                // radial samples
+                for (uint nRadialSample = 0; nRadialSample < nRadialSamples; nRadialSample++)
+                {
+                    uint nSamples           = 100;
+                    float fRadiusRatio      = 0f;
                     float fPhiRatio         = 1f / (float)(nRadialSamples - 1) * nRadialSample;
                     List<Vector3> aPoints   = new List<Vector3>();
                     for (uint i = 0; i < nSamples; i++)
@@ -361,7 +391,7 @@ namespace Leap71
                 BaseBox     oBox,
                 ColorFloat  clrColor)
             {
-                //lower face
+                // lower face
                 PreviewLine(new List<Vector3>()
                 {
                     oBox.vecGetSurfacePoint(-1, -1, 0),
@@ -372,7 +402,7 @@ namespace Leap71
                 }, clrColor);
 
 
-                //upper face
+                // upper face
                 PreviewLine(new List<Vector3>()
                 {
                     oBox.vecGetSurfacePoint(-1, -1, 1),
@@ -382,7 +412,7 @@ namespace Leap71
                     oBox.vecGetSurfacePoint(-1, -1, 1)
                 }, clrColor);
 
-                //side pillars
+                // side pillars
                 PreviewLine(new List<Vector3>()
                 {
                     oBox.vecGetSurfacePoint(-1, -1, 0),
