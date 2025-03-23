@@ -278,19 +278,19 @@ namespace Leap71
             //step conversions
             protected float fGetRadiusRatioFromStep(int iRadiusStep)
             {
-                float fRadiusRatio = (1f) / (m_nRadialSteps - 1) * (iRadiusStep);
+                float fRadiusRatio = (1f) / (m_nRadialSteps - 1f) * (iRadiusStep);
                 return fRadiusRatio;
             }
 
             protected float fGetPhiRatioFromStep(int iPhiStep)
             {
-                float fPhiRatio = (1f) / (m_nPolarSteps - 1) * (iPhiStep);
+                float fPhiRatio = (1f) / (m_nPolarSteps - 1f) * (iPhiStep);
                 return fPhiRatio;
             }
 
             protected float fGetLengthRatioFromStep(int iLengthStep)
             {
-                float fLengthRatio = (1f) / (m_nLengthSteps - 1) * (iLengthStep);
+                float fLengthRatio = (1f) / (m_nLengthSteps - 1f) * (iLengthStep);
                 return fLengthRatio;
             }
 
