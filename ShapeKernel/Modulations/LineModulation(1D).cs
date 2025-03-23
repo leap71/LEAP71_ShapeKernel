@@ -44,16 +44,15 @@ namespace Leap71
         public class LineModulation
         {
             public delegate float       RatioFunc(float fRatio);
-            public enum                 EInput { FUNC };
             public enum                 ECoord { X, Y, Z };
-
             protected ECoord            m_eValues;
             protected ECoord            m_eAxis;
-            protected List<Vector3>     m_aDiscretePoints;
-            protected List<float>       m_aDiscreteValues;
-            protected RatioFunc         m_oFunc;
-            protected EInput            m_eInput;
-            public float                m_fConstValue;
+
+            public float                m_fConstValue;      // has a constant return value
+            protected RatioFunc         m_oFunc;            // has a function to be evaluated
+            protected List<Vector3>     m_aDiscretePoints;  // has a discrete point list to be interpolated
+            protected List<float>       m_aXValues;
+            protected List<float>       m_aYValues;
 
 
             /// <summary>
@@ -63,7 +62,11 @@ namespace Leap71
             {
                 m_fConstValue           = fConstValue;
                 m_oFunc                 = fConstLineDummyFunc;
-                m_eInput                = EInput.FUNC;
+
+                // unused
+                m_aDiscretePoints = new();
+                m_aXValues = new();
+                m_aYValues = new();
             }
 
             /// <summary>
@@ -72,7 +75,11 @@ namespace Leap71
             public LineModulation(RatioFunc oModuationFunc)
             {
                 m_oFunc                 = oModuationFunc;
-                m_eInput                = EInput.FUNC;
+
+                // unused
+                m_aDiscretePoints = new();
+                m_aXValues = new();
+                m_aYValues = new();
             }
 
             /// <summary>
@@ -80,41 +87,60 @@ namespace Leap71
             /// </summary>
             public LineModulation(List<Vector3> aDiscretePoints, ECoord eValues, ECoord eAxis)
             {
-                m_eValues               = eValues;
-                m_eAxis                 = eAxis;
-                m_aDiscretePoints       = aDiscretePoints;
+                m_eValues           = eValues;
+                m_eAxis             = eAxis;
+                m_aDiscretePoints   = aDiscretePoints;
 
-                //extend list, so that last value is found and does not jump back to start value
-                Vector3 vecValueUnit    = Vector3.UnitX;
-                float fLastValue        = m_aDiscretePoints[^1].X;
-                if (m_eValues == ECoord.Y)
-                {
-                    vecValueUnit        = Vector3.UnitY;
-                    fLastValue          = m_aDiscretePoints[^1].Y;
-                }
-                else if (m_eValues == ECoord.Z)
-                {
-                    vecValueUnit        = Vector3.UnitZ;
-                    fLastValue          = m_aDiscretePoints[^1].Z;
-                }
+                m_aXValues          = new ();
+                m_aYValues          = new();
+                float fXValue       = fGetCoordinate(m_aDiscretePoints[0], eAxis);
+                float fYValue       = fGetCoordinate(m_aDiscretePoints[0], eValues);
+                m_aXValues.Add(fXValue);
+                m_aYValues.Add(fYValue);
 
-                Vector3 vecAxisUnit = Vector3.UnitX;
-                if (m_eAxis == ECoord.Y)
+                for (int i = 1; i < m_aDiscretePoints.Count; i++)
                 {
-                    vecAxisUnit = Vector3.UnitY;
-                }
-                else if (m_eAxis == ECoord.Z)
-                {
-                    vecAxisUnit = Vector3.UnitZ;
+                    Vector3 vecPt   = m_aDiscretePoints[i];
+                    fXValue         = fGetCoordinate(vecPt, eAxis);
+                    fYValue         = fGetCoordinate(vecPt, eValues);
+
+                    if (fXValue > m_aXValues[^1])
+                    {
+                        m_aXValues.Add(fXValue);
+                        m_aYValues.Add(fYValue);
+                    }
                 }
 
-                m_oFunc             = oPointsDummyFunc;
-                m_eInput            = EInput.FUNC;
+                // fix start and end
+                if (m_aXValues[0] > 0.0f)
+                {
+                    float fFirstY   = m_aYValues[0];
+                     m_aXValues.Insert(0, 0.0f);
+                    m_aYValues.Insert(0, fFirstY);
+                }
+                if (m_aXValues[^1] < 1.0f)
+                {
+                    float fLastY    = m_aYValues[^1];
+                    m_aXValues.Add(1.0f);
+                    m_aYValues.Add(fLastY);
+                }
+                
+                // interpolation function
+                m_oFunc = oPointsDummyFunc;
+            }
 
-                Vector3 vecLast     = fLastValue * vecValueUnit + 1.01f * vecAxisUnit;
-                Vector3 vecVeryLast = fLastValue * vecValueUnit + 1.1f * vecAxisUnit;
-                m_aDiscretePoints.Add(vecLast);
-                m_aDiscretePoints.Add(vecVeryLast);
+            protected float fGetCoordinate(Vector3 vecPt, ECoord eCoord)
+            {
+                float fCoordinate = vecPt.X;
+                if (eCoord == ECoord.Y)
+                {
+                    fCoordinate = vecPt.Y;
+                }
+                else if (eCoord == ECoord.Z)
+                {
+                    fCoordinate = vecPt.Z;
+                }
+                return fCoordinate;
             }
 
             protected float fConstLineDummyFunc(float fRatio)
@@ -122,86 +148,27 @@ namespace Leap71
                 return m_fConstValue;
             }
 
-            protected float oPointsDummyFunc(float fRatio)
+            protected float oPointsDummyFunc(float fX)
             {
-                //initialise for the first point
-                float dS            = 0;
-                float fLowerRatio   = 0;
-                float fUpperRatio   = 1f;
-                int iLowerIndex     = 0;
+                fX = float.Clamp(fX, 0, 1);
 
-                for (int i = 0; i < m_aDiscretePoints.Count - 2; i++)
+                for (int i = 1; i < m_aXValues.Count; i++)
                 {
-                    float fCurrentRatio = 0;
-                    float fNextRatio    = 0;
-                    if (m_eAxis == ECoord.X)
+                    int iLowerIndex = i - 1;
+                    int iUpperIndex = i - 0;
+                    float fLowerX   = m_aXValues[iLowerIndex];
+                    float fUpperX   = m_aXValues[iUpperIndex];
+
+                    if (fX >= fLowerX && fX <= fUpperX)
                     {
-                        fCurrentRatio   = m_aDiscretePoints[i].X;
-                        fNextRatio      = m_aDiscretePoints[i + 1].X;
-                    }
-                    else if (m_eAxis == ECoord.Y)
-                    {
-                        fCurrentRatio   = m_aDiscretePoints[i].Y;
-                        fNextRatio      = m_aDiscretePoints[i + 1].Y;
-                    }
-                    else if (m_eAxis == ECoord.Z)
-                    {
-                        fCurrentRatio   = m_aDiscretePoints[i].Z;
-                        fNextRatio      = m_aDiscretePoints[i + 1].Z;
-                    }
-                    if (fCurrentRatio >= fRatio)
-                    {
-                        fLowerRatio     = fCurrentRatio;
-                        dS              = fRatio - fLowerRatio;
-                        fUpperRatio     = fNextRatio;
-                        iLowerIndex     = i;
-                        break;
+                        float fLR           = (fX - fLowerX) / (fUpperX - fLowerX);
+                        float fLowerY       = m_aYValues[iLowerIndex];
+                        float fUpperY       = m_aYValues[iUpperIndex];
+                        float fY            = fLowerY + fLR * (fUpperY - fLowerY);
+                        return fY;
                     }
                 }
-
-                //restrict
-                iLowerIndex = Math.Max(0, Math.Min(iLowerIndex, m_aDiscretePoints.Count - 2));
-                int iUpperIndex         = (int)(iLowerIndex + 1);
-                float dRatio            = fUpperRatio - fLowerRatio;
-
-                float fValue = 0;
-                if (m_eValues == ECoord.X)
-                {
-                    fValue = (m_aDiscretePoints[iUpperIndex].X - m_aDiscretePoints[iLowerIndex].X) / dRatio * dS + m_aDiscretePoints[iLowerIndex].X;
-                }
-                else if (m_eValues == ECoord.Y)
-                {
-                    fValue = (m_aDiscretePoints[iUpperIndex].Y - m_aDiscretePoints[iLowerIndex].Y) / dRatio * dS + m_aDiscretePoints[iLowerIndex].Y;
-                }
-                else if (m_eValues == ECoord.Z)
-                {
-                    fValue = (m_aDiscretePoints[iUpperIndex].Z - m_aDiscretePoints[iLowerIndex].Z) / dRatio * dS + m_aDiscretePoints[iLowerIndex].Z;
-                }
-                return fValue;
-            }
-
-            protected Vector3 vecFromDim(ECoord eCoord)
-            {
-                if (eCoord == ECoord.Y)
-                {
-                    return Vector3.UnitY;
-                }
-                else if (eCoord == ECoord.Z)
-                {
-                    return Vector3.UnitZ;
-                }
-                else
-                {
-                    return Vector3.UnitX;
-                }
-            }
-
-            /// <summary>
-            /// Returns the underlaying input type for this modulation.
-            /// </summary>
-            public EInput oGetInputType()
-            {
-                return m_eInput;
+                return m_aYValues[^1];
             }
 
             /// <summary>
