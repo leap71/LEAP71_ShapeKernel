@@ -115,7 +115,6 @@ namespace Leap71
                 Vector3 vecVeryLast = fLastValue * vecValueUnit + 1.1f * vecAxisUnit;
                 m_aDiscretePoints.Add(vecLast);
                 m_aDiscretePoints.Add(vecVeryLast);
-
             }
 
             protected float fConstLineDummyFunc(float fRatio)
