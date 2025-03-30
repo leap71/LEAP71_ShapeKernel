@@ -150,7 +150,7 @@ namespace Leap71
             {
                 //iterate across width and depth
                 int iLengthStep     = m_nLengthSteps - 1;
-                float fLengthRatio  = fGetLengthRatioFromStep(iLengthStep);
+                float fLR           = fGetLengthRatioFromStep(iLengthStep);
 
                 for (int iWidthStep = 1; iWidthStep < m_nWidthSteps; iWidthStep++)
                 {
@@ -162,10 +162,10 @@ namespace Leap71
                         float fDepthRatio1 = fGetDepthRatioFromStep(iDepthStep - 1);
                         float fDepthRatio2 = fGetDepthRatioFromStep(iDepthStep);
 
-                        Vector3 vecPt0 = vecGetSurfacePoint(fWidthRatio1, fDepthRatio1, fLengthRatio);
-                        Vector3 vecPt1 = vecGetSurfacePoint(fWidthRatio1, fDepthRatio2, fLengthRatio);
-                        Vector3 vecPt2 = vecGetSurfacePoint(fWidthRatio2, fDepthRatio2, fLengthRatio);
-                        Vector3 vecPt3 = vecGetSurfacePoint(fWidthRatio2, fDepthRatio1, fLengthRatio);
+                        Vector3 vecPt0 = vecGetSurfacePoint(fWidthRatio1, fDepthRatio1, fLR);
+                        Vector3 vecPt1 = vecGetSurfacePoint(fWidthRatio1, fDepthRatio2, fLR);
+                        Vector3 vecPt2 = vecGetSurfacePoint(fWidthRatio2, fDepthRatio2, fLR);
+                        Vector3 vecPt3 = vecGetSurfacePoint(fWidthRatio2, fDepthRatio1, fLR);
 
                         if (bFlip == false)
                         {
@@ -185,7 +185,7 @@ namespace Leap71
             {
                 //iterate across width and depth
                 int iLengthStep     = 0;
-                float fLengthRatio  = fGetLengthRatioFromStep(iLengthStep);
+                float fLR           = fGetLengthRatioFromStep(iLengthStep);
 
                 for (int iWidthStep = 1; iWidthStep < m_nWidthSteps; iWidthStep++)
                 {
@@ -197,10 +197,10 @@ namespace Leap71
                         float fDepthRatio1 = fGetDepthRatioFromStep(iDepthStep - 1);
                         float fDepthRatio2 = fGetDepthRatioFromStep(iDepthStep);
 
-                        Vector3 vecPt0 = vecGetSurfacePoint(fWidthRatio1, fDepthRatio1, fLengthRatio);
-                        Vector3 vecPt1 = vecGetSurfacePoint(fWidthRatio1, fDepthRatio2, fLengthRatio);
-                        Vector3 vecPt2 = vecGetSurfacePoint(fWidthRatio2, fDepthRatio2, fLengthRatio);
-                        Vector3 vecPt3 = vecGetSurfacePoint(fWidthRatio2, fDepthRatio1, fLengthRatio);
+                        Vector3 vecPt0 = vecGetSurfacePoint(fWidthRatio1, fDepthRatio1, fLR);
+                        Vector3 vecPt1 = vecGetSurfacePoint(fWidthRatio1, fDepthRatio2, fLR);
+                        Vector3 vecPt2 = vecGetSurfacePoint(fWidthRatio2, fDepthRatio2, fLR);
+                        Vector3 vecPt3 = vecGetSurfacePoint(fWidthRatio2, fDepthRatio1, fLR);
 
                         if (bFlip == false)
                         {
@@ -224,18 +224,18 @@ namespace Leap71
 
                 for (int iLengthStep = 1; iLengthStep < m_nLengthSteps; iLengthStep++)
                 {
-                    float fLengthRatio1 = fGetLengthRatioFromStep(iLengthStep - 1);
-                    float fLengthRatio2 = fGetLengthRatioFromStep(iLengthStep);
+                    float fLR1 = fGetLengthRatioFromStep(iLengthStep - 1);
+                    float fLR2 = fGetLengthRatioFromStep(iLengthStep);
 
                     for (int iDepthStep = 1; iDepthStep < m_nDepthSteps; iDepthStep++)
                     {
                         float fDepthRatio1 = fGetDepthRatioFromStep(iDepthStep - 1);
                         float fDepthRatio2 = fGetDepthRatioFromStep(iDepthStep);
 
-                        Vector3 vecPt0 = vecGetSurfacePoint(fWidthRatio, fDepthRatio1, fLengthRatio1);
-                        Vector3 vecPt1 = vecGetSurfacePoint(fWidthRatio, fDepthRatio2, fLengthRatio1);
-                        Vector3 vecPt2 = vecGetSurfacePoint(fWidthRatio, fDepthRatio2, fLengthRatio2);
-                        Vector3 vecPt3 = vecGetSurfacePoint(fWidthRatio, fDepthRatio1, fLengthRatio2);
+                        Vector3 vecPt0 = vecGetSurfacePoint(fWidthRatio, fDepthRatio1, fLR1);
+                        Vector3 vecPt1 = vecGetSurfacePoint(fWidthRatio, fDepthRatio2, fLR1);
+                        Vector3 vecPt2 = vecGetSurfacePoint(fWidthRatio, fDepthRatio2, fLR2);
+                        Vector3 vecPt3 = vecGetSurfacePoint(fWidthRatio, fDepthRatio1, fLR2);
 
                         if (bFlip == false)
                         {
@@ -259,18 +259,18 @@ namespace Leap71
 
                 for (int iLengthStep = 1; iLengthStep < m_nLengthSteps; iLengthStep++)
                 {
-                    float fLengthRatio1 = fGetLengthRatioFromStep(iLengthStep - 1);
-                    float fLengthRatio2 = fGetLengthRatioFromStep(iLengthStep);
+                    float fLR1 = fGetLengthRatioFromStep(iLengthStep - 1);
+                    float fLR2 = fGetLengthRatioFromStep(iLengthStep);
 
                     for (int iDepthStep = 1; iDepthStep < m_nDepthSteps; iDepthStep++)
                     {
                         float fDepthRatio1 = fGetDepthRatioFromStep(iDepthStep - 1);
                         float fDepthRatio2 = fGetDepthRatioFromStep(iDepthStep);
 
-                        Vector3 vecPt0 = vecGetSurfacePoint(fWidthRatio, fDepthRatio1, fLengthRatio1);
-                        Vector3 vecPt1 = vecGetSurfacePoint(fWidthRatio, fDepthRatio2, fLengthRatio1);
-                        Vector3 vecPt2 = vecGetSurfacePoint(fWidthRatio, fDepthRatio2, fLengthRatio2);
-                        Vector3 vecPt3 = vecGetSurfacePoint(fWidthRatio, fDepthRatio1, fLengthRatio2);
+                        Vector3 vecPt0 = vecGetSurfacePoint(fWidthRatio, fDepthRatio1, fLR1);
+                        Vector3 vecPt1 = vecGetSurfacePoint(fWidthRatio, fDepthRatio2, fLR1);
+                        Vector3 vecPt2 = vecGetSurfacePoint(fWidthRatio, fDepthRatio2, fLR2);
+                        Vector3 vecPt3 = vecGetSurfacePoint(fWidthRatio, fDepthRatio1, fLR2);
 
                         if (bFlip == false)
                         {
@@ -294,18 +294,18 @@ namespace Leap71
 
                 for (int iLengthStep = 1; iLengthStep < m_nLengthSteps; iLengthStep++)
                 {
-                    float fLengthRatio1 = fGetLengthRatioFromStep(iLengthStep - 1);
-                    float fLengthRatio2 = fGetLengthRatioFromStep(iLengthStep);
+                    float fLR1 = fGetLengthRatioFromStep(iLengthStep - 1);
+                    float fLR2 = fGetLengthRatioFromStep(iLengthStep);
 
                     for (int iWidthStep = 1; iWidthStep < m_nWidthSteps; iWidthStep++)
                     {
                         float fWidthRatio1 = fGetWidthRatioFromStep(iWidthStep - 1);
                         float fWidthRatio2 = fGetWidthRatioFromStep(iWidthStep);
 
-                        Vector3 vecPt0 = vecGetSurfacePoint(fWidthRatio1, fDepthRatio, fLengthRatio1);
-                        Vector3 vecPt1 = vecGetSurfacePoint(fWidthRatio2, fDepthRatio, fLengthRatio1);
-                        Vector3 vecPt2 = vecGetSurfacePoint(fWidthRatio2, fDepthRatio, fLengthRatio2);
-                        Vector3 vecPt3 = vecGetSurfacePoint(fWidthRatio1, fDepthRatio, fLengthRatio2);
+                        Vector3 vecPt0 = vecGetSurfacePoint(fWidthRatio1, fDepthRatio, fLR1);
+                        Vector3 vecPt1 = vecGetSurfacePoint(fWidthRatio2, fDepthRatio, fLR1);
+                        Vector3 vecPt2 = vecGetSurfacePoint(fWidthRatio2, fDepthRatio, fLR2);
+                        Vector3 vecPt3 = vecGetSurfacePoint(fWidthRatio1, fDepthRatio, fLR2);
 
                         if (bFlip == false)
                         {
@@ -329,18 +329,18 @@ namespace Leap71
 
                 for (int iLengthStep = 1; iLengthStep < m_nLengthSteps; iLengthStep++)
                 {
-                    float fLengthRatio1 = fGetLengthRatioFromStep(iLengthStep - 1);
-                    float fLengthRatio2 = fGetLengthRatioFromStep(iLengthStep);
+                    float fLR1 = fGetLengthRatioFromStep(iLengthStep - 1);
+                    float fLR2 = fGetLengthRatioFromStep(iLengthStep);
 
                     for (int iWidthStep = 1; iWidthStep < m_nWidthSteps; iWidthStep++)
                     {
                         float fWidthRatio1 = fGetWidthRatioFromStep(iWidthStep - 1);
                         float fWidthRatio2 = fGetWidthRatioFromStep(iWidthStep);
 
-                        Vector3 vecPt0 = vecGetSurfacePoint(fWidthRatio1, fDepthRatio, fLengthRatio1);
-                        Vector3 vecPt1 = vecGetSurfacePoint(fWidthRatio2, fDepthRatio, fLengthRatio1);
-                        Vector3 vecPt2 = vecGetSurfacePoint(fWidthRatio2, fDepthRatio, fLengthRatio2);
-                        Vector3 vecPt3 = vecGetSurfacePoint(fWidthRatio1, fDepthRatio, fLengthRatio2);
+                        Vector3 vecPt0 = vecGetSurfacePoint(fWidthRatio1, fDepthRatio, fLR1);
+                        Vector3 vecPt1 = vecGetSurfacePoint(fWidthRatio2, fDepthRatio, fLR1);
+                        Vector3 vecPt2 = vecGetSurfacePoint(fWidthRatio2, fDepthRatio, fLR2);
+                        Vector3 vecPt3 = vecGetSurfacePoint(fWidthRatio1, fDepthRatio, fLR2);
 
                         if (bFlip == false)
                         {
@@ -360,7 +360,7 @@ namespace Leap71
             protected float fGetDepthRatioFromStep(int iDepthStep)
             {
                 //from -1 to +1
-                float fDepthRatio   = (1f) / (m_nDepthSteps - 1) * (iDepthStep);
+                float fDepthRatio   = (1f) / (m_nDepthSteps - 1f) * (iDepthStep);
                 fDepthRatio         = 2f * fDepthRatio - 1f;
                 return fDepthRatio;
             }
@@ -368,7 +368,7 @@ namespace Leap71
             protected float fGetWidthRatioFromStep(int iWidthStep)
             {
                 //from -1 to +1
-                float fWidthRatio   = (1f) / (m_nWidthSteps - 1) * (iWidthStep);
+                float fWidthRatio   = (1f) / (m_nWidthSteps - 1f) * (iWidthStep);
                 fWidthRatio         = 2f * fWidthRatio - 1f;
                 return fWidthRatio;
             }
@@ -376,8 +376,8 @@ namespace Leap71
             protected float fGetLengthRatioFromStep(int iLengthStep)
             {
                 //from 0 to +1
-                float fLengthRatio = (1f) / (m_nLengthSteps - 1) * (iLengthStep);
-                return fLengthRatio;
+                float fLR = (1f) / (m_nLengthSteps - 1f) * (iLengthStep);
+                return fLR;
             }
 
             /// <summary>
@@ -387,28 +387,28 @@ namespace Leap71
             /// Depth ratio goes from -1 to 1.
             /// Length ratio goes from 0 to 1.
             /// </summary>
-            public virtual Vector3 vecGetSurfacePoint(float fWidthRatio, float fDepthRatio, float fLengthRatio)
+            public virtual Vector3 vecGetSurfacePoint(float fWidthRatio, float fDepthRatio, float fLR)
             {
-                Vector3 vecSpinePos = m_aFrames.vecGetSpineAlongLength(fLengthRatio);
-                Vector3 vecLocalX   = m_aFrames.vecGetLocalXAlongLength(fLengthRatio);
-                Vector3 vecLocalY   = m_aFrames.vecGetLocalYAlongLength(fLengthRatio);
+                Vector3 vecSpinePos = m_aFrames.vecGetSpineAlongLength(fLR);
+                Vector3 vecLocalX   = m_aFrames.vecGetLocalXAlongLength(fLR);
+                Vector3 vecLocalY   = m_aFrames.vecGetLocalYAlongLength(fLR);
 
-                float fX            = 0.5f * fWidthRatio * fGetWidth(fLengthRatio);
-                float fY            = 0.5f * fDepthRatio * fGetDepth(fLengthRatio);
+                float fX            = 0.5f * fWidthRatio * fGetWidth(fLR);
+                float fY            = 0.5f * fDepthRatio * fGetDepth(fLR);
                 Vector3 vecPt       = vecSpinePos + fX * vecLocalX + fY * vecLocalY;
 
                 return m_fnTrafo(vecPt);;
             }
 
-            protected float fGetDepth(float fLengthRatio)
+            protected float fGetDepth(float fLR)
             {
-                float fDepth = m_oDepthModulation.fGetModulation(fLengthRatio);
+                float fDepth = m_oDepthModulation.fGetModulation(fLR);
                 return fDepth;
             }
 
-            protected float fGetWidth(float fLengthRatio)
+            protected float fGetWidth(float fLR)
             {
-                float fWidth = m_oWidthModulation.fGetModulation(fLengthRatio);
+                float fWidth = m_oWidthModulation.fGetModulation(fLR);
                 return fWidth;
             }
         }

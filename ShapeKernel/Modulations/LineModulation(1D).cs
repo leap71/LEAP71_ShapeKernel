@@ -60,8 +60,8 @@ namespace Leap71
             /// </summary>
             public LineModulation(float fConstValue)
             {
-                m_fConstValue           = fConstValue;
-                m_oFunc                 = fConstLineDummyFunc;
+                m_fConstValue = fConstValue;
+                m_oFunc       = fConstLineDummyFunc;
 
                 // unused
                 m_aDiscretePoints = new();
@@ -74,7 +74,7 @@ namespace Leap71
             /// </summary>
             public LineModulation(RatioFunc oModuationFunc)
             {
-                m_oFunc                 = oModuationFunc;
+                m_oFunc = oModuationFunc;
 
                 // unused
                 m_aDiscretePoints = new();

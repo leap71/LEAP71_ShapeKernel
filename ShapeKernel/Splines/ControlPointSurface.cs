@@ -42,16 +42,16 @@ namespace Leap71
     {
         public class ControlPointSurface
         {
-            public enum EEnds       { OPEN, CLOSED };
-            protected EEnds         m_eEndsU;
-            protected EEnds         m_eEndsV;
-            protected List<float>   m_aKnotU;
-            protected List<float>   m_aKnotV;
-            protected uint          m_nDegreeU;
-            protected uint          m_nDegreeV;
-            protected List<List<Vector3>>
-                                    m_aControlGrid;
-            protected float         m_fError = 0.0000001f;
+            public enum EEnds    { OPEN, CLOSED };
+            public EEnds         m_eEndsU;
+            public EEnds         m_eEndsV;
+            public List<float>   m_aKnotU;
+            public List<float>   m_aKnotV;
+            public uint          m_nDegreeU;
+            public uint          m_nDegreeV;
+            public List<List<Vector3>>
+                                m_aControlGrid;
+            protected float     m_fError = 0.0000001f;
 
 
             /// <summary>
