@@ -449,6 +449,42 @@ namespace Leap71
                 BaseBox oBox    = new BaseBox(new LocalFrame(vecBase), fLength, fWidth, fDepth);
                 PreviewBoxWireframe(oBox, clrColor);
             }
+
+            public static void PreviewRingWireframe(BaseRing oRing, ColorFloat clr)
+            {
+                uint nLengthSamples = 10;
+                uint nRadialSamples = 5;
+
+                // length samples
+                for (uint nLengthSample = 0; nLengthSample < nLengthSamples; nLengthSample++)
+                {
+                    uint nSamples           = 100;
+                    float fRadiusRatio      = 1f;
+                    float fLengthRatio      = 1f / (nLengthSamples - 1f) * nLengthSample;
+                    List<Vector3> aPoints   = new List<Vector3>();
+                    for (uint i = 0; i < nSamples; i++)
+                    {
+                        float fPhiRatio     = 1f / (nSamples - 1f) * i;
+                        aPoints.Add(oRing.vecGetSurfacePoint(fLengthRatio, fPhiRatio, fRadiusRatio));
+                    }
+                    PreviewLine(aPoints, clr);
+                }
+
+                // radial samples
+                for (uint nRadialSample = 0; nRadialSample < nRadialSamples; nRadialSample++)
+                {
+                    uint nSamples           = 500;
+                    float fRadiusRatio      = 1f;
+                    float fPhiRatio         = 1f / (nRadialSamples - 1f) * nRadialSample;
+                    List<Vector3> aPoints   = new List<Vector3>();
+                    for (uint i = 0; i < nSamples; i++)
+                    {
+                        float fLengthRatio  = 1f / (nSamples - 1f) * i;
+                        aPoints.Add(oRing.vecGetSurfacePoint(fLengthRatio, fPhiRatio, fRadiusRatio));
+                    }
+                    PreviewLine(aPoints, clr);
+                }
+            }
         }
     }
 }
