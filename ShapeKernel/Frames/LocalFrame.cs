@@ -204,25 +204,26 @@ namespace Leap71
 
 	    /// <summary>
 	    /// Returns a new LocalFrame positioned at an offset relative to the given reference frame. 
-            /// The offset is interpreted in the reference frame's local coordinate system. 
+            /// The offset is interpreted in the reference frame's local coordinate system.
+	    /// Use caution if chaining relative frames as inaccuracies can compound. 
 	    /// </summary>
 	    /// <param name="refFrame">The LocalFrame whose local axes define the translation directions</param>
 	    /// <param name="vecLocalOffset">Translation vector in the reference frame's local coordinates</param> 
 	    /// <returns>A new LocalFrame translated relative to the reference frame</returns>
 	    public static LocalFrame oGetRelativeFrame(LocalFrame refFrame, Vector3 vecLocalOffset)
 	    {
-    	    	Vector3 vecRefX = refFrame.vecGetLocalX();
-    	   	Vector3 vecRefY = refFrame.vecGetLocalY();
-    	    	Vector3 vecRefZ = refFrame.vecGetLocalZ();
+		Vector3 vecRefX = refFrame.vecGetLocalX();
+		Vector3 vecRefY = refFrame.vecGetLocalY();
+		Vector3 vecRefZ = refFrame.vecGetLocalZ();
 
-    		Vector3 vecGlobalOffset =
-        	vecRefX * vecLocalOffset.X +
-       		vecRefY * vecLocalOffset.Y +
-        	vecRefZ * vecLocalOffset.Z;
+		Vector3 vecGlobalOffset =
+		vecRefX * vecLocalOffset.X 
+		vecRefY * vecLocalOffset.Y +
+		vecRefZ * vecLocalOffset.Z;
 
-    		Vector3 vecNewPosition = refFrame.vecGetPosition() + vecGlobalOffset;
+		Vector3 vecNewPosition = refFrame.vecGetPosition() + vecGlobalOffset;
 
-    		return new LocalFrame(vecNewPosition, refFrame.vecGetLocalZ(), refFrame.vecGetLocalX());
+		return new LocalFrame(vecNewPosition, refFrame.vecGetLocalZ(), refFrame.vecGetLocalX());
 	    }
 
 
