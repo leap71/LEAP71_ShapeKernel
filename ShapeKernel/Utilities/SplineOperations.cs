@@ -257,7 +257,7 @@ namespace Leap71
             /// </summary>
             public static List<Vector3> aGetNURBSpline(List<Vector3> aControlPoints, uint nSamples)
             {
-                ControlPointSpline oBSpline = new ControlPointSpline(aControlPoints, 2, ControlPointSpline.EEnds.OPEN);
+                ControlPointSpline oBSpline = new (aControlPoints, 2, ControlPointSpline.EEnds.OPEN);
                 return oBSpline.aGetPoints(nSamples);
             }
             
