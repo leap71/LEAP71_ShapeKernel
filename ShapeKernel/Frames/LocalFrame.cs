@@ -154,8 +154,52 @@ namespace Leap71
                 return m_vecLocalZ;
             }
 
+            /// <summary>
+            /// Returns a local frame that is flipped compared to the specified local frame.
+            /// The position remains constant.
+            /// The booleans toogle which local axes whould be inverted.
+            /// </summary>
+            public LocalFrame oInvert(bool bMirrorZ, bool bMirrorX)
+            {
+                Vector3 vecNewLocalZ = vecGetLocalZ();
+                Vector3 vecNewLocalX = vecGetLocalX();
+                if (bMirrorZ)
+                {
+                    vecNewLocalZ = -vecGetLocalZ();
+                }
+                if (bMirrorX)
+                {
+                    vecNewLocalX = -vecGetLocalX();
+                }
 
-            //utility
+                LocalFrame oNewFrame = new (vecGetPosition(), vecNewLocalZ, vecNewLocalX);
+                return oNewFrame;
+            }
+
+            /// <summary>
+            /// Returns a local frame that is translates in position compared to the specified local frame.
+            /// The axes remain constant.
+            /// </summary>
+            public LocalFrame oTranslate(Vector3 vecTranslate)
+            {
+                Vector3 vecNewPosition  = vecGetPosition() + vecTranslate;
+                LocalFrame oNewFrame    = new (vecNewPosition, vecGetLocalZ(), vecGetLocalX());
+                return oNewFrame;
+            }
+
+            /// <summary>
+            /// Returns a local frame that is rotated compared to the specified local frame.
+            /// The position remains constant.
+            /// All local axes are rotated around the specified axis by angle phi in rad.
+            /// </summary>
+            public LocalFrame oRotate(float dPhi, Vector3 vecAxis)
+            {
+                Vector3 vecNewLocalX = VecOperations.vecRotateAroundAxis(vecGetLocalX(), dPhi, vecAxis);
+                Vector3 vecNewLocalZ = VecOperations.vecRotateAroundAxis(vecGetLocalZ(), dPhi, vecAxis);
+                LocalFrame oNewFrame = new (vecGetPosition(), vecNewLocalZ, vecNewLocalX);
+                return oNewFrame;
+            }
+
             /// <summary>
             /// Returns a local frame that is flipped compared to the specified local frame.
             /// The position remains constant.
