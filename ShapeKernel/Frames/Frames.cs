@@ -200,7 +200,7 @@ namespace Leap71
                 float fMaxDotProduct    = MathF.Abs(Vector3.Dot(vecInitLocalX, vecTargetX));
                 Vector3 vecFinalLocalX  = vecInitLocalX;
 
-                for (float dAngle = 0; dAngle < 180f; dAngle += 0.1f)
+                for (float dAngle = 0; dAngle < 180f; dAngle += 0.01f)
                 {
                     float fPhi              = (2 * MathF.PI) / 360f * dAngle;
                     Vector3 vecNewLocalX    = MathF.Cos(fPhi) * vecInitLocalX + MathF.Sin(fPhi) * vecInitLocalY;
