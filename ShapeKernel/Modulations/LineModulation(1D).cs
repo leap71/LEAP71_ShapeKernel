@@ -204,13 +204,13 @@ namespace Leap71
                 return ModulationAddition.oGetDifferenceOfModulations(oMod1, oMod2);
             }
 
-            protected class ModulationAddition
+            class ModulationAddition
             {
-                protected LineModulation m_oMod1;
-                protected LineModulation m_oMod2;
+                LineModulation m_oMod1;
+                LineModulation m_oMod2;
 
-                protected ModulationAddition(   LineModulation oMod1,
-                                                LineModulation oMod2)
+                ModulationAddition( LineModulation oMod1,
+                                    LineModulation oMod2)
                 {
                     m_oMod1 = oMod1;
                     m_oMod2 = oMod2;
@@ -230,35 +230,35 @@ namespace Leap71
                     return oUtil.oGetDifferenceOfModulations();
                 }
 
-                protected LineModulation oGetSumOfModulations()
+                LineModulation oGetSumOfModulations()
                 {
                     return new LineModulation(fGetAddedModulation);
                 }
 
-                protected LineModulation oGetDifferenceOfModulations()
+                LineModulation oGetDifferenceOfModulations()
                 {
                     return new LineModulation(fGetSubtractedModulation);
                 }
 
-                protected float fGetAddedModulation(float fLengthRatio)
+                float fGetAddedModulation(float fLengthRatio)
                 {
                     return m_oMod1.fGetModulation(fLengthRatio) + m_oMod2.fGetModulation(fLengthRatio);
                 }
 
-                protected float fGetSubtractedModulation(float fLengthRatio)
+                float fGetSubtractedModulation(float fLengthRatio)
                 {
                     return m_oMod1.fGetModulation(fLengthRatio) - m_oMod2.fGetModulation(fLengthRatio);
                 }
             }
 
-            protected class ModulationMultiplication
+            class ModulationMultiplication
             {
-                protected float             m_fFactor;
-                protected LineModulation    m_oMod;
+                float             m_fFactor;
+                LineModulation    m_oMod;
                 
 
-                protected ModulationMultiplication( float fFactor,
-                                                    LineModulation oMod)
+                ModulationMultiplication(   float fFactor,
+                                            LineModulation oMod)
                 {
                     m_fFactor   = fFactor;
                     m_oMod      = oMod;
@@ -271,12 +271,12 @@ namespace Leap71
                     return oUtil.oGetMultipliedModulation();
                 }
 
-                protected LineModulation oGetMultipliedModulation()
+                LineModulation oGetMultipliedModulation()
                 {
                     return new LineModulation(fGetScaledModulation);
                 }
 
-                protected float fGetScaledModulation(float fLengthRatio)
+                float fGetScaledModulation(float fLengthRatio)
                 {
                     return m_fFactor * m_oMod.fGetModulation(fLengthRatio);
                 }

@@ -147,12 +147,20 @@ namespace Leap71
                 }
             }
 
+             /// <summary>
+            /// Multiplies a modulation with a factor.
+            /// </summary>
+            public static SurfaceModulation operator *(float fFactor, SurfaceModulation oMod)
+            {
+                return ModulationMultiplication.oGetScaledModulation(fFactor, oMod);
+            }
+
             /// <summary>
             /// Adds one modulation to another.
             /// </summary>
             public static SurfaceModulation operator +(SurfaceModulation oMod1, SurfaceModulation oMod2)
             {
-                return ModulationUtil.oGetSumOfModulations(oMod1, oMod2);
+                return ModulationAddition.oGetSumOfModulations(oMod1, oMod2);
             }
 
             /// <summary>
@@ -160,53 +168,84 @@ namespace Leap71
             /// </summary>
             public static SurfaceModulation operator -(SurfaceModulation oMod1, SurfaceModulation oMod2)
             {
-                return ModulationUtil.oGetDifferenceOfModulations(oMod1, oMod2);
+                return ModulationAddition.oGetDifferenceOfModulations(oMod1, oMod2);
             }
 
-            protected class ModulationUtil
+            class ModulationAddition
             {
-                protected SurfaceModulation m_oMod1;
-                protected SurfaceModulation m_oMod2;
+                SurfaceModulation m_oMod1;
+                SurfaceModulation m_oMod2;
 
-                protected ModulationUtil(   SurfaceModulation oMod1,
-                                            SurfaceModulation oMod2)
+                ModulationAddition( SurfaceModulation oMod1,
+                                    SurfaceModulation oMod2)
                 {
                     m_oMod1 = oMod1;
                     m_oMod2 = oMod2;
                 }
 
-                public static SurfaceModulation oGetSumOfModulations(  SurfaceModulation oMod1,
-                                                                    SurfaceModulation oMod2)
+                public static SurfaceModulation oGetSumOfModulations(   SurfaceModulation oMod1,
+                                                                        SurfaceModulation oMod2)
                 {
-                    ModulationUtil oUtil = new(oMod1, oMod2);
+                    ModulationAddition oUtil = new (oMod1, oMod2);
                     return oUtil.oGetSumOfModulations();
                 }
 
-                public static SurfaceModulation oGetDifferenceOfModulations(   SurfaceModulation oMod1,
+                public static SurfaceModulation oGetDifferenceOfModulations(SurfaceModulation oMod1,
                                                                             SurfaceModulation oMod2)
                 {
-                    ModulationUtil oUtil = new(oMod1, oMod2);
+                    ModulationAddition oUtil = new(oMod1, oMod2);
                     return oUtil.oGetDifferenceOfModulations();
                 }
 
-                protected SurfaceModulation oGetSumOfModulations()
+                SurfaceModulation oGetSumOfModulations()
                 {
                     return new SurfaceModulation(fGetAddedModulation);
                 }
 
-                protected SurfaceModulation oGetDifferenceOfModulations()
+                SurfaceModulation oGetDifferenceOfModulations()
                 {
                     return new SurfaceModulation(fGetSubtractedModulation);
                 }
 
-                protected float fGetAddedModulation(float fPhi, float fLengthRatio)
+                float fGetAddedModulation(float fPhi, float fLR)
                 {
-                    return m_oMod1.fGetModulation(fPhi, fLengthRatio) + m_oMod2.fGetModulation(fPhi, fLengthRatio);
+                    return m_oMod1.fGetModulation(fPhi, fLR) + m_oMod2.fGetModulation(fPhi, fLR);
                 }
 
-                protected float fGetSubtractedModulation(float fPhi, float fLengthRatio)
+                float fGetSubtractedModulation(float fPhi, float fLR)
                 {
-                    return m_oMod1.fGetModulation(fPhi, fLengthRatio) - m_oMod2.fGetModulation(fPhi, fLengthRatio);
+                    return m_oMod1.fGetModulation(fPhi, fLR) - m_oMod2.fGetModulation(fPhi, fLR);
+                }
+            }
+
+            class ModulationMultiplication
+            {
+                float             m_fFactor;
+                SurfaceModulation m_oMod;
+                
+
+                ModulationMultiplication(   float fFactor,
+                                            SurfaceModulation oMod)
+                {
+                    m_fFactor   = fFactor;
+                    m_oMod      = oMod;
+                }
+
+                public static SurfaceModulation oGetScaledModulation(  float fFactor,
+                                                                        SurfaceModulation oMod)
+                {
+                    ModulationMultiplication oUtil = new (fFactor, oMod);
+                    return oUtil.oGetMultipliedModulation();
+                }
+
+                SurfaceModulation oGetMultipliedModulation()
+                {
+                    return new SurfaceModulation(fGetScaledModulation);
+                }
+
+                float fGetScaledModulation(float fPhi, float fLR)
+                {
+                    return m_fFactor * m_oMod.fGetModulation(fPhi, fLR);
                 }
             }
         }
