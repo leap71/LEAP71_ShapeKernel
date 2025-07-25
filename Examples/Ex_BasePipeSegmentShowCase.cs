@@ -34,7 +34,7 @@ namespace Leap71
                 try
                 {
                     {
-                        //basic
+                        // basic
                         LocalFrame oLocalFrame  = new LocalFrame(new Vector3(-50, 0, 0));
                         BasePipeSegment oShape  = new BasePipeSegment(oLocalFrame, 60, 20, 40,
                             new LineModulation(MathF.PI),
@@ -45,7 +45,7 @@ namespace Leap71
                     }
 
                     {
-                        //modulated 0
+                        // modulated 0
                         LocalFrame oLocalFrame  = new LocalFrame(new Vector3(-50, 50, 0));
                         BasePipeSegment oShape  = new BasePipeSegment(oLocalFrame, 60, 2, 40,
                             new LineModulation(MathF.PI),
@@ -60,7 +60,7 @@ namespace Leap71
                     }
 
                     {
-                        //modulated 1
+                        // modulated 1
                         LocalFrame oLocalFrame  = new LocalFrame(new Vector3(0, -50, 0));
                         BasePipeSegment oShape  = new BasePipeSegment(oLocalFrame, 60, 2, 40,
                             new LineModulation(MathF.PI),
@@ -75,7 +75,7 @@ namespace Leap71
                     }
 
                     {
-                        //modulated 2
+                        // modulated 2
                         LocalFrame oLocalFrame  = new LocalFrame(new Vector3(50, -50, 0));
                         BasePipeSegment oShape  = new BasePipeSegment(oLocalFrame, 60, 2, 40,
                             new LineModulation(fGetSegmentPhiMid1),
@@ -90,7 +90,7 @@ namespace Leap71
                     }
 
                     {
-                        //modulated + spined
+                        // modulated + spined
                         ISpline oSpine          = new ExampleSpline();
                         Frames aFrames          = new Frames(oSpine.aGetPoints(), Vector3.UnitY);
                         BasePipeSegment oShape  = new BasePipeSegment(aFrames, 2, 40,
@@ -105,7 +105,7 @@ namespace Leap71
                     }
 
                     {
-                        //spined
+                        // spined
                         ISpline oSpine          = new ExampleSpline();
                         List<Vector3> aPoints   = SplineOperations.aTranslateList(oSpine.aGetPoints(), 50 * Vector3.UnitX);
                         Frames aFrames          = new Frames(aPoints, Vector3.UnitY);
@@ -124,39 +124,39 @@ namespace Leap71
             }
 
 
-            //functions for pipe segment line modulations
-            protected static float fGetSegmentPhiMid1(float fLengthRatio)
+            // functions for pipe segment line modulations
+            static float fGetSegmentPhiMid1(float fLengthRatio)
             {
                 float fPhiMid = -1f * MathF.PI * fLengthRatio;
                 return fPhiMid;
             }
 
-            protected static float fGetSegmentPhiMid2(float fLengthRatio)
+            static float fGetSegmentPhiMid2(float fLengthRatio)
             {
                 float fPhiMid = 4f * MathF.PI * fLengthRatio;
                 return fPhiMid;
             }
 
-            protected static float fGetSegmentPhiRange1(float fLengthRatio)
+            static float fGetSegmentPhiRange1(float fLengthRatio)
             {
                 float fPhiRange = 0.5f * MathF.PI + 0.25f * MathF.PI * MathF.Cos(8f * fLengthRatio);
                 return fPhiRange;
             }
 
-            protected static float fGetSegmentPhiRange2(float fLengthRatio)
+            static float fGetSegmentPhiRange2(float fLengthRatio)
             {
                 float fPhiRange = 0.5f * MathF.PI + 0.25f * MathF.PI * MathF.Cos(40f * fLengthRatio);
                 return fPhiRange;
             }
 
-            //functions for generic line modulations
-            public static float fGetLineModulation1(float fLengthRatio)
+            // functions for generic line modulations
+            static float fGetLineModulation1(float fLengthRatio)
             {
                 float fWidth = 10f - 3f * MathF.Cos(8f * fLengthRatio);
                 return fWidth;
             }
 
-            //functions for generic surface modulations
+            // functions for generic surface modulations
             public static float fGetSurfaceModulation1(float fPhi, float fLengthRatio)
             {
                 float fRadius = 12f + 3f * MathF.Cos(5f * fPhi);

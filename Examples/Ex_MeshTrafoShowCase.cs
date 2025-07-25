@@ -31,19 +31,19 @@ namespace Leap71
         {
             public static void Task()
             {
-                //Step 1: Generate a simple mesh (e.g. from voxelfields)
+                // Step 1: Generate a simple mesh (e.g. from voxelfields)
                 BaseBox oBox                = new BaseBox(new LocalFrame(new Vector3(0, 100, 0)), 50, 40, 30);
                 Voxels voxBox               = oBox.voxConstruct();
                 Mesh mshBox                 = new Mesh(voxBox);
 
 
-                //Step 2: Apply a vertex-wise transformation to the mesh
+                // Step 2: Apply a vertex-wise transformation to the mesh
                 // Select between the fnMirror and the fnRotate function
-                //Mesh mshTrafoBox            = MeshUtility.mshApplyTransformation(mshBox, fnMirror);
+                // Mesh mshTrafoBox            = MeshUtility.mshApplyTransformation(mshBox, fnMirror);
                 Mesh mshTrafoBox            = MeshUtility.mshApplyTransformation(mshBox, fnRotate);
 
 
-                //Step 3: Voxelize transformed mesh (if needed)
+                // Step 3: Voxelize transformed mesh (if needed)
                 Voxels voxTrafoBox          = new Voxels(mshTrafoBox);
                 Sh.PreviewVoxels(voxBox,      Cp.clrOrchid, 0.5f);
                 Sh.PreviewVoxels(voxTrafoBox, Cp.clrOrchid, 1.0f);

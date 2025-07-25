@@ -31,7 +31,7 @@ namespace Leap71
         {
             public static void Task()
             {
-                //Step 1: Generate a three example meshes (e.g. from voxelfields)
+                // Step 1: Generate a three example meshes (e.g. from voxelfields)
                 float fRadius               = 50f;
                 BaseSphere oSphere1         = new BaseSphere(new LocalFrame(new Vector3(-120, 0, 0)), fRadius);
                 BaseSphere oSphere2         = new BaseSphere(new LocalFrame(new Vector3(   0, 0, 0)), fRadius);
@@ -41,7 +41,7 @@ namespace Leap71
                 Mesh msh3                   = new Mesh(oSphere3.voxConstruct());
 
 
-                //Step 2: Show local overhang distribution on first mesh
+                // Step 2: Show local overhang distribution on first mesh
                 float fMinValue             =  0;   // deg
                 float fMaxValue             = 90;   // deg
                 bool bShowOnlyDownFacing    = false;
@@ -50,7 +50,7 @@ namespace Leap71
                 MeshPainter.PreviewOverhangAngle(msh1, xScale1, bShowOnlyDownFacing, nColorSteps);
 
 
-                //Step 3: Show critical overhang areas on second mesh
+                // Step 3: Show critical overhang areas on second mesh
                 float fCritAngle            = 30;   // deg
                 float fTransitionSmooth     = 5;
                 bShowOnlyDownFacing         = true;
@@ -58,7 +58,7 @@ namespace Leap71
                 MeshPainter.PreviewOverhangAngle(msh2, xScale2, bShowOnlyDownFacing, nColorSteps);
 
                 
-                //Step 4: Show custom property on third mesh
+                // Step 4: Show custom property on third mesh
                 fMinValue                   = 0;    // mm
                 fMaxValue                   = 10;   // mm
                 IColorScale xScale3         = new LinearColorScale2D(Cp.clrCrystal, Cp.clrPitaya, fMinValue, fMaxValue);

@@ -33,18 +33,18 @@ namespace Leap71
             {
                 try
                 {
-                    //generate SDFs using presets.
+                    // generate SDFs using presets.
                     Vector3 vecCentre       = new Vector3();
                     float fRadius           = 10f;
                     IImplicit sdfSphere     = new ImplicitSphere(vecCentre, fRadius);
                     IImplicit sdfPattern    = new ImplicitGyroid(3, 1);
                     BBox3 oBBox             = new BBox3(1.2f * new Vector3(-fRadius, -fRadius, -fRadius), 1.2f * new Vector3(fRadius, fRadius, fRadius));
 
-                    //render a simple shape into voxels.
+                    // render a simple shape into voxels.
                     Voxels voxSphere        = new Voxels(sdfSphere, oBBox);
 
-                    //intersect an implicit pattern with a bounding voxelfield.
-                    Voxels voxGyroidSphere  = Sh.voxIntersectImplicit(voxSphere, sdfPattern);
+                    // intersect an implicit pattern with a bounding voxelfield.
+                    Voxels voxGyroidSphere  = voxSphere.voxIntersectImplicit(sdfPattern);
 
                     Sh.PreviewVoxels(voxGyroidSphere,   Cp.clrBillie);
                     Sh.PreviewVoxels(voxSphere,         Cp.clrBubblegum, 0.3f);

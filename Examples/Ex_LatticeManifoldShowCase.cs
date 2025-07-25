@@ -18,11 +18,11 @@
 
 
 using PicoGK;
+using System.Numerics;
 
 
 namespace Leap71
 {
-    using System.Numerics;
     using ShapeKernel;
 
     namespace ShapeKernelExamples

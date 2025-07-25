@@ -30,20 +30,19 @@ namespace Leap71
         {
             public static void Task()
             {
-                //Step 1: Generate a simple shape with convex and concave corners
+                // Step 1: Generate a simple shape with convex and concave corners
                 BaseBox oBox_01             = new BaseBox(new LocalFrame(), 10, 40, 30);
                 BaseBox oBox_02             = new BaseBox(new LocalFrame(), 40, 40, 10);
-                Voxels voxBox               = Sh.voxUnion(oBox_01.voxConstruct(), oBox_02.voxConstruct());
+                Voxels voxBox               = oBox_01.voxConstruct()
+                                                + oBox_02.voxConstruct();
                 
+                // Step 2: Apply one of the below offset operations
+                // Voxels voxNewBox          = voxBox.voxOffset(3f);
+                Voxels voxNewBox          = voxBox.voxFillet(3f);
+                // Voxels voxNewBox          = voxBox.voxFillet(-3f);
+                // Voxels voxNewBox          = voxBox.voxSmoothen(3f);
 
-                //Step 2: Apply one of the below offset operations
-                //Voxels voxNewBox            = Sh.voxOffset(voxBox, 3);
-                Voxels voxNewBox          = Sh.voxOverOffset(voxBox, 3, 0);
-                //Voxels voxNewBox          = Sh.voxOverOffset(voxBox, -3, 0);
-                //Voxels voxNewBox            = Sh.voxSmoothen(voxBox, 3);
-
-
-                //Step 3: Visualize
+                // Step 3: Visualize
                 Sh.PreviewBoxWireframe(oBox_01, Cp.clrBlack);
                 Sh.PreviewBoxWireframe(oBox_02, Cp.clrBlack);
                 Sh.PreviewVoxels(voxNewBox, Cp.clrBubblegum, 1.0f);

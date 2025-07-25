@@ -31,10 +31,10 @@ namespace Leap71
         {
             public static void Task()
             {
-                //note: ellipsoid shape is very small. Use voxel size 0.01mm for good resolution.
-                //note: https://en.wikipedia.org/wiki/Superellipsoid
-                //note: parameter n is fEpsilon1
-                //note: parameter e is fEpsilon2
+                // Note: ellipsoid shape is very small. Use voxel size 0.01mm for good resolution.
+                // Note: https://en.wikipedia.org/wiki/Superellipsoid
+                // Note: parameter n is fEpsilon1
+                // Note: parameter e is fEpsilon2
                 try
                 {
                     {                    
@@ -45,18 +45,17 @@ namespace Leap71
                         float fEpsilon2             = 0.25f;
                         Vector3 vecCentre           = new Vector3(0f, 0, 0);
 
-
-                        //Step 1: generate SDF
+                        // Step 1: generate SDF
                         IImplicit sdfEllipsoid      = new ImplicitSuperEllipsoid(vecCentre, fAx, fAz, fAy, fEpsilon1, fEpsilon2);
 
-                        //Step 2: define bounding object
+                        // Step 2: define bounding object
                         BBox3 oBBox                 = new BBox3(1f * new Vector3(-fAx - vecCentre.X, -fAy - vecCentre.Y, -fAz - vecCentre.Z),
                                                                 1f * new Vector3(fAx - vecCentre.X, fAy - vecCentre.Y, fAz - vecCentre.Z));
 
-                        //Step 3: render the implicit shape into voxels
+                        // Step 3: render the implicit shape into voxels
                         Voxels voxEllipsoid         = new Voxels(sdfEllipsoid, oBBox);
 
-                        //Step 4: visualization
+                        // Step 4: visualization
                         Sh.PreviewVoxels(voxEllipsoid, Cp.clrRuby);
                     }
 
@@ -68,17 +67,17 @@ namespace Leap71
                         float fEpsilon2             = 1.50f;
                         Vector3 vecCentre           = new Vector3(-4, 0, 0);
 
-                        //Step 1: generate SDF
+                        // Step 1: generate SDF
                         IImplicit sdfEllipsoid      = new ImplicitSuperEllipsoid(vecCentre, fAx, fAz, fAy, fEpsilon1, fEpsilon2);
 
-                        //Step 2: define bounding object
+                        // Step 2: define bounding object
                         BBox3 oBBox                 = new BBox3(1f * new Vector3(-fAx - vecCentre.X, -fAy - vecCentre.Y, -fAz - vecCentre.Z),
                                                                 1f * new Vector3( fAx - vecCentre.X,  fAy - vecCentre.Y,  fAz - vecCentre.Z));
 
-                        //Step 3: render the implicit shape into voxels
+                        // Step 3: render the implicit shape into voxels
                         Voxels voxEllipsoid         = new Voxels(sdfEllipsoid, oBBox);
 
-                        //Step 4: visualization
+                        // Step 4: visualization
                         Sh.PreviewVoxels(voxEllipsoid, Cp.clrBlue);
                     }
 
@@ -90,17 +89,17 @@ namespace Leap71
                         float fEpsilon2             = 0.25f;
                         Vector3 vecCentre           = new Vector3(4, 0, 0);
 
-                        //Step 1: generate SDF
+                        // Step 1: generate SDF
                         IImplicit sdfEllipsoid      = new ImplicitSuperEllipsoid(vecCentre, fAx, fAy, fAz, fEpsilon1, fEpsilon2);
 
-                        //Step 2: define bounding object
+                        // Step 2: define bounding object
                         BBox3 oBBox                 = new BBox3(1f * new Vector3(-fAx - vecCentre.X, -fAy - vecCentre.Y, -fAz - vecCentre.Z),
                                                                 1f * new Vector3(fAx - vecCentre.X, fAy - vecCentre.Y, fAz - vecCentre.Z));
 
-                        //Step 3: render the implicit shape into voxels
+                        // Step 3: render the implicit shape into voxels
                         Voxels voxEllipsoid         = new Voxels(sdfEllipsoid, oBBox);
 
-                        //Step 4: visualization
+                        // Step 4: visualization
                         Sh.PreviewVoxels(voxEllipsoid, Cp.clrBubblegum);
                     }
                 }

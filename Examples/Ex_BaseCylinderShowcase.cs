@@ -34,7 +34,7 @@ namespace Leap71
                 try
                 {
                     {
-                        //basic
+                        // basic
                         LocalFrame oLocalFrame  = new LocalFrame(new Vector3(-50, 0, 0));
                         BaseCylinder oShape     = new BaseCylinder(oLocalFrame, 60f, 40);
                         Voxels oVoxels          = oShape.voxConstruct();
@@ -42,7 +42,7 @@ namespace Leap71
                     }
 
                     {
-                        //modulated
+                        // modulated
                         LocalFrame oLocalFrame  = new LocalFrame(new Vector3(50, 0, 0));
                         BaseCylinder oShape     = new BaseCylinder(oLocalFrame, 60, 12);
                         oShape.SetLengthSteps(500);
@@ -51,7 +51,7 @@ namespace Leap71
                         Sh.PreviewVoxels(oVoxels, Cp.clrGreen);
                     }
                     {
-                        //modulated + spined
+                        // modulated + spined
                         ISpline oSpine          = new ExampleSpline();
                         Frames aFrames          = new Frames(oSpine.aGetPoints(), Vector3.UnitY);
                         BaseCylinder oShape     = new BaseCylinder(aFrames, 12);
@@ -66,14 +66,14 @@ namespace Leap71
                 }
             }
 
-            //functions for generic line modulations
+            // functions for generic line modulations
             public static float fGetLineModulation(float fLengthRatio)
             {
                 float fWidth = 10f - 3f * MathF.Cos(8f * fLengthRatio);
                 return fWidth;
             }
 
-            //functions for generic surface modulations
+            // functions for generic surface modulations
             public static float fGetSurfaceModulation(float fPhi, float fLengthRatio)
             {
                 float fRadius = 12f + 3f * MathF.Cos(5f * fPhi);

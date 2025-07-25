@@ -34,7 +34,7 @@ namespace Leap71
                 try
                 {
                     {
-                        //basic
+                        // basic
                         LocalFrame oLocalFrame  = new LocalFrame(new Vector3(-50, -50, 0));
                         BaseRing oShape         = new BaseRing(oLocalFrame, 30, 8);
                         Voxels oVoxels          = oShape.voxConstruct();
@@ -42,7 +42,7 @@ namespace Leap71
                     }
 
                     {
-                        //modulated 0
+                        // modulated 0
                         LocalFrame oLocalFrame  = new LocalFrame(new Vector3(-50, 50, 0));
                         BaseRing oShape         = new BaseRing(oLocalFrame, 30);
                         oShape.SetRadius(new SurfaceModulation(fGetRingRadius0));
@@ -51,7 +51,7 @@ namespace Leap71
                     }
 
                     {
-                        //modulated 1
+                        // modulated 1
                         LocalFrame oLocalFrame  = new LocalFrame(new Vector3(50, 50, 0));
                         BaseRing oShape         = new BaseRing(oLocalFrame, 30);
                         oShape.SetRadius(new SurfaceModulation(fGetRingRadius1));
@@ -60,7 +60,7 @@ namespace Leap71
                     }
 
                     {
-                        //modulated 2
+                        // modulated 2
                         LocalFrame oLocalFrame  = new LocalFrame(new Vector3(50, -50, 0));
                         BaseRing oShape         = new BaseRing(oLocalFrame, 30);
                         oShape.SetRadius(new SurfaceModulation(fGetRingRadius2));
@@ -74,20 +74,20 @@ namespace Leap71
                 }
             }
 
-            //functions for ring surface modulations
-            protected static float fGetRingRadius0(float fPhi, float fAlpha)
+            // functions for ring surface modulations
+            static float fGetRingRadius0(float fPhi, float fAlpha)
             {
                 float fRadius = 10f - 2f * MathF.Cos(5f * fPhi);
                 return fRadius;
             }
 
-            protected static float fGetRingRadius1(float fPhi, float fAlpha)
+            static float fGetRingRadius1(float fPhi, float fAlpha)
             {
                 float fRadius = 10f + 3f * MathF.Cos(5f * fAlpha);
                 return fRadius;
             }
 
-            protected static float fGetRingRadius2(float fPhi, float fAlpha)
+            static float fGetRingRadius2(float fPhi, float fAlpha)
             {
                 fPhi += 1f * fAlpha;
                 float fRadius = 10f - 2f * MathF.Cos(5f * fPhi) + 3f * MathF.Cos(5f * fAlpha);

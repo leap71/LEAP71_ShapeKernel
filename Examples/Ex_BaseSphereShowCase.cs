@@ -34,7 +34,7 @@ namespace Leap71
                 try
                 {
                     {
-                        //basic
+                        // basic
                         LocalFrame oLocalFrame  = new LocalFrame(new Vector3(-100, 0, 0));
                         BaseSphere oShape       = new BaseSphere(oLocalFrame, 40);
                         Voxels oVoxels          = oShape.voxConstruct();
@@ -42,7 +42,7 @@ namespace Leap71
                     }
 
                     {
-                        //modulated 0
+                        // modulated 0
                         LocalFrame oLocalFrame  = new LocalFrame(new Vector3(0, 0, 0));
                         BaseSphere oShape       = new BaseSphere(oLocalFrame);
                         oShape.SetRadius(new SurfaceModulation(fGetSphereRadius0));
@@ -51,7 +51,7 @@ namespace Leap71
                     }
 
                     {
-                        //modulated 1
+                        // modulated 1
                         LocalFrame oLocalFrame  = new LocalFrame(new Vector3(150, 0, 0));
                         BaseSphere oShape       = new BaseSphere(oLocalFrame);
                         oShape.SetRadius(new SurfaceModulation(fGetSphereRadius1));
@@ -65,14 +65,14 @@ namespace Leap71
                 }
             }
 
-            //functions for sphere surface modulations
-            protected static float fGetSphereRadius0(float fTheta, float fPhi)
+            // functions for sphere surface modulations
+            static float fGetSphereRadius0(float fTheta, float fPhi)
             {
                 float fRadius = 40f - 10f * MathF.Cos(6f * fPhi);
                 return fRadius;
             }
 
-            protected static float fGetSphereRadius1(float fTheta, float fPhi)
+            static float fGetSphereRadius1(float fTheta, float fPhi)
             {
                 float fRadius = 40f - 10f * MathF.Cos(6f * fPhi) + 30f * MathF.Cos(2f * fTheta);
                 return fRadius;

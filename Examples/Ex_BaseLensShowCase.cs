@@ -34,7 +34,7 @@ namespace Leap71
                 try
                 {
                     {
-                        //basic
+                        // basic
                         LocalFrame oLocalFrame  = new LocalFrame(new Vector3(-50, -50, 0));
                         BaseLens oShape         = new BaseLens(oLocalFrame, 10, 10, 40);
                         Voxels oVoxels          = oShape.voxConstruct();
@@ -42,7 +42,7 @@ namespace Leap71
                     }
 
                     {
-                        //modulated 0
+                        // modulated 0
                         LocalFrame oLocalFrame  = new LocalFrame(new Vector3(50, 50, 0));
                         BaseLens oShape         = new BaseLens(oLocalFrame, 10, 10, 40);
                         oShape.SetHeight(new SurfaceModulation(fGetLenseHeight1), new SurfaceModulation(fGetLenseHeight2));
@@ -51,7 +51,7 @@ namespace Leap71
                     }
 
                     {
-                        //modulated 1
+                        // modulated 1
                         LocalFrame oLocalFrame  = new LocalFrame(new Vector3(-50, 50, 0));
                         BaseLens oShape         = new BaseLens(oLocalFrame, 10, 10, 40);
                         oShape.SetHeight(new SurfaceModulation(fGetLenseHeight1), new SurfaceModulation(fGetLenseHeight3));
@@ -65,27 +65,27 @@ namespace Leap71
                 }
             }
 
-            //functions for lense surface modulations
-            protected static float fGetLenseHeight1(float fPhi, float fRadiusRatio)
+            // functions for lense surface modulations
+            static float fGetLenseHeight1(float fPhi, float fRadiusRatio)
             {
                 float fRadius = 5f - fGetSurfaceModulation(fPhi, fRadiusRatio);
                 return fRadius;
             }
 
-            protected static float fGetLenseHeight2(float fPhi, float fRadiusRatio)
+            static float fGetLenseHeight2(float fPhi, float fRadiusRatio)
             {
                 float fRadius = 5f + fGetSurfaceModulation(fPhi, fRadiusRatio);
                 return fRadius;
             }
 
-            protected static float fGetLenseHeight3(float fPhi, float fRadiusRatio)
+            static float fGetLenseHeight3(float fPhi, float fRadiusRatio)
             {
                 fPhi += 0.3f * MathF.PI * fRadiusRatio;
                 float fRadius = 5f + 1f * MathF.Cos(6f * fPhi) + 3f * MathF.Cos(20f * fRadiusRatio);
                 return fRadius;
             }
 
-            //functions for generic surface modulations
+            // functions for generic surface modulations
             public static float fGetSurfaceModulation(float fPhi, float fLengthRatio)
             {
                 float fRadius = 12f + 3f * MathF.Cos(5f * fPhi);

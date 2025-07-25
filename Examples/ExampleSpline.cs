@@ -34,7 +34,7 @@ namespace Leap71
             /// </summary>
             public ExampleSpline()
             {
-                //Define a few control points in space via their x-y-z coordinates.
+                // Define a few control points in space via their x-y-z coordinates.
                 List<Vector3> aControlPoints = new List<Vector3>() {
                     new Vector3(0, 0, 0),
                     new Vector3(0, 40, 0),
@@ -42,14 +42,14 @@ namespace Leap71
                     new Vector3(0, 60, 60),
                 };
 
-                //Use a ControlPointSpline object (B-Spline) to derive a smooth curve from the control points.
-                //This curve is continuous and can later be samples into a new point list.
+                // Use a ControlPointSpline object (B-Spline) to derive a smooth curve from the control points.
+                // This curve is continuous and can later be samples into a new point list.
                 m_oBSpline = new ControlPointSpline(aControlPoints);
             }
 
             public List<Vector3> aGetPoints(uint nSamples = 500)
             {
-                //Query 500 (or nSamples) point along the B-Spline.
+                // Query 500 (or nSamples) point along the B-Spline.
                 return m_oBSpline.aGetPoints(nSamples);
             }
         }

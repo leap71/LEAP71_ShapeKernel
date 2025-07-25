@@ -18,11 +18,11 @@
 
 
 using PicoGK;
+using System.Numerics;
 
 
 namespace Leap71
 {
-    using System.Numerics;
     using ShapeKernel;
 
     namespace ShapeKernelExamples
@@ -34,7 +34,7 @@ namespace Leap71
                 try
                 {
                     {
-                        //basic
+                        // basic
                         LocalFrame oLocalFrame  = new LocalFrame(new Vector3(-50, 0, 0));
                         LatticePipe oShape      = new LatticePipe(oLocalFrame, 60f, 10);
                         Voxels oVoxels          = oShape.voxConstruct();
@@ -42,7 +42,7 @@ namespace Leap71
                     }
 
                     {
-                        //modulated 0
+                        // modulated 0
                         LocalFrame oLocalFrame  = new LocalFrame(new Vector3(50, -50, 0));
                         LatticePipe oShape      = new LatticePipe(oLocalFrame, 60);
                         oShape.SetRadius(new LineModulation(fGetLineModulation1));
@@ -51,7 +51,7 @@ namespace Leap71
                     }
 
                     {
-                        //modulated + spined
+                        // modulated + spined
                         ISpline oSpine          = new ExampleSpline();
                         Frames aFrames          = new Frames(oSpine.aGetPoints(), Vector3.UnitY);
                         LatticePipe oShape      = new LatticePipe(aFrames);
@@ -61,7 +61,7 @@ namespace Leap71
                     }
 
                     {
-                        //spined
+                        // spined
                         ISpline oSpine          = new ExampleSpline();
                         List<Vector3> aPoints   = SplineOperations.aTranslateList(oSpine.aGetPoints(), 50 * Vector3.UnitX);
                         Frames aFrames          = new Frames(aPoints, Vector3.UnitY);
@@ -76,7 +76,7 @@ namespace Leap71
                 }
             }
 
-            //functions for generic line modulations
+            // functions for generic line modulations
             public static float fGetLineModulation1(float fLengthRatio)
             {
                 float fWidth = 10f - 3f * MathF.Cos(8f * fLengthRatio);

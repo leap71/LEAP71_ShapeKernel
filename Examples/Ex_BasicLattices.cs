@@ -35,12 +35,12 @@ namespace Leap71
                 {
                     Lattice oLattice = new Lattice();
 
-                    //add node
+                    // add node
                     Vector3 vecPt0 = new Vector3(1, 5, -10);
                     float fRadius0 = 5;
                     oLattice.AddSphere(vecPt0, fRadius0);
 
-                    //add beams
+                    // add beams
                     Vector3 vecPt1 = new Vector3(5, 3, 0);
                     float fRadius1 = 1;
                     Vector3 vecPt2 = new Vector3(-3, 0, 7);

@@ -34,7 +34,7 @@ namespace Leap71
                 try
                 {
                     {
-                        //basic
+                        // basic
                         LocalFrame oLocalFrame  = new LocalFrame(new Vector3(-50, 0, 0));
                         BaseBox oShape          = new BaseBox(oLocalFrame, 20, 10, 15);
                         Voxels oVoxels          = oShape.voxConstruct();
@@ -42,7 +42,7 @@ namespace Leap71
                     }
 
                     {
-                        //modulated
+                        // modulated
                         LocalFrame oLocalFrame  = new LocalFrame(new Vector3(50, 0, 0));
                         BaseBox oShape          = new BaseBox(oLocalFrame, 20);
                         oShape.SetWidth(new LineModulation(fGetLineModulation2));
@@ -51,7 +51,7 @@ namespace Leap71
                         Sh.PreviewVoxels(oVoxels, Cp.clrGreen);
                     }
                     {
-                        //modulated + spined
+                        // modulated + spined
                         ISpline oSpine          = new ExampleSpline();
                         Frames aFrames          = new Frames(oSpine.aGetPoints(), Vector3.UnitY);
                         BaseBox oShape          = new BaseBox(aFrames);
@@ -67,7 +67,7 @@ namespace Leap71
                 }
             }
 
-            //functions for generic line modulations
+            // functions for generic line modulations
             public static float fGetLineModulation1(float fLengthRatio)
             {
                 float fWidth = 10f - 3f * MathF.Cos(8f * fLengthRatio);

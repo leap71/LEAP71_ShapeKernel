@@ -18,11 +18,11 @@
 
 
 using PicoGK;
+using System.Numerics;
 
 
 namespace Leap71
 {
-    using System.Numerics;
     using ShapeKernel;
 
     namespace ShapeKernelExamples
@@ -34,7 +34,7 @@ namespace Leap71
                 try
                 {
                     {
-                        //basic
+                        // basic
                         LocalFrame oLocalFrame  = new LocalFrame(new Vector3(-50, 0, 0));
                         BasePipe oShape         = new BasePipe(oLocalFrame, 60, 10, 20);
                         Voxels oVoxels          = oShape.voxConstruct();
@@ -42,7 +42,7 @@ namespace Leap71
                     }
 
                     {
-                        //transformed
+                        // transformed
                         LocalFrame oLocalFrame  = new LocalFrame(new Vector3(0, 0, 0));
                         BasePipe oShape         = new BasePipe(oLocalFrame, 60, 10, 20);
                         oShape.SetTransformation(vecGetTransformation);
@@ -51,7 +51,7 @@ namespace Leap71
                     }
 
                     {
-                        //modulated 0
+                        // modulated 0
                         LocalFrame oLocalFrame  = new LocalFrame(new Vector3(50, -50, 0));
                         BasePipe oShape         = new BasePipe(oLocalFrame, 60, 2, 40);
                         oShape.SetLengthSteps(500);
@@ -63,7 +63,7 @@ namespace Leap71
                     }
 
                     {
-                        //modulated 1
+                        // modulated 1
                         LocalFrame oLocalFrame  = new LocalFrame(new Vector3(-50, -50, 0));
                         BasePipe oShape         = new BasePipe(oLocalFrame, 60, 2, 40);
                         oShape.SetLengthSteps(500);
@@ -75,7 +75,7 @@ namespace Leap71
                     }
 
                     {
-                        //modulated 2
+                        // modulated 2
                         LocalFrame oLocalFrame  = new LocalFrame(new Vector3(0, -50, 0));
                         BasePipe oShape         = new BasePipe(oLocalFrame, 60, 2, 40);
                         oShape.SetLengthSteps(500);
@@ -87,7 +87,7 @@ namespace Leap71
                     }
 
                     {
-                        //modulated + spined
+                        // modulated + spined
                         ISpline oSpine          = new ExampleSpline();
                         Frames aFrames          = new Frames(oSpine.aGetPoints(), Vector3.UnitY);
                         BasePipe oShape         = new BasePipe(aFrames, 2, 40);
@@ -99,7 +99,7 @@ namespace Leap71
                     }
 
                     {
-                        //spined
+                        // spined
                         ISpline oSpine          = new ExampleSpline();
                         List<Vector3> aPoints   = SplineOperations.aTranslateList(oSpine.aGetPoints(), 50 * Vector3.UnitX);
                         Frames aFrames          = new Frames(aPoints, Vector3.UnitY);
@@ -114,7 +114,7 @@ namespace Leap71
                 }
             }
 
-            //functions for generic line modulations
+            // functions for generic line modulations
             public static float fGetLineModulation1(float fLengthRatio)
             {
                 float fWidth = 10f - 3f * MathF.Cos(8f * fLengthRatio);
@@ -127,7 +127,7 @@ namespace Leap71
                 return fDepth;
             }
 
-            //functions for generic surface modulations
+            // functions for generic surface modulations
             public static float fGetSurfaceModulation1(float fPhi, float fLengthRatio)
             {
                 float fRadius = 12f + 3f * MathF.Cos(5f * fPhi);

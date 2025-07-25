@@ -31,29 +31,29 @@ namespace Leap71
         {
             public static void Task()
             {
-                //note: genus shape is very small. Use voxel size 0.01mm for good resolution.
-                float fGap    = 0.3f;
-                float fExtent = 2.5f;
+                // Note: genus shape is very small. Use voxel size 0.01mm for good resolution.
+                float fGap              = 0.3f;
+                float fExtent           = 2.5f;
 
-                //Step 1: generate SDF
+                // Step 1: generate SDF
                 IImplicit sdfGenus      = new ImplicitGenus(fGap);
 
-                //Step 2: define bounding object
+                // Step 2: define bounding object
                 BBox3 oBBox             = new BBox3(1.2f * new Vector3(-fExtent, -fExtent, -fExtent + 1.5f), 1.2f * new Vector3(fExtent, fExtent, fExtent - 1.5f));
 
-                //Step 3: render the implicit shape into voxels
+                // Step 3: render the implicit shape into voxels
                 Voxels voxGenus         = new Voxels(sdfGenus, oBBox);
 
-                //Step 4: intersect  implicit pattern with the voxel
+                // Step 4: intersect  implicit pattern with the voxel
                 IImplicit sdfPattern    = new ImplicitGyroid(1, 0.5f);
-                Voxels voxGyroidGenus   = Sh.voxIntersectImplicit(voxGenus, sdfPattern);
+                Voxels voxGyroidGenus   = voxGenus.voxIntersectImplicit(sdfPattern);
 
-                //Step 5: visualization
+                // Step 5: visualization
                 Sh.PreviewVoxels(voxGyroidGenus, Cp.clrRandom());
                 Sh.PreviewVoxels(voxGenus, Cp.clrRandom(), 0.5f);
 
-                ////Step 6: export
-                //Sh.ExportVoxelsToSTLFile(voxGenus, Sh.strGetExportPath(Sh.EExport.STL, "Genus"));
+                //// Step 6: export
+                // Sh.ExportVoxelsToSTLFile(voxGenus, Sh.strGetExportPath(Sh.EExport.STL, "Genus"));
             }
         }
     }
