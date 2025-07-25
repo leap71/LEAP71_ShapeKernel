@@ -43,6 +43,7 @@ namespace Leap71
         public partial class Sh
         {
             public static uint nNumberOfGroups = 0;
+            
             public static void PreviewMesh(
                 Mesh        oMesh,
                 ColorFloat  clrColor,

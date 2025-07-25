@@ -43,11 +43,9 @@ namespace Leap71
     {
         public class ColorScale3D : IColorScale
         {
-            protected List<Vector3>    m_aSmoothRGBList;
-            protected List<float>      m_aLengths;
-            protected float            m_fPathLength;
-            protected float            m_fMinValue;
-            protected float            m_fMaxValue;
+            List<Vector3>    m_aSmoothRGBList;
+            float            m_fMinValue;
+            float            m_fMaxValue;
 
 
             /// <summary>
@@ -60,8 +58,7 @@ namespace Leap71
                 m_fMaxValue         = fMaxValue;
                 m_fMinValue         = fMinValue;
                 m_aSmoothRGBList    = SplineOperations.aGetNURBSpline(xSpectrum.aGetRawRGBList(), 500);
-                m_aSmoothRGBList    = SplineOperations.aGetReparametrizedSpline(m_aSmoothRGBList, (uint)500);
-                m_fPathLength       = SplineOperations.fGetTotalLength(m_aSmoothRGBList);
+                m_aSmoothRGBList    = SplineOperations.aGetReparametrizedSpline(m_aSmoothRGBList, 500);
             }
 
             public float fGetMinValue()

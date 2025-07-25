@@ -42,6 +42,10 @@ namespace Leap71
     {
         public partial class Uf
         {
+            static Random               m_oRandom = new ();
+            static ControlPointSpline?  m_oBSpline;
+
+
             /// <summary>
             /// Pauses the program execution for a given number of seconds.
             /// </summary>
@@ -56,10 +60,9 @@ namespace Leap71
             /// </summary>
             /// <param name="fS"> Current position along a dimension. </param>
             /// <returns></returns>
-            protected static ControlPointSpline m_oBSpline;
             public static float fTransFixed(float fValue1, float fValue2, float fS)
             {
-                if (m_oBSpline == null)
+                if (m_oBSpline is null)
                 {
                     List<Vector3> aControlPoints = new List<Vector3>();
                     aControlPoints.Add(new Vector3(0, 0, 0.0f));
@@ -90,7 +93,7 @@ namespace Leap71
             /// <summary>
             /// https://www.j-raedler.de/2010/10/smooth-transition-between-functions-with-tanh/
             /// </summary>
-            protected static float fGetNormalizedTangensHyperbolicus(float fS, float fTransitionS, float fSmooth)
+            static float fGetNormalizedTangensHyperbolicus(float fS, float fTransitionS, float fSmooth)
             {
                 float fValue = (float)(0.5 + 0.5 * Math.Tanh((fS - fTransitionS) / fSmooth));
                 return fValue;
@@ -175,7 +178,6 @@ namespace Leap71
             /// Renturns a random sample according to a linear propability distribution.
             /// This randomness is not reproducable.
             /// </summary>
-            protected static Random m_oRandom = new Random();
             public static float fGetRandomLinear(float fMin, float fMax)
             {
                 float fValue = (float)(fMin + (fMax - fMin) * m_oRandom.NextDouble());

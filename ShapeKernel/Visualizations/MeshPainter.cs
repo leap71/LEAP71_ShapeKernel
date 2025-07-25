@@ -78,7 +78,7 @@ namespace Leap71
                     float fOverhangAngle = MathF.Atan2(dZ, dR) / MathF.PI * 180f;
                     fOverhangAngle       = float.Clamp(fOverhangAngle, 0f, 90f);
 
-                    //only show downfacing
+                    // only show downfacing
                     if (bShowOnlyDownFacing == true &&
                         vecNormal.Z < 0)
                     {
