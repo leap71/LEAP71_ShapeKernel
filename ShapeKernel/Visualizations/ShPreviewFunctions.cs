@@ -139,6 +139,22 @@ namespace Leap71
                 nNumberOfGroups++;
             }
 
+            public static void PreviewLine(
+                Vector3     vecPt1, 
+                Vector3     vecPt2,
+                ColorFloat  clrColor)
+            {
+                int iNextGroupId        = (int)nNumberOfGroups;
+                PolyLine oLine          = new PolyLine(clrColor);
+                List<Vector3> aPoints   = new () {vecPt1, vecPt2};
+                for (int i = 0; i < aPoints.Count; i++)
+                {
+                    oLine.nAddVertex(aPoints[i]);
+                }
+                Library.oViewer().Add(oLine, iNextGroupId);
+                nNumberOfGroups++;
+            }
+
             public static void PreviewGrid(
                 List<List<Vector3>> aGrid,
                 ColorFloat          clrColor)
