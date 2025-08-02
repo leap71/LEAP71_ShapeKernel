@@ -105,9 +105,8 @@ namespace Leap71
                 float       fMetallic       = 0.4f,
                 float       fRoughness      = 0.7f)
             {
-                Lattice oLattice = new Lattice();
-                oLattice.AddSphere(vecPt, fBeam);
-                PreviewLattice(oLattice, clrColor, fTransparency, fMetallic, fRoughness);
+                BaseSphere oBall = new (new (vecPt), fBeam);
+                PreviewMesh(oBall.mshConstruct(), clrColor, fTransparency, fMetallic, fRoughness);
             }
 
             public static void PreviewBeam(
