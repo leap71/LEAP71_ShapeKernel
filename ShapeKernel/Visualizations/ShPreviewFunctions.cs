@@ -187,12 +187,10 @@ namespace Leap71
                 float           fMetallic       = 0.4f,
                 float           fRoughness      = 0.7f)
             {
-                Lattice oLattice = new Lattice();
                 for (int i = 0; i < aPoints.Count; i++)
                 {
-                    oLattice.AddBeam(aPoints[i], fBeam, aPoints[i], fBeam);
+                    PreviewPoint(aPoints[i], fBeam, clrColor, fTransparency, fMetallic, fRoughness);
                 }
-                PreviewLattice(oLattice, clrColor, fTransparency, fMetallic, fRoughness);
             }
 
             public static void PreviewFrame(
