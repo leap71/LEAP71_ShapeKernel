@@ -197,63 +197,39 @@ namespace Leap71
                 LocalFrame  oFrame,
                 float       fSize)
             {
-                Lattice oXLattice = new Lattice();
-                Lattice oYLattice = new Lattice();
-                Lattice oZLattice = new Lattice();
+                PolyLine oXLine = new(Cp.clrRed);
+                oXLine.nAddVertex(oFrame.vecGetPosition());
+                oXLine.nAddVertex(oFrame.vecGetPosition() + fSize * oFrame.vecGetLocalX());
+                oXLine.AddArrow(0.2f * fSize);
 
-                PreviewFrame(
-                    oFrame,
-                    fSize,
-                    ref oXLattice,
-                    ref oYLattice,
-                    ref oZLattice);
+                PolyLine oYLine = new(Cp.clrGreen);
+                oYLine.nAddVertex(oFrame.vecGetPosition());
+                oYLine.nAddVertex(oFrame.vecGetPosition() + fSize * oFrame.vecGetLocalY());
+                oYLine.AddArrow(0.2f * fSize);
 
-                PreviewLattice(oXLattice, Cp.clrRed);
-                PreviewLattice(oYLattice, Cp.clrGreen);
-                PreviewLattice(oZLattice, Cp.clrBlue);
-            }
+                PolyLine oZLine = new(Cp.clrBlue);
+                oZLine.nAddVertex(oFrame.vecGetPosition());
+                oZLine.nAddVertex(oFrame.vecGetPosition() + fSize * oFrame.vecGetLocalZ());
+                oZLine.AddArrow(0.2f * fSize);
 
-            public static void PreviewFrame(
-                LocalFrame  oFrame,
-                float       fSize,
-                ref Lattice oXLattice,
-                ref Lattice oYLattice,
-                ref Lattice oZLattice)
-            {
-                float fBeam1        = 0.4f;
-                float fBeam2        = 0.1f;
-                Vector3 vecCentre   = oFrame.vecGetPosition();
-                Vector3 vecTipX     = vecCentre + fSize * oFrame.vecGetLocalX();
-                Vector3 vecTipY     = vecCentre + fSize * oFrame.vecGetLocalY();
-                Vector3 vecTipZ     = vecCentre + fSize * oFrame.vecGetLocalZ();
-
-                oXLattice.AddBeam(vecCentre, fBeam1, vecTipX, fBeam2);
-                oYLattice.AddBeam(vecCentre, fBeam1, vecTipY, fBeam2);
-                oZLattice.AddBeam(vecCentre, fBeam1, vecTipZ, fBeam2);
+                PreviewPoint(oFrame.vecGetPosition(), 0.5f, Cp.clrBlack);
+                Library.oViewer().Add(oXLine);
+                Library.oViewer().Add(oYLine);
+                Library.oViewer().Add(oZLine);
             }
 
             public static void PreviewFrames(
-                Frames  oFrames,
+                Frames  aFrames,
                 float   fSize)
             {
-                Lattice oXLattice = new Lattice();
-                Lattice oYLattice = new Lattice();
-                Lattice oZLattice = new Lattice();
-
-                for (float fLengthRatio = 0; fLengthRatio <= 1f; fLengthRatio += 0.01f)
+                float fTotalLength  = SplineOperations.fGetTotalLength(aFrames.aGetPoints(100));
+                uint nSamples       = (uint)(2f * fTotalLength / fSize);
+                for (int i = 0; i < nSamples; i++)
                 {
-                    LocalFrame oFrame = oFrames.oGetLocalFrame(fLengthRatio);
-                    PreviewFrame(
-                        oFrame,
-                        fSize,
-                        ref oXLattice,
-                        ref oYLattice,
-                        ref oZLattice);
+                    float fLR           = 1f / (nSamples - 1f) * i;
+                    LocalFrame oFrame   = aFrames.oGetLocalFrame(fLR);
+                    PreviewFrame(oFrame, fSize);
                 }
-
-                PreviewLattice(oXLattice, Cp.clrRed);
-                PreviewLattice(oYLattice, Cp.clrGreen);
-                PreviewLattice(oZLattice, Cp.clrBlue);
             }
 
             public static void PreviewCircleSection(
