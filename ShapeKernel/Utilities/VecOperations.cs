@@ -84,7 +84,7 @@ namespace Leap71
 
             /// <summary>
             /// Returns the carthesian coordinates of a point specified in cylindrical coordinates.
-            /// The angle is measured in radiant.
+            /// The angle is measured in radian.
             /// </summary>
             public static Vector3 vecGetCylPoint(float fRadius, float fPhi, float fZ)
             {
@@ -96,7 +96,7 @@ namespace Leap71
 
             /// <summary>
             /// Returns the carthesian coordinates of a point specified in spherical coordinates.
-            /// All angles are measured in radiant.
+            /// All angles are measured in radian.
             /// </summary>
             public static Vector3 vecGetSphPoint(float fRadius, float fPhi, float fTheta)
             {
@@ -119,7 +119,7 @@ namespace Leap71
             /// <summary>
             /// Returns the 2D planar polar angle of a point with respect to the absolute z-axis.
             /// Cylindrical coordinate system.
-            /// The angle is measured in radiant.
+            /// The angle is measured in radian.
             /// </summary>
             public static float fGetPhi(Vector3 vecPt)
             {
@@ -130,7 +130,7 @@ namespace Leap71
             /// <summary>
             /// Returns the azimuthal angle of a point with respect to the absolute z-axis.
             /// Spherical coordinate system.
-            /// The angle is measured in radiant.
+            /// The angle is measured in radian.
             /// </summary>
             public static float fGetTheta(Vector3 vecPt)
             {
@@ -152,7 +152,7 @@ namespace Leap71
 
             /// <summary>
             /// Returns a point with the same cylindrical coordinates (z and radius), but with a new polar position.
-            /// The angle is measured in radiant.
+            /// The angle is measured in radian.
             /// </summary>
             public static Vector3 vecSetPhi(Vector3 vecPt, float fNewPhi)
             {
@@ -187,7 +187,7 @@ namespace Leap71
 
             /// <summary>
             /// Returns a point that is turned around the absolute z-axis by an angle dPhi.
-            /// The angle increment is measured in radiant.
+            /// The angle increment is measured in radian.
             /// </summary>
             public static Vector3 vecUpdatePhi(Vector3 vecPt, float dPhi)
             {
@@ -257,7 +257,7 @@ namespace Leap71
             /// <summary>
             /// Rotates a point around the absolute z-axis.
             /// The axis origin can be customised.
-            /// The angle increment is measured in radiant.
+            /// The angle increment is measured in radian.
             /// </summary>
             public static Vector3 vecRotateAroundZ(Vector3 vecPt, float dPhi, Vector3 vecAxisOrigin = new Vector3())
             {
@@ -285,7 +285,7 @@ namespace Leap71
 
             /// <summary>
             /// Returns the minimum angle between to 3D vectors.
-            /// The angle is measured in radiant.
+            /// The angle is measured in radian.
             /// </summary>
             public static float fGetAngleBetween(Vector3 vecA, Vector3 vecB)
             {
@@ -294,7 +294,7 @@ namespace Leap71
                 float fDot   = float.Clamp(Vector3.Dot(vecA, vecB), -1, 1);
                 float fTheta = MathF.Acos(fDot);
 
-                if ((float.IsNaN(fTheta)) &&
+                if (float.IsNaN(fTheta) &&
                     (MathF.Abs(fDot) == 1))
                 {
                     return MathF.PI;
@@ -304,32 +304,30 @@ namespace Leap71
 
             /// <summary>
             /// Returns the minimum, signed angle between to 3D vectors.
-            /// The angle is measured in radiant.
-            /// The order in which the vectors are specified will influende the rotation sense indicated by the sign.
+            /// The angle is measured in radian.
+            /// The order in which the vectors are specified will influence the rotation sense indicated by the sign.
             /// </summary>
-            public static float fGetSignedAngleBetween(Vector3 vecA, Vector3 vecB)
+            public static float fGetSignedAngleBetween(Vector3 vecA, Vector3 vecB, Vector3 vecRefNormal)
             {
-                float fNormA = vecA.Length();
-                float fNormB = vecB.Length();
-                vecA        /= fNormA;
-                vecB        /= fNormB;
-                float fDot   = float.Clamp(Vector3.Dot(vecA, vecB), -1, 1);
-                float fTheta = MathF.Acos(fDot);
+                const float fError = 1e-20f;
 
-                if (float.IsNaN(fTheta))
+                if (vecA.LengthSquared() < fError || 
+                    vecB.LengthSquared() < fError || 
+                    vecRefNormal.LengthSquared() < fError)
                 {
-                    Library.Log("Invalid rotation angle.");
-                    throw new Exception("Invalid rotation angle.");
+                    throw new Exception("Vector3 with zero length.");
                 }
 
-                Vector3 vecAxis     = Vector3.Cross(vecA, vecB);
-                Vector3 vecPosRotB  = vecRotateAroundAxis(vecB, fTheta, vecAxis);
-                float fPosDist      = (vecPosRotB - vecA).LengthSquared();
+                vecA                = vecA.Normalize();
+                vecB                = vecB.Normalize();
+                vecRefNormal        = vecRefNormal.Normalize();
+                Vector3 vecNormal   = Vector3.Cross(vecA, vecB);
+                vecNormal           = vecFlipForAlignment(vecNormal, vecRefNormal);
+                float fTheta        = MathF.Abs(fGetAngleBetween(vecA, vecB));
+                float fPosDot       = Vector3.Dot(vecA, vecRotateAroundAxis(vecB, fTheta, vecNormal));
+                float fNegDot       = Vector3.Dot(vecA, vecRotateAroundAxis(vecB, -fTheta, vecNormal));
 
-                Vector3 vecNegRotB  = vecRotateAroundAxis(vecB, -fTheta, vecAxis);
-                float fNegDist      = (vecNegRotB - vecA).LengthSquared();
-
-                if (fNegDist < fPosDist)
+                if (fNegDot > fPosDot)
                 {
                     return -fTheta;
                 }
@@ -342,7 +340,7 @@ namespace Leap71
             /// <summary>
             /// Rotates a point around a custom axis.
             /// The axis origin can be customised.
-            /// The angle increment is measured in radiant.
+            /// The angle increment is measured in radian.
             /// </summary>
             public static Vector3 vecRotateAroundAxis(Vector3 vecPt, float dPhi, Vector3 vecAxis, Vector3? vecAxisOrigin = null)
             {
@@ -448,7 +446,7 @@ namespace Leap71
             /// <summary>
             /// Returns the polar angle between the local frame's z-axis and the specified point.
             /// Similar to the function fGetPhi, but in an arbitary, 3D reference frame.
-            /// The angle is measured in radiant.
+            /// The angle is measured in radian.
             /// </summary>
             public static float fGetPhiToAxis(LocalFrame oFrame, Vector3 vecPt)
             {

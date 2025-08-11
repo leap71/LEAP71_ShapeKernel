@@ -211,7 +211,7 @@ namespace Leap71
 
             /// <summary>
             /// Rotates the spline around the absolute z-axis by a given angle.
-            /// The angle is measured in radiant.
+            /// The angle is measured in radian.
             /// </summary>
             public static List<Vector3> aRotateListAroundZ(List<Vector3> aList, float fAngle)
             {
@@ -328,7 +328,7 @@ namespace Leap71
 
             /// <summary>
             /// Rotates the spline around an arbiary 3D axis by a given angle.
-            /// The angle is measured in radiant.
+            /// The angle is measured in radian.
             /// </summary>
             public static List<Vector3> aRotateListAroundAxis(List<Vector3> aList, float dPhi, Vector3 vecAxis, Vector3 vecAxisOrigin = new Vector3())
             {
