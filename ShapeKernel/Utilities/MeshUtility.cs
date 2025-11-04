@@ -119,6 +119,19 @@ namespace Leap71
             }
 
             /// <summary>
+            /// Converts voxels into a mesh.
+            /// Creates a new mesh by applying a transformation function to each vertex of the input mesh.
+            /// Voxelizes the new mesh.
+            /// </summary>
+            public static Voxels voxApplyTransformation(Voxels vox, 
+                                                        BaseShape.fnVertexTransformation fnTrafo)
+            {
+                Mesh msh    = new (vox);
+                msh         = mshApplyTransformation(msh, fnTrafo);
+                return new Voxels(msh);
+            }
+
+            /// <summary>
             /// Returns a mesh that has been translated from the input to the output frame.
             /// </summary>
             public static Mesh mshTranslateMeshOntoFrame(Mesh msh,
