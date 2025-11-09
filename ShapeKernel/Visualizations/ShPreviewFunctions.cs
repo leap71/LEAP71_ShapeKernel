@@ -269,14 +269,14 @@ namespace Leap71
                 float       fRadius,
                 ColorFloat  clrColor)
             {
-                LocalFrame oFrame = new LocalFrame(vecCentre);
+                LocalFrame oFrame = new (vecCentre);
                 PreviewCircle(oFrame, fRadius, clrColor);
             }
 
             public static void PreviewCylinderWireframe(
                 BaseCylinder    oCyl,
                 ColorFloat      clrColor,
-                uint            nRadialSamples = 5,
+                uint            nRadialSamples = 4,
                 uint            nLengthSamples = 10)
             {
                 // length samples
@@ -313,7 +313,7 @@ namespace Leap71
             public static void PreviewPipeWireframe(
                 BasePipe    oCyl,
                 ColorFloat  clrColor,
-                uint        nRadialSamples = 5,
+                uint        nRadialSamples = 4,
                 uint        nLengthSamples = 10)
             {
                 // length samples
