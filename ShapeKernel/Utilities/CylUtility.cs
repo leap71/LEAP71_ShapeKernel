@@ -66,6 +66,17 @@ namespace Leap71
             }
 
             /// <summary>
+            /// Simplifies the creation of a base pipe along the absolute z-axis.
+            /// </summary>
+            public static Voxels voxGetPipe(float fStartZ, float fEndZ, float fInnerRadius, float fOuterRadius)
+            {
+                LocalFrame oFrame   = new (new Vector3(0, 0, fStartZ));
+                float fLength       = fEndZ - fStartZ;
+                BasePipe oPipe      = new (oFrame, fLength, fInnerRadius, fOuterRadius);
+                return oPipe.voxConstruct();
+            }
+
+            /// <summary>
             /// Simplifies the creation of a base cylinder with respect to the reference frame's local z-axis.
             /// </summary>
             public static Voxels voxGetCyl(LocalFrame oRefFrame, float fStartZ, float fEndZ, float fRadius)
@@ -85,6 +96,17 @@ namespace Leap71
                 float fLength       = fEndZ - fStartZ;
                 BaseCone oCone      = new (oFrame, fLength, fStartRadius, fEndRadius);
                 return oCone.voxConstruct();
+            }
+
+            /// <summary>
+            /// Simplifies the creation of a base pipe with respect to the reference frame's local z-axis.
+            /// </summary>
+            public static Voxels voxGetPipe(LocalFrame oRefFrame, float fStartZ, float fEndZ, float fInnerRadius, float fOuterRadius)
+            {
+                LocalFrame oFrame   = oRefFrame.oTranslate(fStartZ * oRefFrame.vecGetLocalZ());
+                float fLength       = fEndZ - fStartZ;
+                BasePipe oPipe      = new (oFrame, fLength, fInnerRadius, fOuterRadius);
+                return oPipe.voxConstruct();
             }
         }
     }
