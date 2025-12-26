@@ -44,7 +44,7 @@ namespace Leap71
         {
             public static uint nNumberOfGroups = 0;
             
-            public static void PreviewMesh(
+            public static int PreviewMesh(
                 Mesh        oMesh,
                 ColorFloat  clrColor,
                 float       fTransparency   = 0.9f,
@@ -59,6 +59,7 @@ namespace Leap71
                                             fRoughness);
                 Library.oViewer().Add(oMesh, iNextGroupId);
                 nNumberOfGroups++;
+                return (int)(nNumberOfGroups - 1);
             }
 
             public static int PreviewVoxels(
