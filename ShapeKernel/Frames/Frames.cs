@@ -51,7 +51,8 @@ namespace Leap71
             protected List<Vector3> m_aLocalZ;
             protected Vector3?      m_vecLastLocalX;
 
-
+            protected Frames() { }
+            
             /// <summary>
             /// Extrudes a const local frame along a straight line.
             /// </summary>
