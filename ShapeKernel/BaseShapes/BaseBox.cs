@@ -93,6 +93,28 @@ namespace Leap71
                 m_oDepthModulation  = new LineModulation(fDepth);
             }
 
+            /// <summary>
+            /// Initialises a box from a BBox3 object (e.g. of a voxel field).
+            /// </summary>
+            public BaseBox(BBox3 oBBox) : base()
+            {
+                float fWidth        = oBBox.vecSize().X;
+                float fDepth        = oBBox.vecSize().Y;
+                float fLength       = oBBox.vecSize().Z;
+
+                Vector3 vecCentre   = oBBox.vecCenter();
+                vecCentre.Z         = oBBox.vecMin.Z;
+                LocalFrame oFrame   = new (vecCentre);
+
+                m_aFrames = new Frames(fLength, oFrame);
+                SetWidthSteps(5);
+                SetDepthSteps(5);
+                SetLengthSteps(5);
+
+                m_oWidthModulation  = new LineModulation(fWidth);
+                m_oDepthModulation  = new LineModulation(fDepth);
+            }
+
 
             //settings
             public void SetWidth(LineModulation oModulation)
