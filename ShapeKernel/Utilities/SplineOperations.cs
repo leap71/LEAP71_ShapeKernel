@@ -378,6 +378,27 @@ namespace Leap71
             }
 
             /// <summary>
+            /// Returns the point from the list that is closest to the given start position.
+            /// </summary>
+            public static Vector2 vecGetClosestPoint(List<Vector2> aPoints, Vector2 vecStart)
+            {
+                float fMinDist      = float.MaxValue;
+                Vector2 vecNear     = Vector2.Zero;
+
+                for (int i = 0; i < aPoints.Count; i++)
+                {
+                    Vector2 vecPt   = aPoints[i];
+                    float fDist     = (vecPt - vecStart).LengthSquared();
+                    if (fDist < fMinDist)
+                    {
+                        fMinDist    = fDist;
+                        vecNear     = vecPt;
+                    }
+                }
+                return vecNear;
+            }
+
+            /// <summary>
             /// Returns the distance to the point from the list that is closest to the given start position.
             /// </summary>
             public static float fGetDistanceToClosestPoint(List<Vector3> aPoints, Vector3 vecStart)
@@ -386,6 +407,24 @@ namespace Leap71
                 for (int i = 0; i < aPoints.Count; i++)
                 {
                     Vector3 vecPt   = aPoints[i];
+                    float fDist     = (vecPt - vecStart).LengthSquared();
+                    if (fDist < fMinDist)
+                    {
+                        fMinDist    = fDist;
+                    }
+                }
+                return MathF.Sqrt(fMinDist);
+            }
+
+            /// <summary>
+            /// Returns the distance to the point from the list that is closest to the given start position.
+            /// </summary>
+            public static float fGetDistanceToClosestPoint(List<Vector2> aPoints, Vector2 vecStart)
+            {
+                float fMinDist      = float.MaxValue;
+                for (int i = 0; i < aPoints.Count; i++)
+                {
+                    Vector2 vecPt   = aPoints[i];
                     float fDist     = (vecPt - vecStart).LengthSquared();
                     if (fDist < fMinDist)
                     {
