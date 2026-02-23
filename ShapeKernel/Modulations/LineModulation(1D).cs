@@ -152,23 +152,25 @@ namespace Leap71
             {
                 fX = float.Clamp(fX, 0, 1);
 
-                for (int i = 1; i < m_aXValues.Count; i++)
+                int idx = m_aXValues.BinarySearch(fX);
+                if (idx < 0)
                 {
-                    int iLowerIndex = i - 1;
-                    int iUpperIndex = i - 0;
-                    float fLowerX   = m_aXValues[iLowerIndex];
-                    float fUpperX   = m_aXValues[iUpperIndex];
-
-                    if (fX >= fLowerX && fX <= fUpperX)
-                    {
-                        float fLR           = (fX - fLowerX) / (fUpperX - fLowerX);
-                        float fLowerY       = m_aYValues[iLowerIndex];
-                        float fUpperY       = m_aYValues[iUpperIndex];
-                        float fY            = fLowerY + fLR * (fUpperY - fLowerY);
-                        return fY;
-                    }
+                    idx = ~idx;
                 }
-                return m_aYValues[^1];
+
+                int iUpper      = Math.Min(idx, m_aXValues.Count - 1);
+                int iLower      = Math.Max(iUpper - 1, 0);
+                float fLowerX   = m_aXValues[iLower];
+                float fUpperX   = m_aXValues[iUpper];
+
+                if (fUpperX == fLowerX)
+                {
+                    return m_aYValues[iLower];
+                }
+
+                float fLR       = (fX - fLowerX) / (fUpperX - fLowerX);
+                float fY        = m_aYValues[iLower] + fLR * (m_aYValues[iUpper] - m_aYValues[iLower]);
+                return fY;
             }
 
             /// <summary>
