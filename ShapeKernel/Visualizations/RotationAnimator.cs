@@ -58,10 +58,10 @@ namespace Leap71
 
             public void Do()
             {
-                float fElevation    = Library.oViewer().m_fElevation;
-                float fCurrentOrbit = Library.oViewer().m_fOrbit;
-                float fNextOrbit    = fCurrentOrbit + 0.5f;
-                Library.oViewer().SetViewAngles(fNextOrbit, fElevation);
+                //float fElevation    = Library.oViewer().m_fElevation;
+                //float fCurrentOrbit = Library.oViewer().m_fOrbit;
+                //float fNextOrbit    = fCurrentOrbit + 0.5f;
+                //Library.oViewer().SetViewAngles(fNextOrbit, fElevation);
             }
         }
     }
