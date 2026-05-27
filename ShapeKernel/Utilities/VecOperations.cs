@@ -35,6 +35,7 @@
 
 using System.Numerics;
 using PicoGK;
+using PicoGK.Numerics;
 
 
 namespace Leap71
@@ -51,35 +52,32 @@ namespace Leap71
                 return fGetRadius(vecPt);
             }
 
+            [Obsolete("Use vec.vecSafeNormalized or vec.vecNormalized (throws when length is 0) instead")]
             /// <summary>
             /// Sets the vector's length to 1.
             /// </summary>
             public static Vector3 Normalize(this Vector3 vecA)
             {
-                float fLength = vecA.Length();
-                if (fLength > 0.000000001f)
-                {
-                    Vector3 vecNorm = vecA / fLength;
-                    return vecNorm;
-                }
-                return new Vector3(0f, 0f, 0f);
+                return vecA.vecSafeNormalized();
             }
 
+            [Obsolete("Use vec.vecAsVector3 instead")]
             /// <summary>
             /// Adds z-dimension the flat vector.
             /// </summary>
             public static Vector3 ConvertTo3D(this Vector2 vecFlat, float fZ = 0)
             {
-                return new Vector3(vecFlat.X, vecFlat.Y, fZ);
+                return vecFlat.vecAsVector3(fZ);
             }
 
+            [Obsolete("Use vec.vecStripZ instead")]
             /// <summary>
             /// Removes z-dimension from vector.
             /// The information about the z-value will be lost.
             /// </summary>
             public static Vector2 ConvertTo2D(this Vector3 vecA)
             {
-                return new Vector2(vecA.X, vecA.Y);
+                return vecA.vecStripZ();
             }
 
             /// <summary>
@@ -216,7 +214,7 @@ namespace Leap71
             public static Vector3 vecGetPlanarDir(Vector3 vecPt)
             {
                 Vector3 vecDir  = new Vector3(vecPt.X, vecPt.Y, 0);
-                vecDir          = vecDir.Normalize();
+                vecDir          = vecDir.vecSafeNormalized();
                 return vecDir;
             }
 
@@ -279,7 +277,7 @@ namespace Leap71
                     vecNonParallel  = Vector3.UnitY;
                 }
                 Vector3 vecNormal   = Vector3.Cross(vecDir, vecNonParallel);
-                vecNormal           = vecNormal.Normalize();
+                vecNormal           = vecNormal.vecSafeNormalized();
                 return vecNormal;
             }
 
@@ -289,8 +287,8 @@ namespace Leap71
             /// </summary>
             public static float fGetAngleBetween(Vector3 vecA, Vector3 vecB)
             {
-                vecA         = vecA.Normalize();
-                vecB         = vecB.Normalize();
+                vecA         = vecA.vecSafeNormalized();
+                vecB         = vecB.vecSafeNormalized();
                 float fDot   = float.Clamp(Vector3.Dot(vecA, vecB), -1, 1);
                 float fTheta = MathF.Acos(fDot);
 
@@ -318,9 +316,9 @@ namespace Leap71
                     throw new Exception("Vector3 with zero length.");
                 }
 
-                vecA                = vecA.Normalize();
-                vecB                = vecB.Normalize();
-                vecRefNormal        = vecRefNormal.Normalize();
+                vecA                = vecA.vecSafeNormalized();
+                vecB                = vecB.vecSafeNormalized();
+                vecRefNormal        = vecRefNormal.vecSafeNormalized();
                 Vector3 vecNormal   = Vector3.Cross(vecA, vecB);
                 vecNormal           = vecFlipForAlignment(vecNormal, vecRefNormal);
                 float fTheta        = MathF.Abs(fGetAngleBetween(vecA, vecB));
@@ -356,12 +354,13 @@ namespace Leap71
                 return vecNewPt;
             }
 
+            [Obsolete("Use vec.vecPtWorld(oFrame)instead")]
             /// <summary>
             /// Rotates and translates a point in absolute carthesian coordinates onto the specified local reference frame.
             /// The relative coordinates of the result with respect to the local frame will mach those of the input point in absolute reference.
             /// The absolute coordinated of the result will update depending on the position and orientation of the local frame.
             /// "How would this point look like when it was referenced to a this local frame?".
-            /// </summary>
+            /// </summary> 
             public static Vector3 vecTranslatePointOntoFrame(LocalFrame oFrame, Vector3 vecPt)
             {
                 Vector3 vecOrigin = oFrame.vecGetPosition();
@@ -373,6 +372,7 @@ namespace Leap71
                 return vecNewPt;
             }
 
+            [Obsolete("Use vec.vecDirWorld(oFrame)instead")]
             /// <summary>
             /// Rotates and translates a direction in absolute carthesian coordinates onto the specified local reference frame.
             /// The relative coordinates of the result with respect to the local frame will mach those of the input point in absolute reference.
@@ -389,6 +389,7 @@ namespace Leap71
                 return vecNewDir;
             }
 
+            [Obsolete("Use vec.vecPtLocal(oFrame)instead")]
             /// <summary>
             /// Returns the relative coordinates expression of an absolute, carthesian point with respect to a given local reference frame.
             /// "How would this point look like when viewed from this local frame?".
@@ -403,6 +404,7 @@ namespace Leap71
                 return vecNewPt;
             }
 
+            [Obsolete("Use vec.vecDirLocal(oFrame)instead")]
             /// <summary>
             /// Returns the direction of a direct connection between the local frame's z-axis and the specified point.
             /// Similar to the function vecGetPlanarDir, but in an arbitary, 3D reference frame.
@@ -421,7 +423,7 @@ namespace Leap71
                     fX * vecLocalX +
                     fY * vecLocalY;
 
-                vecNewPt = vecNewPt.Normalize();
+                vecNewPt = vecNewPt.vecSafeNormalized();
                 return vecNewPt;
             }
 
@@ -462,6 +464,7 @@ namespace Leap71
                 return fPhi;
             }
 
+            [Obsolete("Use Vector3.Lerp(vecPt1, vecPt2, fRatio) instead")]
             /// <summary>
             /// Returns a linearly interpolated point between the two specified points.
             /// </summary>
@@ -479,8 +482,8 @@ namespace Leap71
                 vecAxisOrigin       = vecSetZ(vecAxisOrigin, 0f);
                 float dMinAngle     = fGetAngleBetween(vecPt1, vecPt2);
 
-                Vector3 vecSide1    = (vecPt1 - vecAxisOrigin).Normalize();
-                Vector3 vecSide2    = (vecPt2 - vecAxisOrigin).Normalize();
+                Vector3 vecSide1    = (vecPt1 - vecAxisOrigin).vecSafeNormalized();
+                Vector3 vecSide2    = (vecPt2 - vecAxisOrigin).vecSafeNormalized();
                 Vector3 vecNormal   = Vector3.Cross(vecSide1, vecSide2);
 
                 //figure out rotation sense
@@ -511,8 +514,8 @@ namespace Leap71
             {
                 float dMinAngle     = fGetAngleBetween(vecPt1, vecPt2);
 
-                Vector3 vecSide1    = (vecPt1 - vecAxisOrigin).Normalize();
-                Vector3 vecSide2    = (vecPt2 - vecAxisOrigin).Normalize();
+                Vector3 vecSide1    = (vecPt1 - vecAxisOrigin).vecSafeNormalized();
+                Vector3 vecSide2    = (vecPt2 - vecAxisOrigin).vecSafeNormalized();
                 Vector3 vecNormal   = Vector3.Cross(vecSide1, vecSide2);
 
                 //figure out rotation sense

@@ -35,7 +35,7 @@
 
 using System.Numerics;
 using PicoGK;
-
+using PicoGK.Numerics;
 
 namespace Leap71
 {
@@ -154,7 +154,7 @@ namespace Leap71
                 Vector3 vecCentre   = m_oFrame.vecGetPosition();
 
                 Vector3 vecLocalX   = (vecSpine - vecCentre);
-                vecLocalX           = vecLocalX.Normalize();
+                vecLocalX           = vecLocalX.vecSafeNormalized();
                 Vector3 vecLocalY   = m_oFrame.vecGetLocalZ();
                 Vector3 vecLocalZ   = Vector3.Cross(vecLocalY, vecLocalX);
 

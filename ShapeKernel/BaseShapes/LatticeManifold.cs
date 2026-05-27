@@ -35,6 +35,7 @@
 
 using System.Numerics;
 using PicoGK;
+using PicoGK.Numerics;
 
 
 namespace Leap71
@@ -143,7 +144,7 @@ namespace Leap71
 
             protected static float fGetOverhangAngleDegFromVector(Vector3 vecDir)
             {
-                vecDir                  = vecDir.Normalize();
+                vecDir                  = vecDir.vecSafeNormalized();
                 float fConnectionAngle  = VecOperations.fGetAngleBetween(vecDir, -Vector3.UnitZ);
                 float fDegAngle         = fConnectionAngle / MathF.PI * 180f;
                 return fDegAngle;
