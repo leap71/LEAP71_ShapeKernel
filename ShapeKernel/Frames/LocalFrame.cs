@@ -34,6 +34,7 @@
 
 
 using System.Numerics;
+using PicoGK.Shapes;
 
 
 namespace Leap71
@@ -154,6 +155,7 @@ namespace Leap71
                 return m_vecLocalZ;
             }
 
+            [Obsolete("Avoid since the function rotates and doesn't truly invert")]
             /// <summary>
             /// Returns a local frame that is flipped compared to the specified local frame.
             /// The position remains constant.
@@ -253,6 +255,20 @@ namespace Leap71
             {
                 Vector3 vecLocalY = Vector3.Cross(vecLocalZ, vecLocalX);
                 return vecLocalY;
+            }
+
+            public static implicit operator Frame3d(LocalFrame oFrame)
+            {
+                return new (    oFrame.vecGetPosition(),
+                                oFrame.vecGetLocalZ(),
+                                oFrame.vecGetLocalX());
+            }
+
+            public static implicit operator LocalFrame(Frame3d frm)
+            {
+                return new LocalFrame(  frm.vecPos,
+                                        frm.vecLz,
+                                        frm.vecLx);
             }
         }
     }
