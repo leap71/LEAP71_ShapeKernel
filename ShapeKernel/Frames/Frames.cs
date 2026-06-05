@@ -34,6 +34,7 @@
 
 
 using System.Numerics;
+using PicoGK.Numerics;
 
 
 namespace Leap71
@@ -167,6 +168,16 @@ namespace Leap71
                 }
             }
 
+            public void ApplyToFrame(LocalFrame oFrame)
+            {
+                for (int i = 0; i < m_aPoints.Count; i += 1)
+                {
+                    m_aPoints[i]        = m_aPoints[i].vecPtWorld(oFrame);
+                    m_aLocalX[i]        = m_aLocalX[i].vecDirWorld(oFrame);
+                    m_aLocalY[i]        = m_aLocalY[i].vecDirWorld(oFrame);
+                    m_aLocalZ[i]        = m_aLocalZ[i].vecDirWorld(oFrame);
+                }
+            }
 
             //utility
             protected Vector3 vecAlignWithFramesType(Vector3 vecPt, Vector3 vecLocalZ, EFrameType eFrameType)
