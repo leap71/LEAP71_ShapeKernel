@@ -142,7 +142,8 @@ namespace Leap71
                 oZLine.nAddVertex(oFrame.vecGetPosition() + fSize * oFrame.vecGetLocalZ());
                 oZLine.AddArrow(0.2f * fSize);
 
-                PreviewPoint(oFrame.vecGetPosition(), 0.5f, Cp.clrBlack);
+                float fPointRadius = MathF.Min(0.5f, 0.05f * fSize);
+                PreviewPoint(oFrame.vecGetPosition(), fPointRadius, Cp.clrBlack);
                 Library.oViewer().Add(oXLine);
                 Library.oViewer().Add(oYLine);
                 Library.oViewer().Add(oZLine);
