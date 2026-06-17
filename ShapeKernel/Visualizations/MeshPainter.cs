@@ -134,12 +134,22 @@ namespace Leap71
                     aSubMeshes[nSubMeshIndex].nAddTriangle(vecA, vecB, vecC);
                 }
 
+
                 for (int i = 0; i < nClasses; i++)
                 {
                     ColorFloat clr      = xScale.clrGetColor(fMinValue + (i * dValue));
                     try
                     {
-                        Sh.PreviewMesh(aSubMeshes[i], clr);
+                        Mesh mshSub         = aSubMeshes[i];
+                        int nTriangleCount  = mshSub.nTriangleCount();
+                        int nVertexCount    = mshSub.nVertexCount();
+
+                        if (nTriangleCount == 0) { }
+                        else if (nVertexCount == 0) { }
+                        else
+                        {
+                            Sh.PreviewMesh(mshSub, clr);
+                        }
                     }
                     catch { }
                 }
