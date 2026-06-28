@@ -33,6 +33,9 @@
 //
 
 
+using PicoGK.Numerics;
+
+
 namespace Leap71
 {
     namespace ShapeKernel
@@ -86,6 +89,14 @@ namespace Leap71
                 float fMax          = m_fMaxInput;
                 float fOutputAtMin  = fGetOutputFromFunc(fMin);
                 float fOutputAtMax  = fGetOutputFromFunc(fMax);
+                if (fOutputAtMin.bAlmostZero())
+                {
+                    return m_fMinInput;
+                }
+                if (fOutputAtMax.bAlmostZero())
+                {
+                    return m_fMaxInput;
+                }
                 if (fOutputAtMin * fOutputAtMax >= 0)
                 {
                     throw new BisectionException("No valid limits.");
