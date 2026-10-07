@@ -140,6 +140,23 @@ namespace Leap71
             }
 
             /// <summary>
+            /// Aligns local frames along a spline for localZ and a const target direction for localX,
+            /// and optionally removes 180-degree frame flips.
+            /// </summary>
+            public Frames(
+                List<Vector3>   aPoints,
+                Vector3         vecTargetX,
+                bool            bEnsureFrameContinuity,
+                float           fReparametrisationSpacing = 1f)
+                : this(aPoints, vecTargetX, fReparametrisationSpacing)
+            {
+                if (bEnsureFrameContinuity)
+                {
+                    EnsureFrameContinuity();
+                }
+            }
+
+            /// <summary>
             /// Aligns local frames along a spline for localZ and a coord-system-dependant target direction for localX.
             /// </summary>
             public Frames(
@@ -168,6 +185,23 @@ namespace Leap71
                 }
             }
 
+            /// <summary>
+            /// Aligns local frames along a spline and optionally removes 180-degree frame flips.
+            /// Existing constructors retain their original behaviour.
+            /// </summary>
+            public Frames(
+                List<Vector3>   aPoints,
+                EFrameType      eFrameType,
+                bool            bEnsureFrameContinuity,
+                float           fReparametrisationSpacing = 1f)
+                : this(aPoints, eFrameType, fReparametrisationSpacing)
+            {
+                if (bEnsureFrameContinuity)
+                {
+                    EnsureFrameContinuity();
+                }
+            }
+
             public void ApplyToFrame(LocalFrame oFrame)
             {
                 for (int i = 0; i < m_aPoints.Count; i += 1)
@@ -180,6 +214,45 @@ namespace Leap71
             }
 
             //utility
+            /// <summary>
+            /// Densifies the frame field and removes equivalent 180-degree local-X flips.
+            /// </summary>
+            protected void EnsureFrameContinuity()
+            {
+                const uint nSamples = 500;
+
+                List<Vector3> aPoints = new List<Vector3>();
+                List<Vector3> aLocalX = new List<Vector3>();
+                List<Vector3> aLocalZ = new List<Vector3>();
+
+                for (int i = 0; i < nSamples; i += 1)
+                {
+                    float fLR = i / (nSamples - 1f);
+                    LocalFrame oFrame = oGetLocalFrame(fLR);
+
+                    Vector3 vecLocalX = oFrame.vecGetLocalX();
+                    if (aLocalX.Count > 0 && Vector3.Dot(aLocalX[^1], vecLocalX) < 0f)
+                    {
+                        vecLocalX = -vecLocalX;
+                    }
+
+                    aPoints.Add(oFrame.vecGetPosition());
+                    aLocalX.Add(vecLocalX);
+                    aLocalZ.Add(oFrame.vecGetLocalZ());
+                }
+
+                m_aPoints = aPoints;
+                m_aLocalX = aLocalX;
+                m_aLocalZ = aLocalZ;
+                m_aLocalY = new List<Vector3>();
+
+                for (int i = 0; i < m_aPoints.Count; i += 1)
+                {
+                    Vector3 vecLocalY = LocalFrame.vecGetLocalY(m_aLocalZ[i], m_aLocalX[i]);
+                    m_aLocalY.Add(vecLocalY);
+                }
+            }
+
             protected Vector3 vecAlignWithFramesType(Vector3 vecPt, Vector3 vecLocalZ, EFrameType eFrameType)
             {
                 if (eFrameType == EFrameType.MIN_ROTATION)
