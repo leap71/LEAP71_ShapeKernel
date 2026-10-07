@@ -34,6 +34,7 @@
 
 
 using System.Numerics;
+using PicoGK.Numerics;
 
 
 namespace Leap71
@@ -115,8 +116,8 @@ namespace Leap71
                 }
 
                 Vector3 vecPt1                  = vecStart;
-                Vector3 vecPt2                  = vecStart   + fStartTangentStrength * vecStartDir.Normalize();
-                Vector3 vecPt3                  = vecEnd     - fEndTangentStrenth    * vecEndDir.Normalize();
+                Vector3 vecPt2                  = vecStart   + fStartTangentStrength * vecStartDir.vecNormalized();
+                Vector3 vecPt3                  = vecEnd     - fEndTangentStrenth    * vecEndDir.vecNormalized();
                 Vector3 vecPt4                  = vecEnd;
                 List<Vector3> aControlPoints    = new List<Vector3>() { vecPt1, vecPt2, vecPt3, vecPt4 };
                 m_oBSpline                      = new ControlPointSpline(aControlPoints);
