@@ -35,6 +35,7 @@
 
 using System.Numerics;
 using PicoGK;
+using PicoGK.Numerics;
 
 
 namespace Leap71
@@ -71,7 +72,7 @@ namespace Leap71
                 for (int i = 0; i < nNumberOfTriangles; i++)
                 {
                     oMesh.GetTriangle(i, out Vector3 vecA, out Vector3 vecB, out Vector3 vecC);
-                    Vector3 vecNormal    = Vector3.Cross(vecA - vecB, vecC - vecB).Normalize();
+                    Vector3 vecNormal    = Vector3.Cross(vecA - vecB, vecC - vecB).vecNormalized();
 
                     float dR             = MathF.Sqrt(vecNormal.X * vecNormal.X + vecNormal.Y * vecNormal.Y);
                     float dZ             = MathF.Abs(vecNormal.Z);
