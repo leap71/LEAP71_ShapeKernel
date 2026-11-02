@@ -332,8 +332,6 @@ namespace Leap71
                 BaseCylinder oCyl           = new BaseCylinder(oFrame, fHeight, fRadius);
                 Voxels vox                  = oCyl.voxConstruct();
 
-
-
                 // measured cylinder
                 Vector3 vecMeasuredCoG      = vecGetCentreOfGravity(vox);
                 float fMeasuredVolume       = fGetVolume(vox);                                      // mm3
@@ -345,8 +343,6 @@ namespace Leap71
                 float fMeasuredIxx          = (float)matInertiaTensor[0, 0];
                 float fMeasuredIyy          = (float)matInertiaTensor[1, 1];
                 float fMeasuredIzz          = (float)matInertiaTensor[2, 2];
-
-
 
                 // analytic cylinder
                 Vector3 vecAnalyticCoG      = oFrame.vecGetPosition() + 0.5f * fHeight * oFrame.vecGetLocalZ();
