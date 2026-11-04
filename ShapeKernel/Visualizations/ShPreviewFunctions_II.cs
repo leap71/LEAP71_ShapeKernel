@@ -34,6 +34,7 @@
 
 using System.Numerics;
 using PicoGK;
+using PicoGK.Numerics;
 
 
 namespace Leap71
@@ -113,11 +114,25 @@ namespace Leap71
                 List<Vector3>   aPoints,
                 ColorFloat      clrColor)
             {
-                int iNextGroupId = (int)nNumberOfGroups;
-                PolyLine oLine = new PolyLine(clrColor);
+                int iNextGroupId    = (int)nNumberOfGroups;
+                PolyLine oLine      = new (clrColor);
                 for (int i = 0; i < aPoints.Count; i++)
                 {
                     oLine.nAddVertex(aPoints[i]);
+                }
+                Library.oViewer().Add(oLine, iNextGroupId);
+                nNumberOfGroups++;
+            }
+
+            public static void Preview(
+                List<Vector2>   aPoints,
+                ColorFloat      clrColor)
+            {
+                int iNextGroupId    = (int)nNumberOfGroups;
+                PolyLine oLine      = new (clrColor);
+                for (int i = 0; i < aPoints.Count; i++)
+                {
+                    oLine.nAddVertex(aPoints[i].vecAsVector3());
                 }
                 Library.oViewer().Add(oLine, iNextGroupId);
                 nNumberOfGroups++;
