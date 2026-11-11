@@ -44,13 +44,38 @@ namespace Leap71
 		public partial class Measure
 		{
             /// <summary>
-            /// Calculates the volume by counting the number of voxels.
+            /// Calculates the volume from the mesh of the voxel field, as the sum of the
+            /// signed tetrahedra spanned by each triangle and the origin. This includes
+            /// enclosed cavities correctly, which Voxels.CalculateProperties does not:
+            /// for a closed hollow body it returns the volume of the outer surface only.
             /// The volume is measured in mm^3.
             /// </summary>
             public static float fGetVolume(Voxels oVoxels)
             {
-                oVoxels.CalculateProperties(out float fVolume, out BBox3 oBBox);
-                return fVolume;
+                using Mesh msh = new(oVoxels);
+                return fGetVolume(msh);
+            }
+
+            /// <summary>
+            /// Calculates the enclosed volume of a closed mesh as the sum of the signed
+            /// tetrahedra spanned by each triangle and the origin.
+            /// The volume is measured in mm^3.
+            /// </summary>
+            public static float fGetVolume(Mesh msh)
+            {
+                int nTriangleCount  = msh.nTriangleCount();
+                double dVolume      = 0;
+
+                for (int n = 0; n < nTriangleCount; n++)
+                {
+                    msh.GetTriangle(    n,
+                                        out Vector3 vecA,
+                                        out Vector3 vecB,
+                                        out Vector3 vecC);
+
+                    dVolume += Vector3.Dot(vecA, Vector3.Cross(vecB, vecC)) / 6.0;
+                }
+                return (float)Math.Abs(dVolume);
             }
 
             /// <summary>
