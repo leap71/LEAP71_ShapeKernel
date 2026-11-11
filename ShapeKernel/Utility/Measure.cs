@@ -102,15 +102,18 @@ namespace Leap71
 
             /// <summary>
             /// Returns the centre of gravity of a voxelfield.
-            /// The function iterates across all active voxels.
-            /// All active voxel positions are accumulated and devided by the voxel count.
+            /// The function samples the bounding box on the voxel grid and counts every
+            /// point whose signed distance is zero or negative, i.e. inside the body.
+            /// The return value of ScalarField.bGetValue is deliberately ignored: it only
+            /// says whether a value is stored at that point, and values are stored in the
+            /// narrow band around the surface only. Filtering on it would weigh a shell
+            /// instead of the solid.
             /// The centre of gravity is measured in units of mm.
             /// </summary>
 			public static Vector3 vecGetCentreOfGravity(Voxels oVoxels)
             {
-                VectorField oGradientField  = new(oVoxels);
                 ScalarField oSDField        = new(oVoxels);
-                oVoxels.CalculateProperties(out float fVolume, out BBox3 oBox);
+                BBox3 oBox                  = oVoxels.oCalculateBoundingBox();
                 oBox.Grow(1f);
                 Vector3 vecSize             = oBox.vecSize();
                 float fStep                 = Library.fVoxelSizeMM;
@@ -125,16 +128,11 @@ namespace Leap71
                         for (float fZ = 0f; fZ < vecSize.Z; fZ += fStep)
                         {
                             Vector3 vecPt  = oBox.vecMin + new Vector3(fX, fY, fZ);
-                            if (oGradientField.bGetValue(vecPt, out Vector3 vecVal))
+                            oSDField.bGetValue(vecPt, out float fSDVal);
+                            if (fSDVal <= 0f)
                             {
-                                if (oSDField.bGetValue(vecPt, out float fSDVal))
-                                {
-                                    if (fSDVal < 0)
-                                    {
-                                        vecCoG      += vecPt;
-                                        fCounter    += 1f;
-                                    }
-                                }
+                                vecCoG      += vecPt;
+                                fCounter    += 1f;
                             }
                         }
                     }
@@ -145,12 +143,18 @@ namespace Leap71
 
             /// <summary>
             /// Returns the inertia tensor of a voxelfield with respect to a reference frame.
-            /// The function iterates across all active voxels.
-            /// All active voxels are treated as idealized point masses.
-            /// All active voxel contributions to the inertia tensor are accumulated and devided by the mass.
+            /// The function samples the bounding box on the voxel grid and treats every
+            /// point whose signed distance is zero or negative as a point mass.
+            /// The return value of ScalarField.bGetValue is deliberately ignored: it only
+            /// says whether a value is stored at that point, and values are stored in the
+            /// narrow band around the surface only. Filtering on it would weigh a shell
+            /// instead of the solid and overestimate the inertia by up to 2/3 : 2/5.
+            /// The total mass is density times the measured volume, distributed evenly
+            /// over the counted points.
             /// The voxelfield's density is specified in kg/m3.
             /// The density is assumed to be homogeneously distributed.
-            /// The resulting 3x3 matrix holds components of moments of inertia in units of kg * m2.
+            /// The resulting 3x3 matrix holds components of moments of inertia in units of kg * mm2
+            /// (positions are in mm, mass in kg).
             /// </summary>
             public static double[,] matGetMomentOfInertia(Voxels oVoxels, LocalFrame oRefFrame, float fDensity)
             {
@@ -162,17 +166,15 @@ namespace Leap71
                                                                     { 0f, 0f, 0f }
                                                                 };
 
-                // iterate across all active voxels
-                // treat active voxel as point mass
-                VectorField oGradientField  = new(oVoxels);
                 ScalarField oSDField        = new(oVoxels);
-                oVoxels.CalculateProperties(out float fVolume, out BBox3 oBox);
+                float fVolume               = fGetVolume(oVoxels);
+                BBox3 oBox                  = oVoxels.oCalculateBoundingBox();
                 oBox.Grow(1f);
                 Vector3 vecSize             = oBox.vecSize();
                 float fStep                 = Library.fVoxelSizeMM;
                 float fCounter              = 0f;
 
-                // count active voxels
+                // count points inside the body
                 for (float fX = 0f; fX < vecSize.X; fX += fStep)
                 {
                     for (float fY = 0f; fY < vecSize.Y; fY += fStep)
@@ -180,23 +182,20 @@ namespace Leap71
                         for (float fZ = 0f; fZ < vecSize.Z; fZ += fStep)
                         {
                             Vector3 vecPt  = oBox.vecMin + new Vector3(fX, fY, fZ);
-                            if (oGradientField.bGetValue(vecPt, out Vector3 vecVal))
+                            oSDField.bGetValue(vecPt, out float fSDVal);
+                            if (fSDVal <= 0f)
                             {
-                                if (oSDField.bGetValue(vecPt, out float fSDVal))
-                                {
-                                    if (fSDVal < 0)
-                                    {
-                                        fCounter               += 1f;
-                                    }
-                                }
+                                fCounter += 1f;
                             }
                         }
                     }
                 }
 
-                float dVoxelVolume  = Library.fVoxelSizeMM * Library.fVoxelSizeMM * Library.fVoxelSizeMM;
-                float fVoxelVolume  = fCounter * dVoxelVolume;
-                float fVolumeFactor = fVolume / fVoxelVolume;
+                if (fCounter == 0f)
+                    return matInertiaTensor;
+
+                // distribute the measured volume evenly over the counted points
+                float dVoxelMass = fDensity * (fVolume / fCounter) / MathF.Pow(10f, 9f);     // kg
 
                 for (float fX = 0f; fX < vecSize.X; fX += fStep)
                 {
@@ -205,24 +204,18 @@ namespace Leap71
                         for (float fZ = 0f; fZ < vecSize.Z; fZ += fStep)
                         {
                             Vector3 vecPt  = oBox.vecMin + new Vector3(fX, fY, fZ);
-                            if (oGradientField.bGetValue(vecPt, out Vector3 vecVal))
+                            oSDField.bGetValue(vecPt, out float fSDVal);
+                            if (fSDVal <= 0f)
                             {
-                                if (oSDField.bGetValue(vecPt, out float fSDVal))
-                                {
-                                    if (fSDVal < 0)
-                                    {
-                                        float dVoxelMass        = fDensity * fVolumeFactor * dVoxelVolume / MathF.Pow(10f, 9f);     // kg
-                                        double[,] matIncrement  = matGetMomentOfInertia(vecPt, oRefFrame, dVoxelMass);              // kg * m2
-                                        fMeasureMass            += dVoxelMass;
+                                double[,] matIncrement  = matGetMomentOfInertia(vecPt, oRefFrame, dVoxelMass);              // kg * mm2
+                                fMeasureMass            += dVoxelMass;
 
-                                        // accumulate inertia matrices
-                                        for (int k = 0; k < 3; k++)
-                                        {
-                                            for (int l = 0; l < 3; l++)
-                                            {
-                                                matInertiaTensor[k, l] += matIncrement[k, l];
-                                            }
-                                        }
+                                // accumulate inertia matrices
+                                for (int k = 0; k < 3; k++)
+                                {
+                                    for (int l = 0; l < 3; l++)
+                                    {
+                                        matInertiaTensor[k, l] += matIncrement[k, l];
                                     }
                                 }
                             }
@@ -325,7 +318,7 @@ namespace Leap71
             /// </summary>
             public static void TestInertiaTensorMesurement()
             {
-                float fHeight               = 5f;
+                float fHeight               = 40f;
                 float fRadius               = 50f;
                 float fDensity              = 7000f;
                 LocalFrame oFrame           = new LocalFrame(new Vector3(30, 36, -12), new Vector3(2f, -1f, 1f).Normalize());
@@ -349,17 +342,12 @@ namespace Leap71
                 float fAnalyticVolume       = MathF.PI * fRadius * fRadius * fHeight;               // mm3
                 float fAnalyticMass         = fDensity * fAnalyticVolume / MathF.Pow(10f, 9f);      // kg
 
-                // analytical formulas for a "chubby" cylinder
-                float fAnalyticIxx          = 0.25f * fAnalyticMass * fRadius * fRadius;
-                float fAnalyticIyy          = 0.25f * fAnalyticMass * fRadius * fRadius;
+                // solid cylinder, axes through the centre of gravity
+                // (a cylinder of a few voxels height would fit entirely into the narrow band
+                // and could not tell a shell from a solid, so the test uses a full body)
+                float fAnalyticIxx          = 1f / 12f * fAnalyticMass * (3f * fRadius * fRadius + fHeight * fHeight);
+                float fAnalyticIyy          = 1f / 12f * fAnalyticMass * (3f * fRadius * fRadius + fHeight * fHeight);
                 float fAnalyticIzz          = 0.5f * fAnalyticMass * fRadius * fRadius;
-                if (fHeight > 5f * fRadius)
-                {
-                    // analytical formulas for a "skinny" cylinder
-                    fAnalyticIxx            = 1f / 12f * fAnalyticMass * (3f * fRadius * fRadius + fHeight * fHeight);
-                    fAnalyticIyy            = 1f / 12f * fAnalyticMass * (3f * fRadius * fRadius + fHeight * fHeight);
-                    fAnalyticIzz            = 0.5f * fAnalyticMass * fRadius * fRadius;
-                }
               
                 Library.Log($"Measured Mass = {fMeasuredMass} kg.");
                 Library.Log($"Measured Centre of Gravity = {vecMeasuredCoG} mm.");
