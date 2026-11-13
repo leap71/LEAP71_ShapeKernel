@@ -117,28 +117,37 @@ namespace Leap71
                 oBox.Grow(1f);
                 Vector3 vecSize             = oBox.vecSize();
                 float fStep                 = Library.fVoxelSizeMM;
-                Vector3 vecCoG              = new Vector3();
-                float fCounter              = 0f;
+                int nCountX                 = (int)Math.Ceiling((double)vecSize.X / fStep);
+                int nCountY                 = (int)Math.Ceiling((double)vecSize.Y / fStep);
+                int nCountZ                 = (int)Math.Ceiling((double)vecSize.Z / fStep);
+                double dSumX                = 0d;
+                double dSumY                = 0d;
+                double dSumZ                = 0d;
+                long nCounter               = 0;
 
-
-                for (float fX = 0f; fX < vecSize.X; fX += fStep)
+                for (int nX = 0; nX < nCountX; nX++)
                 {
-                    for (float fY = 0f; fY < vecSize.Y; fY += fStep)
+                    for (int nY = 0; nY < nCountY; nY++)
                     {
-                        for (float fZ = 0f; fZ < vecSize.Z; fZ += fStep)
+                        for (int nZ = 0; nZ < nCountZ; nZ++)
                         {
-                            Vector3 vecPt  = oBox.vecMin + new Vector3(fX, fY, fZ);
+                            Vector3 vecPt  = oBox.vecMin + new Vector3(nX * fStep, nY * fStep, nZ * fStep);
                             oSDField.bGetValue(vecPt, out float fSDVal);
                             if (fSDVal <= 0f)
                             {
-                                vecCoG      += vecPt;
-                                fCounter    += 1f;
+                                dSumX       += vecPt.X;
+                                dSumY       += vecPt.Y;
+                                dSumZ       += vecPt.Z;
+                                nCounter    += 1;
                             }
                         }
                     }
                 }
-                vecCoG /= fCounter;
-                return vecCoG;
+
+                if (nCounter == 0)
+                    throw new InvalidOperationException("Cannot calculate the centre of gravity of an empty voxel field.");
+
+                return new Vector3((float)(dSumX / nCounter), (float)(dSumY / nCounter), (float)(dSumZ / nCounter));
             }
 
             /// <summary>
@@ -158,13 +167,8 @@ namespace Leap71
             /// </summary>
             public static double[,] matGetMomentOfInertia(Voxels oVoxels, LocalFrame oRefFrame, float fDensity)
             {
-                // initialize
-                float fMeasureMass          = 0;
-                double[,] matInertiaTensor  = new double[3, 3]   {
-                                                                    { 0f, 0f, 0f },
-                                                                    { 0f, 0f, 0f },
-                                                                    { 0f, 0f, 0f }
-                                                                };
+                if (!float.IsFinite(fDensity) || fDensity < 0f)
+                    throw new ArgumentOutOfRangeException(nameof(fDensity));
 
                 ScalarField oSDField        = new(oVoxels);
                 float fVolume               = fGetVolume(oVoxels);
@@ -172,60 +176,74 @@ namespace Leap71
                 oBox.Grow(1f);
                 Vector3 vecSize             = oBox.vecSize();
                 float fStep                 = Library.fVoxelSizeMM;
-                float fCounter              = 0f;
+                int nCountX                 = (int)Math.Ceiling((double)vecSize.X / fStep);
+                int nCountY                 = (int)Math.Ceiling((double)vecSize.Y / fStep);
+                int nCountZ                 = (int)Math.Ceiling((double)vecSize.Z / fStep);
+                long nCounter               = 0;
 
                 // count points inside the body
-                for (float fX = 0f; fX < vecSize.X; fX += fStep)
+                for (int nX = 0; nX < nCountX; nX++)
                 {
-                    for (float fY = 0f; fY < vecSize.Y; fY += fStep)
+                    for (int nY = 0; nY < nCountY; nY++)
                     {
-                        for (float fZ = 0f; fZ < vecSize.Z; fZ += fStep)
+                        for (int nZ = 0; nZ < nCountZ; nZ++)
                         {
-                            Vector3 vecPt  = oBox.vecMin + new Vector3(fX, fY, fZ);
+                            Vector3 vecPt  = oBox.vecMin + new Vector3(nX * fStep, nY * fStep, nZ * fStep);
                             oSDField.bGetValue(vecPt, out float fSDVal);
                             if (fSDVal <= 0f)
                             {
-                                fCounter += 1f;
+                                nCounter += 1;
                             }
                         }
                     }
                 }
 
-                if (fCounter == 0f)
+                double[,] matInertiaTensor  = new double[3, 3];
+                if (nCounter == 0)
                     return matInertiaTensor;
 
                 // distribute the measured volume evenly over the counted points
-                float dVoxelMass = fDensity * (fVolume / fCounter) / MathF.Pow(10f, 9f);     // kg
+                double dVoxelMass           = (double)fDensity * fVolume / nCounter / 1e9;     // kg
+                double dIxx                 = 0d;
+                double dIyy                 = 0d;
+                double dIzz                 = 0d;
+                double dIxy                 = 0d;
+                double dIxz                 = 0d;
+                double dIyz                 = 0d;
 
-                for (float fX = 0f; fX < vecSize.X; fX += fStep)
+                for (int nX = 0; nX < nCountX; nX++)
                 {
-                    for (float fY = 0f; fY < vecSize.Y; fY += fStep)
+                    for (int nY = 0; nY < nCountY; nY++)
                     {
-                        for (float fZ = 0f; fZ < vecSize.Z; fZ += fStep)
+                        for (int nZ = 0; nZ < nCountZ; nZ++)
                         {
-                            Vector3 vecPt  = oBox.vecMin + new Vector3(fX, fY, fZ);
+                            Vector3 vecPt  = oBox.vecMin + new Vector3(nX * fStep, nY * fStep, nZ * fStep);
                             oSDField.bGetValue(vecPt, out float fSDVal);
                             if (fSDVal <= 0f)
                             {
-                                double[,] matIncrement  = matGetMomentOfInertia(vecPt, oRefFrame, dVoxelMass);              // kg * mm2
-                                fMeasureMass            += dVoxelMass;
+                                Vector3 vecRel  = VecOperations.vecExpressPointInFrame(oRefFrame, vecPt);
+                                double dX       = vecRel.X;
+                                double dY       = vecRel.Y;
+                                double dZ       = vecRel.Z;
 
-                                // accumulate inertia matrices
-                                for (int k = 0; k < 3; k++)
-                                {
-                                    for (int l = 0; l < 3; l++)
-                                    {
-                                        matInertiaTensor[k, l] += matIncrement[k, l];
-                                    }
-                                }
+                                dIxx += dVoxelMass * (dY * dY + dZ * dZ);
+                                dIyy += dVoxelMass * (dX * dX + dZ * dZ);
+                                dIzz += dVoxelMass * (dX * dX + dY * dY);
+                                dIxy -= dVoxelMass * dX * dY;
+                                dIxz -= dVoxelMass * dX * dZ;
+                                dIyz -= dVoxelMass * dY * dZ;
                             }
                         }
                     }
                 }
 
-                // compare total mass against accumulated voxel mass
-                float fMass = fDensity * fVolume / MathF.Pow(10f, 9f);
-        
+                matInertiaTensor[0, 0] = dIxx;
+                matInertiaTensor[1, 1] = dIyy;
+                matInertiaTensor[2, 2] = dIzz;
+                matInertiaTensor[0, 1] = matInertiaTensor[1, 0] = dIxy;
+                matInertiaTensor[0, 2] = matInertiaTensor[2, 0] = dIxz;
+                matInertiaTensor[1, 2] = matInertiaTensor[2, 1] = dIyz;
+
                 return matInertiaTensor;
             }
 
