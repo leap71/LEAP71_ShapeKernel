@@ -134,7 +134,7 @@ namespace Leap71
             }
 
 
-            //access functions
+            // access functions
             public Vector3 vecGetPosition()
             {
                 return m_vecPosition;
@@ -187,6 +187,20 @@ namespace Leap71
                 Vector3 vecNewPosition  = vecGetPosition() + vecTranslate;
                 LocalFrame oNewFrame    = new (vecNewPosition, vecGetLocalZ(), vecGetLocalX());
                 return oNewFrame;
+            }
+
+            /// <summary>
+            /// Returns a new frame translated along the local axes of this frame.
+            /// The orientation remains unchanged.
+            /// </summary>
+            public LocalFrame oTranslateLocal(Vector3 vecLocalTranslate)
+            {
+                Vector3 vecTranslate =
+                    vecGetLocalX() * vecLocalTranslate.X +
+                    vecGetLocalY() * vecLocalTranslate.Y +
+                    vecGetLocalZ() * vecLocalTranslate.Z;
+
+                return oTranslate(vecTranslate);
             }
 
             /// <summary>
